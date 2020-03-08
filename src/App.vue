@@ -21,7 +21,7 @@
         <!--Левая часть (фильтры)-->
         <pane max-size="22">
           <splitpanes horizontal>
-            <pane size="52">
+            <pane size="35">
               <div class="left__pane">
                 <TopFilters
                   class="filters"

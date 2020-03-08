@@ -1,8 +1,9 @@
 <template>
     <div class="filters-body d-flex flex-column">
-        <button class="filters__btn ml-auto mr-auto">Новая заявка</button>
-        <Option class="filters__radio ml-auto mr-auto" :selected="selectedRadio" @radioChanged="localSelectedRadio = $event"></Option>
-        <button class="filters__btn ml-auto mr-auto" style="margin-top: 35px;">{{date}}</button>
+        <div class="d-flex justify-content-between ml-auto mr-auto" style="width: 350px">
+            <button class="filters__btn">Новая заявка</button>
+            <Option class="filters__radio" :selected="selectedRadio" @radioChanged="localSelectedRadio = $event"></Option>
+        </div>
         <RequestsFilter
             class="filters__box ml-auto mr-auto"
             :checkedRequests="localCheckedRequests"
@@ -59,7 +60,7 @@
     border-color: #FFD79A;
     outline: none;
     white-space: nowrap;
-    width: 350px;
+    width: 170px;
     height: 45px;
     font-weight: 600;
     font-size: 14px;
@@ -69,11 +70,6 @@
 .filters__btn:hover {
     background: #FFE6C0;
     transition: .3s;
-}
-
-.filters__radio {
-    margin-top: 35px;
-    margin-right: 0;
 }
 
 .filters__box {

@@ -2,15 +2,15 @@
   <div class="radio__group d-flex justify-content-around">
     <label for="calendarOption" class="radio d-flex align-items-center justify-content-center">
       <input type="radio" value="calendar" name="mainradio" v-model="localSelected" id="calendarOption"/>
-      <span class="d-flex align-items-center justify-content-center">Календарь</span>
+      <span class="d-flex align-items-center justify-content-center">Кал</span>
     </label>
     <label for="mapOption" class="radio d-flex align-items-center justify-content-center">
       <input type="radio" value="map" name="mainradio" v-model="localSelected" id="mapOption" />
-      <span class="d-flex align-items-center justify-content-center">Карта</span>
+      <span class="d-flex align-items-center justify-content-center">Кар</span>
     </label>
     <label for="tableOption" class="radio d-flex align-items-center justify-content-center">
       <input type="radio" value="table" name="mainradio" v-model="localSelected" id="tableOption" />
-      <span class="d-flex align-items-center justify-content-center">Таблица</span>
+      <span class="d-flex align-items-center justify-content-center">Таб</span>
     </label>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
 <style>
 
 .radio__group {
-    width: 350px;
+    width: 170px;
     height: 45px;
     background: #fff;
     border-radius: 5px;

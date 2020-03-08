@@ -50,13 +50,11 @@
 
                 <div class="req__modal__footer d-flex justify-content-center">
                     <button class="req__btn" @click="showReForm">ОТМЕНИТЬ</button>
-                    <input type="submit" class="req__btn" value="СОХРАНИТЬ"></input>
+                    <input type="submit" class="req__btn" value="СОХРАНИТЬ">
                 </div>
             </form>
         </div>
-        <div class="request__map">
-            MAP
-        </div>
+        <div class="request__map"></div>
     </div>
 </div>
 </template>
@@ -91,7 +89,7 @@ export default {
 .modal__req {
     position: absolute;
     width: 100%;
-    height:100%;
+    height: calc(100% - 44px);
     z-index: 1050;
     background: rgba(0, 0, 0, 0.3);
 }
@@ -106,7 +104,8 @@ export default {
 
 .request__map {
     width: 550px;
-    background: #6F6F6F;
+    background: url("./assets/map_modal.png") no-repeat;
+    background-size: 550px 100%;
 }
 
 .request__form {
@@ -187,6 +186,7 @@ h1 {
     width: 100px;
     height: 28px;
     margin: 0px 10px;
+    outline: none;
 }
 
 .req__btn:hover {

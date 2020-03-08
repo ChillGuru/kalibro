@@ -15,7 +15,7 @@
         </form>
         <div class="ex__modal__footer d-flex justify-content-center">
                 <button class="ex__btn" @click="showExForm">ОТМЕНИТЬ</button>
-                <button class="ex__btn">СОХРАНИТЬ</button>
+                <input type="submit" class="ex__btn" value="СОХРАНИТЬ">
         </div>
     </div>
 </div>
@@ -51,7 +51,7 @@ export default {
 .modal__ex {
     position: absolute;
     width: 100%;
-    height:100%;
+    height: calc(100% - 44px);
     z-index: 1050;
     background: rgba(0, 0, 0, 0.3);
 }
@@ -109,6 +109,7 @@ export default {
     width: 100px;
     height: 28px;
     margin: 0px 10px;
+    outline: none;
 }
 
 .ex__btn:hover {

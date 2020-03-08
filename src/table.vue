@@ -1,5 +1,21 @@
 <template>
     <div class="table">
+        <div class="table__header d-flex align-items-center justify-content-between" style="border-bottom: 0; background: #fff; padding: 0;">
+            <div class="date__item">
+                <img src="./assets/toLeft.png" alt="toLeft" style="sidth: 15px; height: 15px; margin: 0 35px 0 8px;">
+                <span>БЕЗ ДАТЫ</span>
+            </div>
+            <div class="date__item"><span>03.11 ПН</span></div>
+            <div class="date__item"><span>04.11 ВТ</span></div>
+            <div class="date__item"><span>05.11 СР</span></div>
+            <div class="date__item"><span>06.11 ЧТ</span></div>
+            <div class="date__item"><span>07.11 ПТ</span></div>
+            <div class="date__item"><span>08.11 СБ</span></div>
+            <div class="date__item">
+                <span>09.11 ВС</span>
+                <img src="./assets/toRight.png" alt="toRight" style="sidth: 15px; height: 15px; margin: 0 8px 0 35px;">
+            </div>
+        </div>
         <header class="table__header">
             <ul class="header__items d-flex justify-content-between">
                 <li>Статус</li>
@@ -12,15 +28,15 @@
         </header>
 
         <content class="table__content">
-            <div class="table__item d-flex" v-for="req in filteredRequests">
+            <div class="table__item" v-for="req in filteredRequests">
                 <input
                     style="display: none"
                     type="checkbox"
                     :id="req.id"
                     :value="req"
                 />
-                <label class="req__content  d-flex" :for="req.id">
-                    <ul class="item__values d-flex" style="width: 100%">
+                <label class="req__content d-flex" :for="req.id">
+                <ul class="item__values d-flex" style="width: 100%">
                     <li style="width: 3%"><div class="status__color" :style="reqColor(req.status)"></div></li>
                     <li style="width: 8%">{{req.status}}</li>
                     <li style="width: 20%"> {{req.address}}</li>
@@ -31,6 +47,17 @@
                     <li style="width: 17%">{{req.task}}</li>
                 </ul>
                 </label>
+                <div class="panel">
+                    <div class="d-flex">
+                        <div class="panel__map"></div>
+                        <div class="panel__btns">
+                            <button class="panel__btn">Удалить</button>
+                            <button class="panel__btn" style="margin-top: 30px">Изменить</button>
+                            <button class="panel__btn" style="margin-top: 30px">Подробнее</button>
+                            <button class="panel__btn" style="margin-top: 30px">Отчет</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </content>
     </div>
@@ -117,6 +144,11 @@
     padding: 13px 93px;
 }
 
+.date__item {
+    height: 100%;
+    padding: 13px 0 0 0;
+}
+
 .table__content {
     width: 100%;
     height: 100%;
@@ -161,6 +193,53 @@ input[type="checkbox"]:checked + .req__content::before {
 
 input[type="checkbox"]:checked + .req__content {
     background: #FFF4E4;
+    border: solid 1px #000;
+    border-top: 0;
+}
+
+input[type="checkbox"]:checked + .req__content + .panel {
+    background: #FFF4E4;
+    display: block;
+    border: solid 1px #000;
+    border-top: 0;
+}
+
+.panel {
+  background-color: #FFF4E4;
+  display: none;
+  width: 100%;
+  height: 320px;
+  padding: 20px 17px 29px 37px;
+}
+
+.panel__map {
+    width: 1200px;
+    height: 271px;
+    background: url("./assets/map_panel.png") no-repeat;
+    background-size: 1200px 271px;
+}
+
+.panel__btns {
+    width: 200px;
+    height: 271px;
+    margin-left: 34px;
+}
+
+.panel__btn {
+    width: 100%;
+    height: 45px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    border: 0;
+    border-radius: 5px;
+    background: #FFD79A;
+
+}
+
+.panel__btn:hover {
+    background: #FFE6C0;
+    transition: .3s;
 }
 
 .status__color {
