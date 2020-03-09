@@ -20,11 +20,11 @@
 
                 <div class="row1 d-flex align-items-center">
                     <span class="some__span2">C</span>
-                    <input class="little__text" type="text" value="Дата">
-                    <input class="little__text" style="margin-right: 32px" type="text" value="Время">
+                    <input class="little__text" type="text" placeholder="Дата">
+                    <input class="little__text" style="margin-right: 32px" type="text" placeholder="Время">
                     <span class="some__span2">По</span>
-                    <input class="little__text"  type="text" value="Дата">
-                    <input class="little__text" type="text" value="Время">
+                    <input class="little__text"  type="text" placeholder="Дата">
+                    <input class="little__text" type="text" placeholder="Время">
                 </div>
 
                 <h1 style="margin-top: 20px">ЗАДАНИЕ</h1>
@@ -118,7 +118,7 @@ export default {
     height: auto;
 }
 
-h1 {
+.reqForm h1 {
     font-weight: 600;
     font-size: 12px;
     line-height: 15px;

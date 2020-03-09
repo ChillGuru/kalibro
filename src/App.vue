@@ -61,16 +61,14 @@
         <pane size="78" style="padding: 30px 23px 32px 10px">
           <b-tabs class="right__content">
             <b-tab title="Заявки" active>
-              <div class="justbox">
-              <div v-if="selectedRadio == 'calendar'"><h1>Календарь</h1></div>
-              <div v-if="selectedRadio == 'map'"><h1>Карта</h1></div>
-              <div v-if="selectedRadio == 'table'"><h1><Table
+              <div class="justbox" v-if="selectedRadio == 'calendar'"><h1>Календарь</h1></div>
+              <div class="justbox" v-if="selectedRadio == 'map'"><h1>Карта</h1></div>
+              <div class="justbox" v-if="selectedRadio == 'table'"><Table
                                                         :requestList="requestList"
                                                         :requestsFilter="checkedRequests"
                                                         :executorsFilter="checkboxNames"
                                                         :formsFilter="checkedForms"
-                                                        ></Table></h1></div>
-              </div>
+                                                        ></Table></div>
             </b-tab>
             <b-tab title="Исполнители">
               <div class="justbox">
@@ -489,6 +487,7 @@ a {
 .right__content {
   border: none;
   height: 100%;
+
 }
 
 .tab-content {
@@ -497,6 +496,7 @@ a {
 
 .tab-pane.show.fade.active {
   height: 100%;
+  overflow: hidden;
 }
 
 .justbox {
@@ -504,6 +504,7 @@ a {
   height: 100%;
   border: solid #000 0 0 2px 0;
   background: #fff;
+
 }
 
 </style>

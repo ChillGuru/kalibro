@@ -27,7 +27,7 @@
             </ul>
         </header>
 
-        <content class="table__content">
+        <div class="table__content">
             <div class="table__item" v-for="req in filteredRequests">
                 <input
                     style="display: none"
@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </div>
-        </content>
+        </div>
     </div>
 </template>
 
@@ -151,7 +151,8 @@
 
 .table__content {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 92px);
+    overflow: scroll;
 }
 
 .table__item {
