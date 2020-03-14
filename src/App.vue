@@ -9,19 +9,25 @@
       <!--Форма добавления нового исполнителя-->
       <add-executor
         v-if="isExForm"
+        :isForm="isExForm"
+        :executors="executors"
+        @addNewExecutor="executors = $event"
         @showExForm="isExForm = $event"
       />
       <add-request
         v-if="isReForm"
+        :isForm="isReForm"
         :forms="checkedForms"
-        :executors="checkboxNames"
+        :executors="executors"
+        :requests="requestList"
         @showReForm="isReForm = $event"
+        @addNewRequest="requestList = $event"
       />
       <splitpanes class="default-theme" style="height: calc(100% - 44px)">
         <!--Левая часть (фильтры)-->
         <pane max-size="22">
           <splitpanes horizontal>
-            <pane size="35">
+            <pane size="40">
               <div class="left__pane">
                 <TopFilters
                   class="filters"
@@ -38,7 +44,7 @@
                 <ExecutorFilter
                   class="filterbox"
                   :title="'Исполнители'"
-                  :names="checkboxNames"
+                  :names="executors"
                   :allChecked="allNamesChecked"
                   :isForm="isExForm"
                   @showExForm="isExForm = $event"
@@ -66,14 +72,15 @@
               <div class="justbox" v-if="selectedRadio == 'table'"><Table
                                                         :requestList="requestList"
                                                         :requestsFilter="checkedRequests"
-                                                        :executorsFilter="checkboxNames"
+                                                        :executorsFilter="executors"
                                                         :formsFilter="checkedForms"
                                                         ></Table></div>
             </b-tab>
             <b-tab title="Исполнители">
-              <div class="justbox">
-                <h1>Исполнители</h1>
-              </div>
+                <div class="justbox" v-if="selectedRadio == 'table'"><TableExecutors
+                                                        :requestList="requestList"
+                                                        :executorsFilter="executors"
+                                                        ></TableExecutors></div>
             </b-tab>
             <b-tab title="Отчеты">
               <div class="justbox">
@@ -89,7 +96,7 @@
                 </ul>
                 <br />
                 <ul>
-                  <li v-for="n in checkboxNames">{{ n.name }}: {{ n.status }}</li>
+                  <li v-for="n in executors">{{ n.name }}: {{ n.status }}</li>
                 </ul>
                 <br />
                 <ul>
@@ -111,6 +118,7 @@ import TopFilters from "./filters-top.vue"; //Верхняя часть филь
 import ExecutorFilter from "./filter-executors.vue"; //Фильтр по исполнителям.
 import FormsFilter from "./filter-forms.vue"; //Фильтр по бланкам.
 import Table from "./table.vue"; //Таблица с заявками.
+import TableExecutors from "./tableExecutors.vue"; //Таблица с заявками.
 import addExecutor from "./addExecutor.vue" //Модальное окно по добавлению исполнителя
 import addRequest from "./addRequest.vue" //Модальное окно по добавлению заявки
 
@@ -153,46 +161,46 @@ export default {
       ],
 
       allNamesChecked: false,
-      checkboxNames: [
+      executors: [
         {
           name: "Васнецов Николай Евгеньевич",
+          email: "example@gmail.com",
+          password: "qwerty",
+          phone: "88005553535",
           status: true,
           id: "name1"
         },
         {
           name: "Романов Александр Николаевич",
+          email: "example@gmail.com",
+          password: "qwerty",
+          phone: "88005553535",
           status: false,
           id: "name2"
         },
         {
           name: "Прокопьев Владимир Дмитриевич",
+          email: "example@gmail.com",
+          password: "qwerty",
+          phone: "88005553535",
           status: false,
           id: "name3"
         },
         {
           name: "Попов Антон Андреевич",
+          email: "example@gmail.com",
+          password: "qwerty",
+          phone: "88005553535",
           status: false,
           id: "name4"
         },
         {
           name: "Васюков Евгений Петрович",
+          email: "example@gmail.com",
+          password: "qwerty",
+          phone: "88005553535",
           status: false,
           id: "name5"
-        },
-        {
-          name: "Some name #6",
-          status: false,
-          id: "name6"
-        },
-        {
-          name: "Some name #7",
-          status: false,
-          id: "name7"
-        },
-        {
-          name: "Some name #8",
-          status: false,
-          id: "name8"
         }
       ],
 
@@ -233,102 +241,142 @@ export default {
         {
           id: "r1",
           status: "Выполнена",
+          city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          endin: "",
           executor: "Васнецов Николай Евгеньевич",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
-          task: "Замер оконных проёмов"
+          task: "Замер оконных проёмов",
+          crm: "",
+          instructions: "",
         },
         {
           id: "r2",
           status: "Открыта",
+          city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          endin: "",
           executor: "Васнецов Николай Евгеньевич",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
-          task: "Замер оконных проёмов"
+          task: "Замер оконных проёмов",
+          crm: "",
+          instructions: "",
         },
         {
           id: "r3",
           status: "Выполнена",
+          city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          endin: "",
           executor: "Васюков Евгений Петрович",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
-          task: "Замер оконных проёмов"
+          task: "Замер оконных проёмов",
+          crm: "",
+          instructions: "",
         },
         {
           id: "r4",
           status: "Открыта",
+          city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          endin: "",
           executor: "Попов Антон Андреевич",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
-          task: "Замер оконных проёмов"
+          task: "Замер оконных проёмов",
+          crm: "",
+          instructions: "",
         },
         {
           id: "r5",
           status: "Открыта",
+          city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          endin: "",
           executor: "Васнецов Николай Евгеньевич",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
-          task: "Замер оконных проёмов"
+          task: "Замер оконных проёмов",
+          crm: "",
+          instructions: "",
         },
         {
           id: "r6",
           status: "Выполнена",
+          city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          endin: "",
           executor: "Васюков Евгений Петрович",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
-          task: "Замер оконных проёмов"
+          task: "Замер оконных проёмов",
+          crm: "",
+          instructions: "",
         },
         {
           id: "r7",
           status: "Открыта",
+          city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          endin: "",
           executor: "Попов Антон Андреевич",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
-          task: "Замер оконных проёмов"
+          task: "Замер оконных проёмов",
+          crm: "",
+          instructions: "",
         },
         {
           id: "r8",
           status: "Открыта",
+          city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          endin: "",
           executor: "Васнецов Николай Евгеньевич",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
-          task: "Замер оконных проёмов"
+          task: "Замер оконных проёмов",
+          crm: "",
+          instructions: "",
         },
         {
           id: "r9",
           status: "Выполнена",
+          city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          endin: "",
           executor: "Васюков Евгений Петрович",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
-          task: "Замер оконных проёмов"
+          task: "Замер оконных проёмов",
+          crm: "",
+          instructions: "",
         },
         {
           id: "r10",
           status: "Открыта",
+          city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          endin: "",
           executor: "Попов Антон Андреевич",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
-          task: "Замер оконных проёмов"
+          task: "Замер оконных проёмов",
+          crm: "",
+          instructions: "",
         },
       ],
 
@@ -345,6 +393,7 @@ export default {
     ExecutorFilter,
     FormsFilter,
     Table,
+    TableExecutors,
     addExecutor,
     addRequest
   }

@@ -3,19 +3,19 @@
     <div class="modal__ex__content">
         <form class="d-flex flex-column align-items-start ExForm">
             <label for="#ExName">ФИО</label>
-            <input type="text" class="executorInput" id="ExName">
+            <input type="text" class="executorInput" v-model="newex.name" id="ExName">
             <label for="#ExEmail">E-MAIL</label>
-            <input type="e-mail" class="executorInput" id="ExEmail">
+            <input type="e-mail" class="executorInput" v-model="newex.email" id="ExEmail">
             <label for="#ExPass">ПАРОЛЬ</label>
-            <input type="password" class="executorInput" id="ExPass">
+            <input type="password" class="executorInput" v-model="newex.password" id="ExPass">
             <label for="#ExPassCheck">ПОДТВЕРЖДЕНИЕ ПАРОЛЯ</label>
-            <input type="password" class="executorInput" id="ExPassCheck">
+            <input type="password" class="executorInput" v-model="passcheck" id="ExPassCheck">
             <label for="#ExNumber">ТЕЛЕФОН</label>
-            <input type="text" class="executorInput" id="ExNumber">
+            <input type="text" class="executorInput" v-model="newex.phone" id="ExNumber">
         </form>
         <div class="ex__modal__footer d-flex justify-content-center">
                 <button class="ex__btn" @click="showExForm">ОТМЕНИТЬ</button>
-                <input type="submit" class="ex__btn" value="СОХРАНИТЬ">
+                <button class="ex__btn" @click="addNewEx">СОХРАНИТЬ</button>
         </div>
     </div>
 </div>
@@ -23,18 +23,40 @@
 
 <script>
 export default {
-    props: ["isForm"],
+    props: ["isForm", "executors"],
 
     data() {
         return {
-        localIsForm: this.isForm
+        localIsForm: this.isForm,
+        localNames: this.executors,
+        newex: {
+            name: '',
+            email: '',
+            password: '',
+            phone: '',
+            status: false,
+            id: '' 
+        },
+        passcheck: ''
         }
     },
 
     methods: {
         showExForm() {
             this.localIsForm = false
-        }
+        },
+
+        addNewEx() {
+            if ((this.newex.name != '') && (this.newex.email != '') && (this.newex.password != '') && (this.passcheck != '') && (this.newex.phone != '')) {
+                if (this.newex.password === this.passcheck) {
+                    this.newex.id = Math.random() * (9999999 - 1) + 1;
+                    this.localNames.push(this.newex);
+                    this.$emit('addNewExecutor', this.localNames)
+                    this.localIsForm  = false;
+
+                }
+            }
+        },
     },
         
     watch: {

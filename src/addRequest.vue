@@ -8,11 +8,11 @@
                 <div class="row1 d-flex justify-content-between">
                     <div class="st d-flex align-items-center">
                         <span class="some__span2">Улица, дом, кв.</span>
-                        <input class="medium__text" type="text">
+                        <input class="medium__text" type="text" v-model="newReq.address">
                     </div>
                     <div class="st d-flex align-items-center">
                         <span class="some__span2">Город</span>
-                        <input class="medium__text" type="text" value="Екатеринбург">
+                        <input class="medium__text" type="text" v-model="newReq.city" placeholder="Екатеринбург">
                     </div>
                 </div>
 
@@ -20,39 +20,38 @@
 
                 <div class="row1 d-flex align-items-center">
                     <span class="some__span2">C</span>
-                    <input class="little__text" type="text" placeholder="Дата">
-                    <input class="little__text" style="margin-right: 32px" type="text" placeholder="Время">
+                    <input class="little__text" type="text" id="date__mask" v-model="newReq.date" placeholder="Дата">
+                    <input class="little__text" style="margin-right: 32px" type="text" id="time__mask" v-model="starttime" placeholder="Время">
                     <span class="some__span2">По</span>
-                    <input class="little__text"  type="text" placeholder="Дата">
-                    <input class="little__text" type="text" placeholder="Время">
+                    <input class="little__text"  type="text" id="date__mask2" v-model="newReq.endin" placeholder="Дата">
+                    <input class="little__text" type="text" id="time__mask2" v-model="endtime" placeholder="Время">
                 </div>
 
                 <h1 style="margin-top: 20px">ЗАДАНИЕ</h1>
-                <input class="max__text" type="text">
+                <input class="max__text" v-model="newReq.task" type="text">
 
                 <h1 style="margin-top: 20px">БЛАНК</h1>
-                <select class="max__text" style="cursor: pointer">
-                    <option value="forms[0].name">{{ forms[0].name }} (по умолчанию)</option>
-                    <option v-for="form in forms" value="form.name" v-if="form.name != forms[0].name">{{ form.name }}</option>
+                <select class="max__text" v-model="newReq.form" style="cursor: pointer">
+                    <option :value="forms[0].name">{{ forms[0].name }} (по умолчанию)</option>
+                    <option v-for="form in forms" :value="form.name" v-if="form.name != forms[0].name">{{ form.name }}</option>
                 </select>
 
                 <h1 style="margin-top: 20px">ИСПОЛНИТЕЛЬ</h1>
-                <select class="max__text" style="cursor: pointer">
-                    <option value="Any">Выбрать всех (по умолчанию)</option>
-                    <option v-for="executor in executors" value="executor.name">{{ executor.name }}</option>
+                <select class="max__text" v-model="newReq.executor" style="cursor: pointer">
+                    <option value="Любой">Выбрать всех (по умолчанию)</option>
+                    <option v-for="executor in executors" :value="executor.name">{{ executor.name }}</option>
                 </select>
 
                 <h1 style="margin-top: 20px">CRM-ССЫЛКА</h1>
-                <input class="max__text" type="text">
+                <input class="max__text" type="text" v-model="newReq.crm" >
 
                 <h1 style="margin-top: 20px">ИНСТРУКЦИЯ</h1>
-                <textarea class="max__text" style="height: 67px" wrap="soft"></textarea>
-
-                <div class="req__modal__footer d-flex justify-content-center">
-                    <button class="req__btn" @click="showReForm">ОТМЕНИТЬ</button>
-                    <input type="submit" class="req__btn" value="СОХРАНИТЬ">
-                </div>
+                <textarea class="max__text" v-model="newReq.instructions" style="height: 67px" wrap="soft"></textarea>
             </form>
+            <div class="req__modal__footer d-flex justify-content-center">
+                    <button class="req__btn" @click="showReForm">ОТМЕНИТЬ</button>
+                    <button class="req__btn" @click="addNewReq">СОХРАНИТЬ</button>
+                </div>
         </div>
         <div class="request__map"></div>
     </div>
@@ -60,26 +59,70 @@
 </template>
 
 <script>
+import Inputmask from 'inputmask';
+
 export default {
-    props: ["forms", "executors", "isForm"],
+    props: ["forms", "executors", "isForm", "requests"],
 
     data() {
         return {
-            localIsForm: this.isForm
+            localIsForm: this.isForm,
+            localReqs: this.requests,
+            startdate: "",
+            starttime: "",
+            enddate: "",
+            endtime: "",
+            newReq: {
+                id: "",
+                status: "Открыта",
+                city: "Екатеринбург",
+                address: "",
+                date: this.startdate,
+                endin: this.endtdate,
+                executor: "",
+                formColor: "",
+                form: this.forms[0].name,
+                task: "",
+                crm: "",
+                instructions: "",
+            },
         }
+    },
+
+    mounted() {
+        var im = new Inputmask("99/99/9999");
+        im.mask(document.getElementById('date__mask'));
+        var im = new Inputmask("99:99");
+        im.mask(document.getElementById('time__mask'));
+        var im = new Inputmask("99/99/9999");
+        im.mask(document.getElementById('date__mask2'));
+        var im = new Inputmask("99:99");
+        im.mask(document.getElementById('time__mask2'));
     },
 
     methods: {
         showReForm() {
-            this.localIsForm = false
-        }
-    },
-        
-    watch: {
-        localIsForm() {
+            this.localIsForm = false;
             this.$emit('showReForm', this.localIsForm)
-        }
-    }
+        },
+
+        addNewReq() {
+            if (this.newReq.city != ''){
+                var bg = '';
+                this.newReq.id = Math.random() * (9999999 - 1) + 1;
+                bg = Math.floor(Math.random() * 899) + 100;
+                this.forms.forEach((val, i) => {
+                    if (val.name == this.newReq.form) {
+                    this.newReq.color = val.color;
+                    }
+                });
+                this.localReqs.push(this.newReq);
+                this.$emit('addNewRequest', this.localReqs)
+                this.localIsForm = false;
+                this.$emit('showReForm', this.localIsForm)
+            } else{console.log('Данные не приняты');}
+        },
+    },
 
 }
 </script>

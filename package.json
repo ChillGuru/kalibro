@@ -11,6 +11,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^1.2.0",
+    "inputmask": "^5.0.3",
     "popper.js": "^1.12.9",
     "vue": "^2.5.3",
     "vue-radio-toggle-buttons": "^0.1.0",

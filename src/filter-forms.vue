@@ -50,7 +50,7 @@ export default {
     
     pushForm() {
       var Form = {},
-          color = Math.floor(Math.random() * 899) + 100;
+      color = Math.floor(Math.random() * 899) + 100;
       Form.name = 'Some Form #' + (this.localForms.length + 1);
       Form.color = 'background: #' + color.toString();
       Form.id = 'Form' + (this.localForms.length + 1);
