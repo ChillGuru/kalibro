@@ -27,6 +27,7 @@
         </header>
 
         <div class="table__content">
+            <span v-if="filteredExecutors == ''" class="lackof">Фильтры не включены или исполнители отсутствуют</span> 
             <div class="table__item" v-for="executor in filteredExecutors">
                 <input
                     style="display: none"
@@ -36,20 +37,31 @@
                 />
                 <label class="req__content d-flex" :for="executor.id + 'table'">
                 <ul class="item__values d-flex" style="width: 100%">
-                    <li style="width: 20%">{{ executor.name }}</li>
-                    <li style="width: 20%">{{executor.email}}</li>
-                    <li style="width: 20%"> {{executor.phone}}</li>
-                    <li style="width: 20%"> {{ inwork(executor.name) }} </li>
-                    <li style="width: 20%">{{ complete(executor.name) }}</li>
+                    <li style="width: 20%"><span>{{ executor.name }}</span></li>
+                    <li style="width: 20%"><span>{{executor.email}}</span></li>
+                    <li style="width: 20%"><span>{{executor.phone}}</span></li>
+                    <li style="width: 20%"><span>{{ inwork(executor.name) }}</span></li>
+                    <li style="width: 20%"><span>{{ complete(executor.name) }}</span></li>
                 </ul>
                 </label>
                 <div class="panel2">
                     <!--Верхняя часть, с кнопками-->
                     <div class="panel__filter d-flex align-items-center justify-content-between">
-                        <div class="p__filter">
+                        <div class="p__filter d-flex">
                             <span style="margin: 0px 15px;">Отображать по</span>
                             <input type="text" class="count__input" v-model="count" style="margin-right: 58px">
                             <span style="margin-right: 10px;">Страница</span>
+                            <div class="d-flex listToBtns">
+                                <div v-for="asd in paginationList">
+                                <input
+                                    style="display: none"
+                                    type="radio"
+                                    :id="asd + 'check'"
+                                />
+                                <label class="listToBtn" :for="asd + 'check'" @click="currentPage = asd" :class="[isactive(asd)]">{{ asd }}</label>
+                            </div>
+                            </div>
+                            
                         </div>
                         <div class="d-flex justify-content-end" style="width: 50%">
                             <button class="panel__btn" style="max-width: 350px; margin-right: 10px;">Изменить данные исполнителя</button>
@@ -68,9 +80,9 @@
                     </div>
                     <!--Контентая часть таблицы-->
                     <div class="panel__table">
-                        <div class="table__element" v-for="requests in requestList">
+                        <div class="table__element" v-for="request in paginationData">
                             <ul class="d-flex align-items-center" style="height: inherit">
-                                <li class="ul__elem">{{ request.data }}</li>
+                                <li class="ul__elem">{{ request.date }}</li>
                                 <li class="ul__elem">{{ request.address }}</li>
                                 <li class="ul__elem">{{ request.status }}</li>
                                 <li class="ul__elem"><a :href="request.crm">Ссылка</a></li>
@@ -93,8 +105,16 @@
         data() {
             return{
                 count: 4,
+                currentPage: 1,
             }
         },
+
+        watch: {
+             count() {
+                 this.currentPage = 1;
+             }
+        },
+
         computed:{
             filteredExecutors() {
                 return this.executorsFilter.filter(elem => {
@@ -108,7 +128,46 @@
 
                     return res;
                 })
-            }
+            },
+
+            paginationData(){
+                let start = (this.currentPage - 1) * this.count;
+                let end = start*1 + this.count*1;
+                return this.requestList.slice(start, end);
+            },
+            // количество страниц ( после изменения ОТОБРАЖАТЬ ПО, произойдет пересчет данной величины)
+            countPage(){
+                return Math.ceil(this.requestList.length / this.count);
+            },
+            // Список с кнопочками
+            paginationList(){
+                let list = [];
+                if (this.currentPage == 1){
+                    list.push(this.currentPage);
+                    list.push(this.currentPage + 1);
+                    list.push(this.currentPage + 2); 
+                    list = list
+                        .filter( num => num <= this.countPage); 
+
+                } else if (this.currentPage == this.countPage){
+                    list.push(this.currentPage - 2);
+                    list.push(this.currentPage - 1);
+                    list.push(this.currentPage); 
+                    list = list
+                        .filter(num => num > 0) // оставляем страницы только больше 0
+                        .filter( num => num <= this.countPage); // отсекаем страницы больше самой последней
+
+                } else {
+                    list.push(this.currentPage - 1);    // предыдущая
+                    list.push(this.currentPage);        // текущая страница
+                    list.push(this.currentPage + 1);    // следующая
+                    list = list
+                        .filter(num => num > 0) // оставляем страницы только больше 0
+                        .filter( num => num <= this.countPage); // отсекаем страницы больше самой последней
+                    };
+                return list;
+            },
+
         },
         methods: {
             inwork(name) {
@@ -131,7 +190,11 @@
                 return num;
             },
 
-            filterRequests(list)
+            isactive(asd){
+                if (asd == this.currentPage) {
+                    return "act"
+                } else {return ".listToBtn"}
+            }
         }
     }
 </script>
@@ -166,20 +229,22 @@
 
 .table__item {
     width: 100%;
+    min-height: 45px;
 }
 
 .item__values li {
     margin: 0 8px;
-    height: 15px;
+    align-items: center;
 }
 
 .table__element{
     height: 46px;
     width: 100%;
+    border-bottom: 1px solid #C1C1C1;
+    
 }
 
 .req__content {
-  padding-top: 18px;
   margin: 0;
   cursor: pointer;
   font-size: 14px;
@@ -227,7 +292,8 @@ input[type="checkbox"]:checked + .req__content + .panel2 {
   background-color: #FFF4E4;
   display: none;
   width: 100%;
-  height: 320px;
+  min-height: 184px;
+
 }
 
 .panel__filter {
@@ -252,13 +318,31 @@ input[type="checkbox"]:checked + .req__content + .panel2 {
     background: #FFFFFF;
     border: 1px solid #000000;
     text-align: center;
+    outline: none;
 }
 
 .panel__table {
     width: 100%;
-    height: 183px;
     font-weight: 300;
     font-size: 14px;
+    min-height: 47px;
+}
+
+.listToBtns {
+    width: 66px;
+    height: 32px;
+}
+
+.listToBtn {
+    width: 22px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.act {
+    background: #FFD79A;
+    text-decoration: underline;
+    border-radius: 5px;
 }
 
 .panel__btn {
@@ -270,7 +354,6 @@ input[type="checkbox"]:checked + .req__content + .panel2 {
     border: 0;
     border-radius: 5px;
     background: #FFD79A;
-
 }
 
 .panel__btn:hover {

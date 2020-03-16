@@ -9,6 +9,7 @@
       <button class="add__checkbox_item" @click="showExForm">+</button>
     </div>
     <div class="executors__content d-flex flex-column">
+      <span v-if="localNames == ''" class="lackof">Исполнители отсутствуют</span>  
       <div v-for="executor in localNames" class="d-flex justify-content-between" style="margin: 8px 0; line-height: 17px;">
         <div>
           <input
@@ -100,6 +101,12 @@ export default {
     font-size: 14px;
     font-weight: 500;
     margin-top: 5px;
+}
+
+.lackof {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 25px;
 }
 
 .check__label::before {

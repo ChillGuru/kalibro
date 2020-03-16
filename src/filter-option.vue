@@ -1,10 +1,10 @@
 <template>
-  <div class="radio__group d-flex justify-content-around">
-    <label for="calendarOption" class="radio d-flex align-items-center justify-content-center">
+  <div class="radio__group d-flex justify-content-around" :class="{locked: isLocked}">
+    <label for="calendarOption" class="radio d-flex align-items-center justify-content-center" :class="{isLocked: isLocked}">
       <input type="radio" value="calendar" name="mainradio" v-model="localSelected" id="calendarOption"/>
       <span class="d-flex align-items-center justify-content-center">Кал</span>
     </label>
-    <label for="mapOption" class="radio d-flex align-items-center justify-content-center">
+    <label for="mapOption" class="radio d-flex align-items-center justify-content-center" :class="{isLocked: isLocked}">
       <input type="radio" value="map" name="mainradio" v-model="localSelected" id="mapOption" />
       <span class="d-flex align-items-center justify-content-center">Кар</span>
     </label>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  props:['selected'],
+  props:['selected', 'isLocked'],
   data() {
     return {
       localSelected: this.selected
@@ -38,6 +38,15 @@ export default {
     height: 45px;
     background: #fff;
     border-radius: 5px;
+}
+
+.locked {
+  background: #DFDFDF !important;
+}
+
+.isLocked {
+  background: #DFDFDF !important;
+  pointer-events: none;
 }
 
 .radio {

@@ -34,6 +34,7 @@
                   :selectedRadio="selectedRadio"
                   :AllRequestsChecked="AllRequestsChecked"
                   :checkedRequests="checkedRequests"
+                  :isOptionsLocked="isOptionsLocked"
                   @radioChanged="selectedRadio = $event"
                   @requestFilterChanged="checkedRequests = $event"
                 ></TopFilters>
@@ -66,7 +67,7 @@
         <!--Правая часть-->
         <pane size="78" style="padding: 30px 23px 32px 10px">
           <b-tabs class="right__content">
-            <b-tab title="Заявки" active>
+            <b-tab title="Заявки" @click="tabPosition = 1" active>
               <div class="justbox" v-if="selectedRadio == 'calendar'"><h1>Календарь</h1></div>
               <div class="justbox" v-if="selectedRadio == 'map'"><h1>Карта</h1></div>
               <div class="justbox" v-if="selectedRadio == 'table'"><Table
@@ -76,13 +77,13 @@
                                                         :formsFilter="checkedForms"
                                                         ></Table></div>
             </b-tab>
-            <b-tab title="Исполнители">
+            <b-tab title="Исполнители" @click="tabPosition = 2">
                 <div class="justbox" v-if="selectedRadio == 'table'"><TableExecutors
                                                         :requestList="requestList"
                                                         :executorsFilter="executors"
                                                         ></TableExecutors></div>
             </b-tab>
-            <b-tab title="Отчеты">
+            <b-tab title="Отчеты" @click="tabPosition = 3">
               <div class="justbox">
                 <h1>Отчеты</h1>
               </div>
@@ -128,6 +129,8 @@ export default {
     //Все значения приведенные здесь - считаются дефолтными.
     return {
       selectedRadio: "table", //Значения: calendar, map или table. Это радиокнопки  в фильтрах.
+
+      tabPosition: 1,
 
       AllRequestsChecked: true,
       checkedRequests: [
@@ -383,6 +386,16 @@ export default {
       isExForm: false,
       isReForm: false
     };
+  },
+
+  computed: {
+    isOptionsLocked(){
+      if (this.tabPosition != 1){
+        return true
+      } else {
+        return false
+      }
+    }
   },
 
   components: {

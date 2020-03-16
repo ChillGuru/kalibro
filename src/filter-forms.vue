@@ -9,6 +9,7 @@
       <button class="add__checkbox_item" @click="pushForm()">+</button>
     </div>
     <div class="forms__content d-flex flex-column">
+      <span v-if="localForms == ''" class="lackof">Бланки отсутсвуют</span> 
       <div v-for="form in localForms" class="d-flex" style="margin: 8px 0; line-height: 17px; height: 17px;">
         <div>
           <input
