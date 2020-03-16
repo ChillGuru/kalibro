@@ -53,13 +53,22 @@
                             <span style="margin-right: 10px;">Страница</span>
                             <div class="d-flex listToBtns">
                                 <div v-for="asd in paginationList">
-                                <input
-                                    style="display: none"
-                                    type="radio"
-                                    :id="asd + 'check'"
-                                />
-                                <label class="listToBtn" :for="asd + 'check'" @click="currentPage = asd" :class="[isactive(asd)]">{{ asd }}</label>
-                            </div>
+                                    <input
+                                        style="display: none"
+                                        type="radio"
+                                        :id="asd + 'check'"
+                                    />
+                                    <label class="listToBtn" :for="asd + 'check'" @click="currentPage = asd" :class="[isactive(asd)]">{{ asd }}</label>
+                                </div>
+                                <span v-if="isCurrent">...</span>
+                                <div v-if="countPage > 5">
+                                    <input
+                                        style="display: none"
+                                        type="radio"
+                                        id="lastPage"
+                                    />
+                                    <label class="listToBtn" for="lastPage" @click="currentPage = countPage" :class="[isactive(countPage)]">{{ countPage }}</label>
+                                </div>
                             </div>
                             
                         </div>
@@ -116,6 +125,12 @@
         },
 
         computed:{
+            isCurrent() {
+                if ((this.countPage > 5)&&(this.currentPage < this.countPage - 3)) {
+                    return true
+                } else {return false}
+            },
+
             filteredExecutors() {
                 return this.executorsFilter.filter(elem => {
                     var res = true;
@@ -142,6 +157,59 @@
             // Список с кнопочками
             paginationList(){
                 let list = [];
+                if (this.countPage < 6) {
+                    switch(this.currentPage) {
+                        case 1: 
+                            list.push(this.currentPage);
+                            list.push(this.currentPage + 1);
+                            list.push(this.currentPage + 2);
+                            list.push(this.currentPage + 3);
+                            list.push(this.currentPage + 4);
+                            list = list
+                                .filter( num => num <= this.countPage); 
+                            break;
+                        
+                        case 2:
+                            list.push(this.currentPage - 1);
+                            list.push(this.currentPage);
+                            list.push(this.currentPage + 1);
+                            list.push(this.currentPage + 2);
+                            list.push(this.currentPage + 3);
+                            list = list
+                                .filter( num => num <= this.countPage); 
+                            break;
+
+                        case 3:
+                            list.push(this.currentPage - 2);
+                            list.push(this.currentPage - 1);
+                            list.push(this.currentPage);
+                            list.push(this.currentPage + 1);
+                            list.push(this.currentPage + 2);
+                            list = list
+                                .filter( num => num <= this.countPage); 
+                            break;
+
+                        case 4:
+                            list.push(this.currentPage - 3);
+                            list.push(this.currentPage - 2);
+                            list.push(this.currentPage - 1);
+                            list.push(this.currentPage);
+                            list.push(this.currentPage + 1);
+                            list = list
+                                .filter( num => num <= this.countPage); 
+                            break;
+
+                        case 5:
+                            list.push(this.currentPage - 4);
+                            list.push(this.currentPage - 3);
+                            list.push(this.currentPage - 2);
+                            list.push(this.currentPage - 1);
+                            list.push(this.currentPage);
+                            list = list
+                                .filter( num => num <= this.countPage); 
+                            break;
+                    };
+                } else {
                 if (this.currentPage == 1){
                     list.push(this.currentPage);
                     list.push(this.currentPage + 1);
@@ -150,14 +218,27 @@
                         .filter( num => num <= this.countPage); 
 
                 } else if (this.currentPage == this.countPage){
+                    list.push(this.currentPage - 4);
+                    list.push(this.currentPage - 3);
                     list.push(this.currentPage - 2);
                     list.push(this.currentPage - 1);
-                    list.push(this.currentPage); 
-                    list = list
-                        .filter(num => num > 0) // оставляем страницы только больше 0
-                        .filter( num => num <= this.countPage); // отсекаем страницы больше самой последней
-
-                } else {
+                    
+                } else if (this.currentPage == this.countPage - 1) {
+                    list.push(this.currentPage - 3);
+                    list.push(this.currentPage - 2);
+                    list.push(this.currentPage - 1);
+                    list.push(this.currentPage);
+                } else if (this.currentPage == this.countPage - 2){
+                    list.push(this.currentPage - 2);
+                    list.push(this.currentPage - 1);
+                    list.push(this.currentPage);
+                    list.push(this.currentPage + 1);
+                }else if (this.currentPage == this.countPage - 3){
+                    list.push(this.currentPage - 1);
+                    list.push(this.currentPage);
+                    list.push(this.currentPage + 1);
+                    list.push(this.currentPage + 2);
+                }else{
                     list.push(this.currentPage - 1);    // предыдущая
                     list.push(this.currentPage);        // текущая страница
                     list.push(this.currentPage + 1);    // следующая
@@ -165,6 +246,7 @@
                         .filter(num => num > 0) // оставляем страницы только больше 0
                         .filter( num => num <= this.countPage); // отсекаем страницы больше самой последней
                     };
+                }
                 return list;
             },
 
@@ -329,7 +411,8 @@ input[type="checkbox"]:checked + .req__content + .panel2 {
 }
 
 .listToBtns {
-    width: 66px;
+    min-width: 66px;
+    max-width: 110px;
     height: 32px;
 }
 
