@@ -3,6 +3,7 @@
     <Header
       :isExForm="isExForm"
       :isReForm="isReForm"
+      :username="login"
       @showExForm="isExForm = $event"
       @showReForm="isReForm = $event"
     ></Header>
@@ -128,6 +129,8 @@ export default {
   data() {
     //Все значения приведенные здесь - считаются дефолтными.
     return {
+      login: "admin",
+
       selectedRadio: "table", //Значения: calendar, map или table. Это радиокнопки  в фильтрах.
 
       tabPosition: 1,

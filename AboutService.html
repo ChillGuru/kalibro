@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Kalibro - для кого</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body>
+    <header id="header" class="header">
+        <div class="container-fluid" style="min-height: 62px;">
+            <div class="row navbar navbar-expand-md navbar-dark" style="min-height: 62px; background:rgba(48, 48, 48, 48);">
+                <!--Кнопка/Отступ-->
+                <div class="col col-xl-1  order-md-1">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" style="margin-top: 5px;">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <!--Логотип-->
+                <div class="col col-xl-1 d-flex align-items-center  order-md-2">
+                    <a href="index.html"><img src="src/assets/Logo.png" alt="navlogo" class="nav-logo"></a>
+                </div>
+                <!--Отступ-->
+                <div class="col col-xl-2 order-md-3"></div>
+                <!--Навигация-->
+                <div class="nav collapse navbar-collapse col col-md-6 col-xl-4 order-last order-md-4" id="collapsibleNavbar">
+                    <ul class="navbar-nav d-flex justify-content-between" style="width: 100%;">
+                        <li class="nav-item"><a href="AboutService.html">О сервисе</a></li>
+                        <li class="nav-item"><a href="#">Новости</a></li>
+                        <li class="nav-item"><a href="#">API для разработчиков</a></li>
+                        <li class="nav-item"><a href="prices.html">Стоимость</a></li>
+                    </ul>
+                </div>
+
+                <!--Отступ-->
+                <div class="col col-xl-1  order-md-5"></div>
+                <!--Личный кабинет-->
+                <div class="col-12 col-sm-5 col-lg-3 d-flex align-items-center order-first  order-sm-6">
+                    <div class="login d-flex justify-content-between align-items-center">
+                        <img class="user-logo" src="src/assets/nav_user_logo.png" alt="user-logo">
+                        <a href="#">Личный кабинет</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <content>
+       <!--Заголовок-->
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+                    <h1 class="headline">Для кого создан сервис?</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fuid">
+            <div class="row" style="width: 98%; margin-bottom: 119px;">
+               <!--Текст-->
+                <div class="col-12 col-lg-6">
+                   <div class="fix ml-auto">
+                    <div class="text-3 ml-auto pl-5">
+                        <p>
+                            <span style="font-weight: 600;">Kalibro</span> - это облачное решение, позволяющее заменить заполнение бумажных бланков заказов выездных сотрудников на ввод данных через мобильное приложение.
+                        </p>
+                        <p style="margin-top: 101px;">
+                            Сервис предназначен для выездных бригад, которые в режиме реального времени получают задачи с необходимыми бланками для заполнения от оператора. Все бланки отображаются на мобильном устройстве и вводимые в них результаты передаются на сервер оператору.
+                        </p>
+                    </div>
+                    <div class="btns-taste pl-5 d-flex justify-content-between flex-wrap">
+                        <button class="button btn-taste" onClick='location.href="app.html"'><p>ПОПРОБОВАТЬ</p></button>
+                        <div class="btn-2">
+                            <a href="AboutService2.html">КАК ЭТО РАБОТАЕТ?</a>
+                            <div class="active-line"></div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!--Дисплеи-->
+                <div class="col-12 col-lg-6 order-first order-lg-last d-flex justify-content-center">
+                   <div class="imacimg" style="max-width: 622px; margin-top: 97px">
+                        <img src="src/assets/displays.png" alt="imac" class="imac">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </content>
+
+    <footer>
+        <div class="container-fluid" style="padding: 0;">
+            <div class="row footer-top">
+               <!--Левая часть футера-->
+                <div class="col col-sm-12 col-lg-5 col-xl-6 d-flex justify-content-around flex-wrap" style="padding-top: 29px;">
+                    <a href="app.html">Демо-доступ</a>
+                    <a href="#">Обратный звонок</a>
+                    <a href="#">Задать вопрос</a>
+                </div>
+                <!--Правая часть футера-->
+                <div class="col col-sm-12 col-lg-7 col-xl-6 d-flex justify-content-center flex-wrap" style="padding-top: 29px;">
+                    <div class="footer-info-1 d-flex justify-content-between">
+                        <span style="margin-top: 32px">Телефон</span>
+                        <div class="footer-nums" style="margin-top: 24px">
+                            <p>+7 (495) 369 18 76</p>
+                            <p>+7 (343) 382 44 36</p>
+                        </div>
+                    </div>
+                    <div class="probel2"></div>
+                    <div class="footer-info-2 d-flex justify-content-between" style="margin: 32px 0px">
+                        <span>E-mail</span>
+                        <p>mail@binomtech.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row footer-bot">
+               <div class="col d-flex justify-content-center" style="padding: 0px;">
+                    <p style="margin: 9px 0px;">Copyright © 2016-2020. Разработано <span style="color: #FFA115;">БиномТех</span></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,12 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>vue-kalibro</title>
-    <link rel="stylesheet" href="/dist/main.css">
-  </head>
-  <body>
-    <div id="app" style="height: 100%;"></div>
-    <script src="/dist/build.js"></script>
-  </body>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Kalibro</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+
+<body style="background-image: url(src/assets/mainbg.png);
+             background-size: cover;
+             background-repeat: no-repeat;
+             background-position: center center center center;
+             background-attachment: fixed;
+             background-color: rgba(0,0,0,.5);
+             background-blend-mode: overlay;
+             color: #FFFFFF;">
+
+    <header id="header" class="header">
+        <div class="container-fluid" style="min-height: 62px;">
+            <div class="row navbar-expand-md navbar-dark" style="min-height: 62px; background: rgba(0, 0, 0, 0.8);">
+                <!--Кнопка/Отступ-->
+                <div class="col col-xl-4  order-md-1">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" style="margin-top: 5px;">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!--Навигация-->
+                <div class="nav collapse navbar-collapse col col-md-6 col-xl-4 order-last order-md-4" id="collapsibleNavbar">
+                    <ul class="navbar-nav d-flex justify-content-between" style="width: 100%;">
+                        <li class="nav-item"><a href="AboutService.html">О сервисе</a></li>
+                        <li class="nav-item"><a href="#">Новости</a></li>
+                        <li class="nav-item"><a href="#">API для разработчиков</a></li>
+                        <li class="nav-item"><a href="prices.html">Стоимость</a></li>
+                    </ul>
+                </div>
+
+                <!--Отступ-->
+                <div class="col col-xl-1  order-md-5"></div>
+                <!--Личный кабинет-->
+                <div class="col-12 col-sm-5 col-lg-3 d-flex align-items-center order-first  order-sm-6">
+                    <div class="login d-flex justify-content-between align-items-center">
+                        <img class="user-logo" src="src/assets/nav_user_logo.png" alt="user-logo">
+                        <a href="#">Личный кабинет</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <content>
+        <div class="container-fluid">
+            <div class="row">
+                <!--Отступ-->
+                <div class="col col-xl-1" style="height: 50px;"></div>
+                <!--Главное лого-->
+                <div class="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
+                    <img src="src/assets/Logo.png" alt="main-logo" class="main-logo">
+                </div>
+                <!--Отступ-->
+                <div class="col col-xl-5"></div>
+                <!--Номера и кнопка обратного звонка-->
+                <div class="col-12 col-md-7 col-xl-4 d-flex justify-content-center">
+                    <div class="contacts  d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="numbers" style="margin-right: 20px">
+                            <p>+7 (495) 369 18 76</p>
+                            <p>+7 (343) 382 44 36</p>
+                        </div>
+                        <button class="button call-back">
+                            <p>ОБРАТНЫЙ ЗВОНОК</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-12 col-md-10">
+                    <h1 class="text-1">Автоматизация работы выездных бригад</h1>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-12 col-md-10">
+                    <h2 class="text-2">Мы даем возможность заменить бумажные бланки на мобильное приложение.<br> Вы - выездная бригада или владелец строительной фирмы? Свяжитесь с нами для <br> получения более подробной информации о предоставляемых услугах.</h2>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+                    <button class="button btn-con">
+                        <p>КОНСУЛЬТАЦИЯ - ЭТО БЕСПЛАТНО</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </content>
+</body>
+
 </html>
