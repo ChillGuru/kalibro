@@ -28,84 +28,21 @@
 
         <div class="table__content">
             <span v-if="filteredExecutors == ''" class="lackof">Фильтры не включены или исполнители отсутствуют</span> 
-            <div class="table__item" v-for="executor in filteredExecutors">
-                <input
-                    style="display: none"
-                    type="checkbox"
-                    :id="executor.id + 'table'"
-                    :value="executor"
-                />
-                <label class="req__content d-flex" :for="executor.id + 'table'">
-                <ul class="item__values d-flex" style="width: 100%">
-                    <li style="width: 20%"><span>{{ executor.name }}</span></li>
-                    <li style="width: 20%"><span>{{executor.email}}</span></li>
-                    <li style="width: 20%"><span>{{executor.phone}}</span></li>
-                    <li style="width: 20%"><span>{{ inwork(executor.name) }}</span></li>
-                    <li style="width: 20%"><span>{{ complete(executor.name) }}</span></li>
-                </ul>
-                </label>
-                <div class="panel2">
-                    <!--Верхняя часть, с кнопками-->
-                    <div class="panel__filter d-flex align-items-center justify-content-between">
-                        <div class="p__filter d-flex">
-                            <span style="margin: 0px 15px;">Отображать по</span>
-                            <input type="text" class="count__input" v-model="count" style="margin-right: 58px">
-                            <span style="margin-right: 10px;">Страница</span>
-                            <div class="d-flex listToBtns">
-                                <div v-for="asd in paginationList">
-                                    <input
-                                        style="display: none"
-                                        type="radio"
-                                        :id="asd + 'check'"
-                                    />
-                                    <label class="listToBtn" :for="asd + 'check'" @click="currentPage = asd" :class="[isactive(asd)]">{{ asd }}</label>
-                                </div>
-                                <span v-if="isCurrent">...</span>
-                                <div v-if="countPage > 5">
-                                    <input
-                                        style="display: none"
-                                        type="radio"
-                                        id="lastPage"
-                                    />
-                                    <label class="listToBtn" for="lastPage" @click="currentPage = countPage" :class="[isactive(countPage)]">{{ countPage }}</label>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="d-flex justify-content-end" style="width: 50%">
-                            <button class="panel__btn" style="max-width: 350px; margin-right: 10px;">Изменить данные исполнителя</button>
-                            <button class="panel__btn" style="max-width: 262px; margin-right: 32px;">Удалить исполнителя</button>
-                        </div>
-                    </div>
-                    <!--Шапка таблицы, средняя часть-->
-                    <div class="panel__table__header">
-                        <ul class="d-flex align-items-center" style="height: inherit">
-                            <li class="ul__elem">Дата</li>
-                            <li class="ul__elem">Адрес</li>
-                            <li class="ul__elem">Статус</li>
-                            <li class="ul__elem">CRM</li>
-                            <li class="ul__elem">Отчет</li>
-                        </ul>
-                    </div>
-                    <!--Контентая часть таблицы-->
-                    <div class="panel__table">
-                        <div class="table__element" v-for="request in paginationData">
-                            <ul class="d-flex align-items-center" style="height: inherit">
-                                <li class="ul__elem">{{ request.date }}</li>
-                                <li class="ul__elem">{{ request.address }}</li>
-                                <li class="ul__elem">{{ request.status }}</li>
-                                <li class="ul__elem"><a :href="request.crm">Ссылка</a></li>
-                                <li class="ul__elem"> <a href="#">Отчет</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+            <div v-for="executor in filteredExecutors">
+                <table-item
+                :executorInfo="executor"
+                :id="uniID(executor.name)"
+                :requestList="requestList">
+
+                </table-item>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import tableItem from "./table-item.vue"
+
     export default {
         props:[
             'requestList',
@@ -113,24 +50,11 @@
             ],
         data() {
             return{
-                count: 4,
-                currentPage: 1,
+
             }
         },
 
-        watch: {
-             count() {
-                 this.currentPage = 1;
-             }
-        },
-
         computed:{
-            isCurrent() {
-                if ((this.countPage > 5)&&(this.currentPage < this.countPage - 3)) {
-                    return true
-                } else {return false}
-            },
-
             filteredExecutors() {
                 return this.executorsFilter.filter(elem => {
                     var res = true;
@@ -144,139 +68,21 @@
                     return res;
                 })
             },
-
-            paginationData(){
-                let start = (this.currentPage - 1) * this.count;
-                let end = start*1 + this.count*1;
-                return this.requestList.slice(start, end);
-            },
-            // количество страниц ( после изменения ОТОБРАЖАТЬ ПО, произойдет пересчет данной величины)
-            countPage(){
-                return Math.ceil(this.requestList.length / this.count);
-            },
-            // Список с кнопочками
-            paginationList(){
-                let list = [];
-                if (this.countPage < 6) {
-                    switch(this.currentPage) {
-                        case 1: 
-                            list.push(this.currentPage);
-                            list.push(this.currentPage + 1);
-                            list.push(this.currentPage + 2);
-                            list.push(this.currentPage + 3);
-                            list.push(this.currentPage + 4);
-                            list = list
-                                .filter( num => num <= this.countPage); 
-                            break;
-                        
-                        case 2:
-                            list.push(this.currentPage - 1);
-                            list.push(this.currentPage);
-                            list.push(this.currentPage + 1);
-                            list.push(this.currentPage + 2);
-                            list.push(this.currentPage + 3);
-                            list = list
-                                .filter( num => num <= this.countPage); 
-                            break;
-
-                        case 3:
-                            list.push(this.currentPage - 2);
-                            list.push(this.currentPage - 1);
-                            list.push(this.currentPage);
-                            list.push(this.currentPage + 1);
-                            list.push(this.currentPage + 2);
-                            list = list
-                                .filter( num => num <= this.countPage); 
-                            break;
-
-                        case 4:
-                            list.push(this.currentPage - 3);
-                            list.push(this.currentPage - 2);
-                            list.push(this.currentPage - 1);
-                            list.push(this.currentPage);
-                            list.push(this.currentPage + 1);
-                            list = list
-                                .filter( num => num <= this.countPage); 
-                            break;
-
-                        case 5:
-                            list.push(this.currentPage - 4);
-                            list.push(this.currentPage - 3);
-                            list.push(this.currentPage - 2);
-                            list.push(this.currentPage - 1);
-                            list.push(this.currentPage);
-                            list = list
-                                .filter( num => num <= this.countPage); 
-                            break;
-                    };
-                } else {
-                if (this.currentPage == 1){
-                    list.push(this.currentPage);
-                    list.push(this.currentPage + 1);
-                    list.push(this.currentPage + 2); 
-                    list = list
-                        .filter( num => num <= this.countPage); 
-
-                } else if (this.currentPage == this.countPage){
-                    list.push(this.currentPage - 4);
-                    list.push(this.currentPage - 3);
-                    list.push(this.currentPage - 2);
-                    list.push(this.currentPage - 1);
-                    
-                } else if (this.currentPage == this.countPage - 1) {
-                    list.push(this.currentPage - 3);
-                    list.push(this.currentPage - 2);
-                    list.push(this.currentPage - 1);
-                    list.push(this.currentPage);
-                } else if (this.currentPage == this.countPage - 2){
-                    list.push(this.currentPage - 2);
-                    list.push(this.currentPage - 1);
-                    list.push(this.currentPage);
-                    list.push(this.currentPage + 1);
-                }else if (this.currentPage == this.countPage - 3){
-                    list.push(this.currentPage - 1);
-                    list.push(this.currentPage);
-                    list.push(this.currentPage + 1);
-                    list.push(this.currentPage + 2);
-                }else{
-                    list.push(this.currentPage - 1);    // предыдущая
-                    list.push(this.currentPage);        // текущая страница
-                    list.push(this.currentPage + 1);    // следующая
-                    list = list
-                        .filter(num => num > 0) // оставляем страницы только больше 0
-                        .filter( num => num <= this.countPage); // отсекаем страницы больше самой последней
-                    };
-                }
-                return list;
-            },
-
         },
+
         methods: {
-            inwork(name) {
-                var num = 0;
-                this.requestList.forEach((val, i) => {
-                    if ((val.executor == name) && (val.status ==  "Принята")) {
-                        num++;
-                    }   
+            uniID(value) {
+                let id = 0;
+                this.filteredExecutors.forEach((val, i) => {
+                    if (val.name == value) {
+                        return id;
+                    } else {id++}
                 });
-                return num;
-            },
-
-            complete(name) {
-                var num = 0;
-                this.requestList.forEach((val, i) => {
-                    if ((val.executor == name) && (val.status ==  "Выполнена")) {
-                        num++;
-                    }   
-                });
-                return num;
-            },
-
-            isactive(asd){
-                if (asd == this.currentPage) {
-                    return "act"
-                } else {return ".listToBtn"}
             }
+        },
+
+        components: {
+            tableItem
         }
     }
 </script>

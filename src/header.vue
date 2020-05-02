@@ -24,7 +24,7 @@
                 <div class="col-12 col-md-2 col-lg-4 col-xl-5"></div>
                 <div class="col-4 col-md-3 col-lg-2 d-flex align-items-center justify-content-end" style='height: 100%; padding-bottom: 8px;'>
                     <img class="client__logo" src="./assets/nav_user_logo.png" alt="client__logo">
-                    <label class="client__name">{{ clientName }}</label>
+                    <label class="client__name">{{ localUsername }}</label>
                     <label class="logout">Выйти</label>
                 </div>
             </div>
@@ -34,14 +34,14 @@
 
 <script>
     export default {
-        props: ["isExForm", "isReForm"],
+        props: ["isExForm", "isReForm", "username"],
         
         data () {
             return {
-                clientName: 'Admin',
                 isMenuActive: false,
                 localIsExForm: this.isExForm,
-                localIsReForm: this.isReForm
+                localIsReForm: this.isReForm,
+                localUsername: this.username
             }
         },
         methods: {
