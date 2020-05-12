@@ -2,15 +2,15 @@
   <div class="radio__group d-flex justify-content-around" :class="{locked: isLocked}">
     <label for="calendarOption" class="radio d-flex align-items-center justify-content-center" :class="{isLocked: isLocked}">
       <input type="radio" value="calendar" name="mainradio" v-model="localSelected" id="calendarOption"/>
-      <span class="d-flex align-items-center justify-content-center">Кал</span>
+      <span class="d-flex align-items-center justify-content-center"><img src="./assets/calendar_icon.png" alt="calendar_icon" class="option_icon"></span>
     </label>
     <label for="mapOption" class="radio d-flex align-items-center justify-content-center" :class="{isLocked: isLocked}">
       <input type="radio" value="map" name="mainradio" v-model="localSelected" id="mapOption" />
-      <span class="d-flex align-items-center justify-content-center">Кар</span>
+      <span class="d-flex align-items-center justify-content-center"><img src="./assets/map_icon.svg" alt="map_icon" class="option_icon"></span>
     </label>
     <label for="tableOption" class="radio d-flex align-items-center justify-content-center">
       <input type="radio" value="table" name="mainradio" v-model="localSelected" id="tableOption" />
-      <span class="d-flex align-items-center justify-content-center">Таб</span>
+      <span class="d-flex align-items-center justify-content-center"><img src="./assets/table_icon.png" alt="table_icon" class="option_icon"></span>
     </label>
   </div>
 </template>
@@ -26,7 +26,11 @@ export default {
   watch: {
     localSelected: function() {
       this.$emit('radioChanged', this.localSelected)
-    }
+    },
+
+    selected: function() {
+      this.localSelected = this.selected
+    }    
   }
 };
 </script>
@@ -38,6 +42,11 @@ export default {
     height: 45px;
     background: #fff;
     border-radius: 5px;
+}
+
+.option_icon {
+  height: 25px;
+  weight: 25px;
 }
 
 .locked {

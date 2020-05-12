@@ -19,8 +19,8 @@
 </template>
 
 <script>
-    import Option from './filter-option.vue' //Переключатели Календарь/Карта/Таблица
-    import RequestsFilter from './filter-requests.vue' //Блок с заявками
+    import Option from './Options.vue' //Переключатели Календарь/Карта/Таблица
+    import RequestsFilter from './RequestsFilter.vue' //Блок с заявками
 
     export default {
         props:[

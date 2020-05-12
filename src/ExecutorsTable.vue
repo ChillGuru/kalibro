@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import tableItem from "./table-item.vue"
+import tableItem from "./ExecutorsTableItem.vue"
 
     export default {
         props:[

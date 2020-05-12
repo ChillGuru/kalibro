@@ -75,7 +75,6 @@
 </template>
 
 <script>
-import tableItem from "./table-item.vue"
 
 export default {
     props: ['executorInfo', 'id', 'requestList'],

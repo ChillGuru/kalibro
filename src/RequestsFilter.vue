@@ -24,7 +24,7 @@
             @change="changeFilterStatus(request)"
             :v-model="changes"
           />
-          <label class="check__label" :for="request.id">{{ request.name }}</label>
+          <label class="check__label unselectable" :for="request.id">{{ request.name }}</label>
         </div>
         <div class="request d-flex">
           <div class="colorblock" :style="request.color"></div>
