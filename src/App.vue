@@ -37,7 +37,6 @@
                   :selectedRadio="selectedRadio"
                   :AllRequestsChecked="AllRequestsChecked"
                   :checkedRequests="checkedRequests"
-                  :isOptionsLocked="isOptionsLocked"
                   @radioChanged="selectedRadio = $event"
                   @requestFilterChanged="checkedRequests = $event"
                 ></TopFilters>
@@ -70,6 +69,7 @@
         <!--Правая часть-->
         <pane :size='100-paneHorizontalSize' style="padding: 30px 23px 32px 10px">
           <b-tabs class="right__content">
+<<<<<<< HEAD
             <!--Вкладка "Заявки"-->
             <b-tab title="Заявки" @click="tabPosition = 1" active>
               <div class="justbox" v-if="selectedRadio == 'calendar'">
@@ -107,6 +107,27 @@
                   :checkedRequests="checkedRequests"
                   :checkedForms="checkedForms"
                 ></ReportsTable>
+=======
+            <b-tab title="Заявки" active>
+              <div class="justbox" v-if="selectedRadio == 'calendar'"><h1>Календарь</h1></div>
+              <div class="justbox" v-if="selectedRadio == 'map'"><h1>Карта</h1></div>
+              <div class="justbox" v-if="selectedRadio == 'table'"><Table
+                                                        :requestList="requestList"
+                                                        :requestsFilter="checkedRequests"
+                                                        :executorsFilter="executors"
+                                                        :formsFilter="checkedForms"
+                                                        ></Table></div>
+            </b-tab>
+            <b-tab title="Исполнители">
+                <div class="justbox" v-if="selectedRadio == 'table'"><TableExecutors
+                                                        :requestList="requestList"
+                                                        :executorsFilter="executors"
+                                                        ></TableExecutors></div>
+            </b-tab>
+            <b-tab title="Отчеты">
+              <div class="justbox">
+                <h1>Отчеты</h1>
+>>>>>>> parent of 1e838b2... Executors table almost complete.
               </div>
             </b-tab>
             <b-tab title="Отладка">
@@ -156,8 +177,6 @@ export default {
         width: window.innerWidth,
     },
       selectedRadio: "table", //Значения: calendar, map или table. Это радиокнопки  в фильтрах.
-
-      tabPosition: 1,
 
       AllRequestsChecked: true,
       checkedRequests: [
@@ -435,6 +454,7 @@ export default {
     };
   },
 
+<<<<<<< HEAD
   created() {
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
@@ -475,6 +495,8 @@ export default {
     },
   },
 
+=======
+>>>>>>> parent of 1e838b2... Executors table almost complete.
   components: {
     Splitpanes,
     Pane,

@@ -28,7 +28,6 @@
         </header>
 
         <div class="table__content">
-            <span v-if="filteredRequests == ''" class="lackof">Фильтры не включены или заявки отсутствуют</span> 
             <div class="table__item" v-for="req in filteredRequests">
                 <input
                     style="display: none"
@@ -37,7 +36,7 @@
                     :value="req"
                 />
                 <label class="req__content d-flex" :for="req.id">
-                <ul class="item__values d-flex align-items-center" style="width: 100%">
+                <ul class="item__values d-flex" style="width: 100%">
                     <li style="width: 3%"><div class="status__color" :style="reqColor(req.status)"></div></li>
                     <li style="width: 8%">{{req.status}}</li>
                     <li style="width: 20%"> {{req.address}}</li>
@@ -158,28 +157,20 @@
 
 .table__item {
     width: 100%;
-    min-height: 45px;
-}
-
-.item__values {
-    margin: 0;
 }
 
 .item__values li {
     margin: 0 8px;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 15px;
 }
 
 .req__content {
+  padding-top: 18px;
   margin: 0;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
   width: 100%;
-  min-height: 45px;
   border-bottom: 1px solid #000;
 }
 
@@ -187,7 +178,7 @@
   background: url("./assets/triangle_unchecked.png") no-repeat;
   content: "";
   display: inline-block;
-  margin-top: 15px;
+  vertical-align: top;
   background-size: 13px 13px;
   width: 15px;
   height: 15px;

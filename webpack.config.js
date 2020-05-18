@@ -22,7 +22,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        loader: 'vue-loader',
         exclude: /node_modules/
       },
       {

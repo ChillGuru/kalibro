@@ -2,12 +2,7 @@
     <div class="filters-body d-flex flex-column">
         <div class="d-flex justify-content-between ml-auto mr-auto" style="width: 350px">
             <button class="filters__btn">Новая заявка</button>
-            <Option 
-            class="filters__radio" 
-            :selected="selectedRadio"
-            :isLocked="isOptionsLocked"
-            @radioChanged="localSelectedRadio = $event"
-            ></Option>
+            <Option class="filters__radio" :selected="selectedRadio" @radioChanged="localSelectedRadio = $event"></Option>
         </div>
         <RequestsFilter
             class="filters__box ml-auto mr-auto"
@@ -27,7 +22,6 @@
             'selectedRadio',
             'AllRequestsChecked',
             'checkedRequests',
-            'isOptionsLocked'
             ],
         data() {
             return{

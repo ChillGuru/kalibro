@@ -1,10 +1,10 @@
 <template>
-  <div class="radio__group d-flex justify-content-around" :class="{locked: isLocked}">
-    <label for="calendarOption" class="radio d-flex align-items-center justify-content-center" :class="{isLocked: isLocked}">
+  <div class="radio__group d-flex justify-content-around">
+    <label for="calendarOption" class="radio d-flex align-items-center justify-content-center">
       <input type="radio" value="calendar" name="mainradio" v-model="localSelected" id="calendarOption"/>
       <span class="d-flex align-items-center justify-content-center"><img src="./assets/calendar_icon.png" alt="calendar_icon" class="option_icon"></span>
     </label>
-    <label for="mapOption" class="radio d-flex align-items-center justify-content-center" :class="{isLocked: isLocked}">
+    <label for="mapOption" class="radio d-flex align-items-center justify-content-center">
       <input type="radio" value="map" name="mainradio" v-model="localSelected" id="mapOption" />
       <span class="d-flex align-items-center justify-content-center"><img src="./assets/map_icon.svg" alt="map_icon" class="option_icon"></span>
     </label>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  props:['selected', 'isLocked'],
+  props:['selected'],
   data() {
     return {
       localSelected: this.selected
@@ -44,6 +44,7 @@ export default {
     border-radius: 5px;
 }
 
+<<<<<<< HEAD:src/Options.vue
 .option_icon {
   height: 25px;
   weight: 25px;
@@ -58,6 +59,8 @@ export default {
   pointer-events: none;
 }
 
+=======
+>>>>>>> parent of 1e838b2... Executors table almost complete.:src/filter-option.vue
 .radio {
   font-size: 14px;
   width: 100%;
