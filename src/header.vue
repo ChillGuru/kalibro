@@ -36,7 +36,7 @@
     export default {
         props: ["isExForm", "isReForm", "username"],
         
-        data () {
+        data: function() {
             return {
                 isMenuActive: false,
                 localIsExForm: this.isExForm,
@@ -45,17 +45,17 @@
             }
         },
         methods: {
-            MenuActive() {
+            MenuActive: function() {
                 if (this.isMenuActive == false) {this.isMenuActive = true}
                 else {this.isMenuActive = false}
             },
 
-            showExForm() {
+            showExForm: function() {
                 this.localIsExForm = true
                 this.$emit('showExForm', this.localIsExForm)
             },
             
-            showReForm() {
+            showReForm: function() {
                 this.localIsReForm = true
                 this.$emit('showReForm', this.localIsReForm)
             },

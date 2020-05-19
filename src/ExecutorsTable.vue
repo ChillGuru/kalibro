@@ -48,14 +48,14 @@ import tableItem from "./ExecutorsTableItem.vue"
             'requestList',
             'executorsFilter',
             ],
-        data() {
+        data: function() {
             return{
 
             }
         },
 
         computed:{
-            filteredExecutors() {
+            filteredExecutors: function() {
                 return this.executorsFilter.filter(elem => {
                     var res = true;
 
@@ -71,8 +71,8 @@ import tableItem from "./ExecutorsTableItem.vue"
         },
 
         methods: {
-            uniID(value) {
-                let id = 0;
+            uniID: function(value) {
+                var id = 0;
                 this.filteredExecutors.forEach((val, i) => {
                     if (val.name == value) {
                         return id;

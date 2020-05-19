@@ -40,7 +40,7 @@
 <script>
 export default {
   props: ["AllRequestsChecked", "checkedRequests"],
-  data() {
+  data: function() {
     return {
       localAllRequestsChecked: this.AllRequestsChecked,
       changes: [],
@@ -50,7 +50,7 @@ export default {
   },
 
   methods: {
-    changeFilterStatus(req) {
+    changeFilterStatus: function(req) {
       this.requests.forEach((val, i) => {
         if (val.name == req.name) {
           val.status = !val.status;
@@ -60,12 +60,12 @@ export default {
   },
 
   watch: {
-    requests() {
+    requests: function() {
       this.forEmit = this.requests;
       this.$emit("requestFilterChanged", this.forEmit);
     },
 
-    localAllRequestsChecked() {
+    localAllRequestsChecked: function() {
       if (this.localAllRequestsChecked) {
         this.requests.forEach((val, i) => {
           val.status = true;

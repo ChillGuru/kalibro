@@ -37,6 +37,7 @@
                   :selectedRadio="selectedRadio"
                   :AllRequestsChecked="AllRequestsChecked"
                   :checkedRequests="checkedRequests"
+                  :isOptionsLocked="isOptionsLocked"
                   @radioChanged="selectedRadio = $event"
                   @requestFilterChanged="checkedRequests = $event"
                 ></TopFilters>
@@ -69,7 +70,6 @@
         <!--Правая часть-->
         <pane :size='100-paneHorizontalSize' style="padding: 30px 23px 32px 10px">
           <b-tabs class="right__content">
-<<<<<<< HEAD
             <!--Вкладка "Заявки"-->
             <b-tab title="Заявки" @click="tabPosition = 1" active>
               <div class="justbox" v-if="selectedRadio == 'calendar'">
@@ -107,27 +107,6 @@
                   :checkedRequests="checkedRequests"
                   :checkedForms="checkedForms"
                 ></ReportsTable>
-=======
-            <b-tab title="Заявки" active>
-              <div class="justbox" v-if="selectedRadio == 'calendar'"><h1>Календарь</h1></div>
-              <div class="justbox" v-if="selectedRadio == 'map'"><h1>Карта</h1></div>
-              <div class="justbox" v-if="selectedRadio == 'table'"><Table
-                                                        :requestList="requestList"
-                                                        :requestsFilter="checkedRequests"
-                                                        :executorsFilter="executors"
-                                                        :formsFilter="checkedForms"
-                                                        ></Table></div>
-            </b-tab>
-            <b-tab title="Исполнители">
-                <div class="justbox" v-if="selectedRadio == 'table'"><TableExecutors
-                                                        :requestList="requestList"
-                                                        :executorsFilter="executors"
-                                                        ></TableExecutors></div>
-            </b-tab>
-            <b-tab title="Отчеты">
-              <div class="justbox">
-                <h1>Отчеты</h1>
->>>>>>> parent of 1e838b2... Executors table almost complete.
               </div>
             </b-tab>
             <b-tab title="Отладка">
@@ -156,19 +135,19 @@
 <script>
 import { Splitpanes, Pane } from "splitpanes"; //Сплитеры.
 import "splitpanes/dist/splitpanes.css"; //Стили сплитеров.
-import Header from "./Header.vue"; //Хедер (ваш Кэп).
+import Header from "./header.vue"; //Хедер (ваш Кэп).
 import TopFilters from "./TopFilters.vue"; //Верхняя часть фильтров. Включает в себя фильтр по типу заявок.
 import ExecutorFilter from "./ExecutorsFilter.vue"; //Фильтр по исполнителям.
 import FormsFilter from "./FormsFilter.vue"; //Фильтр по бланкам.
 import RequestsTable from "./RequestsTable.vue"; //Таблица с заявками.
 import ExecutorsTable from "./ExecutorsTable.vue"; //Таблица с исполнителями.
 import ReportsTable from "./ReportsTable.vue"; //Таблица с отчетами.
-import AddExecutor from "./AddExecutor.vue"; //Модальное окно по добавлению исполнителя
+import AddExecutor from "./addExecutor.vue"; //Модальное окно по добавлению исполнителя
 import AddRequest from "./AddRequest.vue" //Модальное окно по добавлению заявки
 
 export default {
   name: "app",
-  data() {
+  data: function() {
     //Все значения приведенные здесь - считаются дефолтными.
     return {
       login: "admin",
@@ -177,6 +156,8 @@ export default {
         width: window.innerWidth,
     },
       selectedRadio: "table", //Значения: calendar, map или table. Это радиокнопки  в фильтрах.
+
+      tabPosition: 1,
 
       AllRequestsChecked: true,
       checkedRequests: [
@@ -454,25 +435,24 @@ export default {
     };
   },
 
-<<<<<<< HEAD
-  created() {
+  created: function() {
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
   },
 
-  destroyed() {
+  destroyed: function() {
         window.removeEventListener('resize', this.handleResize);
   },
 
   methods: {
-    handleResize() {
+    handleResize: function() {
             this.window.width = window.innerWidth;
             this.window.height = window.innerHeight;
         }
   },
 
   computed: {
-    isOptionsLocked(){
+    isOptionsLocked: function(){
       if (this.tabPosition != 1){
         return true
       } else {
@@ -480,23 +460,21 @@ export default {
       }
     },
 
-    paneHorizontalSize() {
-      let procent;
+    paneHorizontalSize: function() {
+      var procent;
       if (this.window.width > 1240){
         procent = this.window.width / 100;
         return (400 / procent);
       }
     },
 
-    paneVerticalSize() {
-      let procent;
+    paneVerticalSize: function() {
+      var procent;
       procent = this.window.height / 100;
       return (380 / procent);
     },
   },
 
-=======
->>>>>>> parent of 1e838b2... Executors table almost complete.
   components: {
     Splitpanes,
     Pane,

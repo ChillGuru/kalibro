@@ -9,6 +9,7 @@
       <button class="add__checkbox_item" @click="showExForm">+</button>
     </div>
     <div class="executors__content d-flex flex-column">
+      <span v-if="localNames == ''" class="lackof">Исполнители отсутствуют</span>  
       <div v-for="executor in localNames" class="d-flex justify-content-between" style="margin: 8px 0; line-height: 17px;">
         <div>
           <input
@@ -33,7 +34,7 @@ import addExecutor from "./addExecutor.vue" //Модальное окно по �
 
 export default {
   props: ["title", "names", "allChecked", "isForm"],
-  data() {
+  data: function() {
     return {
       localNames: this.names,
       localNamesChecked: this.allChecked,
@@ -42,12 +43,12 @@ export default {
     }
   },
 
-  mounted() {
+  mounted: function() {
     this.id = this._uid
   },
   
   methods: {
-    changeFilterStatus(nm) {
+    changeFilterStatus: function(nm) {
       this.localNames.forEach((val, i) => {
         if (val.name == nm.name) {
           val.status = !val.status;
@@ -55,7 +56,7 @@ export default {
       });
     },
 
-    pushName() {
+    pushName: function() {
       var Executor = {};
       Executor.name = 'Some name #' + (this.localNames.length + 1);
       Executor.id = 'name' + (this.localNames.length + 1);
@@ -65,14 +66,14 @@ export default {
       return this.localNames;
     },
 
-    showExForm() {
+    showExForm: function() {
       this.localIsForm = true;
       this.$emit('showExForm', this.localIsForm)
   }
   },
 
   watch: {
-    localNamesChecked() {
+    localNamesChecked: function() {
       if (this.localNamesChecked) {
         this.localNames.forEach((val, i) => {
           val.status = true;
@@ -100,6 +101,12 @@ export default {
     font-size: 14px;
     font-weight: 500;
     margin-top: 5px;
+}
+
+.lackof {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 25px;
 }
 
 .check__label::before {

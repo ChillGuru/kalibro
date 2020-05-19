@@ -25,7 +25,7 @@
 export default {
     props: ["isForm", "executors"],
 
-    data() {
+    data: function() {
         return {
         localIsForm: this.isForm,
         localNames: this.executors,
@@ -42,11 +42,11 @@ export default {
     },
 
     methods: {
-        showExForm() {
+        showExForm: function() {
             this.localIsForm = false
         },
 
-        addNewEx() {
+        addNewEx: function() {
             if ((this.newex.name != '') && (this.newex.email != '') && (this.newex.password != '') && (this.passcheck != '') && (this.newex.phone != '')) {
                 if (this.newex.password === this.passcheck) {
                     this.newex.id = Math.random() * (9999999 - 1) + 1;
@@ -60,7 +60,7 @@ export default {
     },
         
     watch: {
-        localIsForm() {
+        localIsForm: function() {
             this.$emit('showExForm', this.localIsForm)
         }
     }

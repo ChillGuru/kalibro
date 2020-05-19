@@ -9,6 +9,7 @@
       <button class="add__checkbox_item" @click="pushForm()">+</button>
     </div>
     <div class="forms__content d-flex flex-column">
+      <span v-if="localForms == ''" class="lackof">Бланки отсутсвуют</span> 
       <div v-for="form in localForms" class="d-flex" style="margin: 8px 0; line-height: 17px; height: 17px;">
         <div>
           <input
@@ -31,7 +32,7 @@
 <script>
 export default {
   props: ["title", "forms", "allChecked"],
-  data() {
+  data: function() {
     return {
       localForms: this.forms,
       localFormsChecked: this.allChecked,
@@ -40,7 +41,7 @@ export default {
   },
   
   methods: {
-    changeFilterStatus(nm) {
+    changeFilterStatus: function(nm) {
       this.localForms.forEach((val, i) => {
         if (val.name == nm.name) {
           val.status = !val.status;
@@ -48,7 +49,7 @@ export default {
       });
     },
     
-    pushForm() {
+    pushForm: function() {
       var Form = {},
       color = Math.floor(Math.random() * 899) + 100;
       Form.name = 'Some Form #' + (this.localForms.length + 1);
@@ -62,7 +63,7 @@ export default {
   },
 
   watch: {
-    localFormsChecked() {
+    localFormsChecked: function() {
       if (this.localFormsChecked) {
         this.localForms.forEach((val, i) => {
           val.status = true;

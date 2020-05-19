@@ -79,7 +79,7 @@
 export default {
     props: ['executorInfo', 'id', 'requestList'],
 
-    data() {
+    data: function() {
         return {
             executor: this.executorInfo,
             localID: this.id,
@@ -89,28 +89,28 @@ export default {
     },
 
     watch: {
-             count() {
+             count: function() {
                  this.currentPage = 1;
              }
         },
 
     computed:{
-            isCurrent() {
+            isCurrent: function() {
                 if ((this.countPage > 5)&&(this.currentPage < this.countPage - 3)) {
                     return true
                 } else {return false}
             },
-            paginationData(){
+            paginationData: function(){
                 let start = (this.currentPage - 1) * this.count;
                 let end = start*1 + this.count*1;
                 return this.filteredRequests.slice(start, end);
             },
             // количество страниц ( после изменения ОТОБРАЖАТЬ ПО, произойдет пересчет данной величины)
-            countPage(){
+            countPage: function(){
                 return Math.ceil(this.filteredRequests.length / this.count);
             },
             // фильтр заявок
-            filteredRequests() {
+            filteredRequests: function() {
                 return this.requestList.filter(elem => {
                     let res = false;
                         if (elem.executor == this.executor.name) {
@@ -120,8 +120,8 @@ export default {
                 })
             },
             // Список с кнопочками
-            paginationList(){
-                let list = [];
+            paginationList: function(){
+                var list = [];
                 if ((this.filteredRequests == '') || (this.conut < 1)) {list.push("-"); return list; currentPage = 1;}
                 if (this.countPage < 6) {
                     switch(this.currentPage) {
@@ -217,7 +217,7 @@ export default {
             },
     },
     methods: {
-        inwork(name) {
+        inwork: function(name) {
             var num = 0;
             this.filteredRequests.forEach((val, i) => {
                 if ((val.executor == name) && (val.status ==  "Принята")) {
@@ -227,7 +227,7 @@ export default {
             return num;
         },
 
-        complete(name) {
+        complete: function(name) {
             var num = 0;
             this.filteredRequests.forEach((val, i) => {
                 if ((val.executor == name) && (val.status ==  "Выполнена")) {
@@ -237,7 +237,7 @@ export default {
             return num;
         },
 
-        isactive(asd){
+        isactive: function(asd){
                 if (asd == this.currentPage) {
                 return "act"
             } else {return ".listToBtn"}

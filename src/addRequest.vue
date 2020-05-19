@@ -64,7 +64,7 @@ import Inputmask from 'inputmask';
 export default {
     props: ["forms", "executors", "isForm", "requests"],
 
-    data() {
+    data: function() {
         return {
             localIsForm: this.isForm,
             localReqs: this.requests,
@@ -89,7 +89,7 @@ export default {
         }
     },
 
-    mounted() {
+    mounted: function() {
         var im = new Inputmask("99/99/9999");
         im.mask(document.getElementById('date__mask'));
         var im = new Inputmask("99:99");
@@ -101,12 +101,12 @@ export default {
     },
 
     methods: {
-        showReForm() {
+        showReForm: function() {
             this.localIsForm = false;
             this.$emit('showReForm', this.localIsForm)
         },
 
-        addNewReq() {
+        addNewReq: function() {
             if (this.newReq.city != ''){
                 var bg = '';
                 this.newReq.id = Math.random() * (9999999 - 1) + 1;

@@ -29,7 +29,7 @@
 export default {
     props: ['reportInfo'],
 
-    data() {
+    data: function() {
         return {
             report: this.reportInfo,
         }

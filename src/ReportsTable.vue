@@ -50,14 +50,14 @@ import ReportsTableItem from "./ReportsTableItem.vue"
             'checkedRequests',
             'checkedForms'
             ],
-        data() {
+        data: function() {
             return{
                 
             }
         },
 
         computed:{
-            filteredReports() {
+            filteredReports: function() {
                 return this.requestList.filter(elem => {
                     var res = true;
 
