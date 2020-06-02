@@ -1,6 +1,7 @@
 <template>
-  <div id="app" style="height: 100%;">
+  <div id="app" class="main" style="height: 100%;">
     <Header
+      style="min-width: 1240px;"
       :isExForm="isExForm"
       :isReForm="isReForm"
       :username="login"
@@ -15,6 +16,7 @@
         @addNewExecutor="executors = $event"
         @showExForm="isExForm = $event"
       />
+      <!--Форма добавления новой заявки-->
       <add-request
         v-if="isReForm"
         :isForm="isReForm"
@@ -26,9 +28,9 @@
       />
       <splitpanes class="default-theme" style="height: calc(100% - 44px)">
         <!--Левая часть (фильтры)-->
-        <pane max-size="22">
+        <pane :size='paneHorizontalSize' :max-size='paneHorizontalSize'>
           <splitpanes horizontal>
-            <pane size="40">
+            <pane :size='paneVerticalSize'>
               <div class="left__pane">
                 <TopFilters
                   class="filters"
@@ -66,27 +68,45 @@
           </splitpanes>
         </pane>
         <!--Правая часть-->
-        <pane size="78" style="padding: 30px 23px 32px 10px">
+        <pane :size='100-paneHorizontalSize' style="padding: 30px 23px 32px 10px">
           <b-tabs class="right__content">
+            <!--Вкладка "Заявки"-->
             <b-tab title="Заявки" @click="tabPosition = 1" active>
-              <div class="justbox" v-if="selectedRadio == 'calendar'"><h1>Календарь</h1></div>
-              <div class="justbox" v-if="selectedRadio == 'map'"><h1>Карта</h1></div>
-              <div class="justbox" v-if="selectedRadio == 'table'"><Table
-                                                        :requestList="requestList"
-                                                        :requestsFilter="checkedRequests"
-                                                        :executorsFilter="executors"
-                                                        :formsFilter="checkedForms"
-                                                        ></Table></div>
+              <div class="justbox" v-if="selectedRadio == 'calendar'">
+                <h1>Данная функция в стадии разработки</h1>
+                <img src="./assets/works.png" alt="works" style="height: 100px; weight:100px;">
+              </div>
+              <div class="justbox" v-if="selectedRadio == 'map'">
+                <h1>Данная функция в стадии разработки</h1>
+                <img src="./assets/works.png" alt="works" style="height: 100px; weight:100px;">
+              </div>
+              <div class="justbox" v-if="selectedRadio == 'table'">
+                <RequestsTable
+                  :requestList="requestList"
+                  :requestsFilter="checkedRequests"
+                  :executorsFilter="executors"
+                  :formsFilter="checkedForms"
+                ></RequestsTable>
+              </div>
             </b-tab>
-            <b-tab title="Исполнители" @click="tabPosition = 2">
-                <div class="justbox" v-if="selectedRadio == 'table'"><TableExecutors
-                                                        :requestList="requestList"
-                                                        :executorsFilter="executors"
-                                                        ></TableExecutors></div>
+            <!--Вкладка "Исполнители"-->
+            <b-tab title="Исполнители" @click="tabPosition = 2; selectedRadio = 'table';">
+                <div class="justbox" v-if="selectedRadio == 'table'">
+                  <ExecutorsTable
+                    :requestList="requestList"
+                    :executorsFilter="executors"
+                  ></ExecutorsTable>
+                </div>
             </b-tab>
-            <b-tab title="Отчеты" @click="tabPosition = 3">
-              <div class="justbox">
-                <h1>Отчеты</h1>
+            <!--Вкладка "Отчеты"-->
+            <b-tab title="Отчеты" @click="tabPosition = 3; selectedRadio = 'table';">
+              <div class="justbox" v-if="selectedRadio == 'table'">
+                <ReportsTable
+                  :requestList="requestList"
+                  :executorsFilter="executors"
+                  :checkedRequests="checkedRequests"
+                  :checkedForms="checkedForms"
+                ></ReportsTable>
               </div>
             </b-tab>
             <b-tab title="Отладка">
@@ -116,21 +136,25 @@
 import { Splitpanes, Pane } from "splitpanes"; //Сплитеры.
 import "splitpanes/dist/splitpanes.css"; //Стили сплитеров.
 import Header from "./header.vue"; //Хедер (ваш Кэп).
-import TopFilters from "./filters-top.vue"; //Верхняя часть фильтров. Включает в себя фильтр по типу заявок.
-import ExecutorFilter from "./filter-executors.vue"; //Фильтр по исполнителям.
-import FormsFilter from "./filter-forms.vue"; //Фильтр по бланкам.
-import Table from "./table.vue"; //Таблица с заявками.
-import TableExecutors from "./tableExecutors.vue"; //Таблица с заявками.
-import addExecutor from "./addExecutor.vue" //Модальное окно по добавлению исполнителя
-import addRequest from "./addRequest.vue" //Модальное окно по добавлению заявки
+import TopFilters from "./TopFilters.vue"; //Верхняя часть фильтров. Включает в себя фильтр по типу заявок.
+import ExecutorFilter from "./ExecutorsFilter.vue"; //Фильтр по исполнителям.
+import FormsFilter from "./FormsFilter.vue"; //Фильтр по бланкам.
+import RequestsTable from "./RequestsTable.vue"; //Таблица с заявками.
+import ExecutorsTable from "./ExecutorsTable.vue"; //Таблица с исполнителями.
+import ReportsTable from "./ReportsTable.vue"; //Таблица с отчетами.
+import AddExecutor from "./addExecutor.vue"; //Модальное окно по добавлению исполнителя
+import AddRequest from "./AddRequest.vue" //Модальное окно по добавлению заявки
 
 export default {
   name: "app",
-  data() {
+  data: function() {
     //Все значения приведенные здесь - считаются дефолтными.
     return {
       login: "admin",
-
+      window: { //размер окна
+        height: window.innerHeight,
+        width: window.innerWidth,
+    },
       selectedRadio: "table", //Значения: calendar, map или table. Это радиокнопки  в фильтрах.
 
       tabPosition: 1,
@@ -250,13 +274,15 @@ export default {
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
-          endin: "",
+          begin: "17.01.2019 17.32",
+          endin: "17.01.2019 19.56",
           executor: "Васнецов Николай Евгеньевич",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
           task: "Замер оконных проёмов",
           crm: "",
           instructions: "",
+          price: "",
         },
         {
           id: "r2",
@@ -264,6 +290,7 @@ export default {
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          begin: "",
           endin: "",
           executor: "Васнецов Николай Евгеньевич",
           formColor: "Background: #84D2DE",
@@ -271,6 +298,7 @@ export default {
           task: "Замер оконных проёмов",
           crm: "",
           instructions: "",
+          price: "",
         },
         {
           id: "r3",
@@ -278,13 +306,15 @@ export default {
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
-          endin: "",
+          begin: "17.01.2019 17.32",
+          endin: "17.01.2019 19.56",
           executor: "Васюков Евгений Петрович",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
           task: "Замер оконных проёмов",
           crm: "",
           instructions: "",
+          price: "",
         },
         {
           id: "r4",
@@ -292,6 +322,7 @@ export default {
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          begin: "",
           endin: "",
           executor: "Попов Антон Андреевич",
           formColor: "Background: #84D2DE",
@@ -299,6 +330,7 @@ export default {
           task: "Замер оконных проёмов",
           crm: "",
           instructions: "",
+          price: "",
         },
         {
           id: "r5",
@@ -306,6 +338,7 @@ export default {
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          begin: "",
           endin: "",
           executor: "Васнецов Николай Евгеньевич",
           formColor: "Background: #84D2DE",
@@ -313,6 +346,7 @@ export default {
           task: "Замер оконных проёмов",
           crm: "",
           instructions: "",
+          price: "",
         },
         {
           id: "r6",
@@ -320,13 +354,15 @@ export default {
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
-          endin: "",
+          begin: "17.01.2019 17.32",
+          endin: "17.01.2019 19.56",
           executor: "Васюков Евгений Петрович",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
           task: "Замер оконных проёмов",
           crm: "",
           instructions: "",
+          price: "",
         },
         {
           id: "r7",
@@ -334,6 +370,7 @@ export default {
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          begin: "",
           endin: "",
           executor: "Попов Антон Андреевич",
           formColor: "Background: #84D2DE",
@@ -341,6 +378,7 @@ export default {
           task: "Замер оконных проёмов",
           crm: "",
           instructions: "",
+          price: "",
         },
         {
           id: "r8",
@@ -348,6 +386,7 @@ export default {
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          begin: "",
           endin: "",
           executor: "Васнецов Николай Евгеньевич",
           formColor: "Background: #84D2DE",
@@ -355,6 +394,7 @@ export default {
           task: "Замер оконных проёмов",
           crm: "",
           instructions: "",
+          price: "",
         },
         {
           id: "r9",
@@ -362,13 +402,15 @@ export default {
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
-          endin: "",
+          begin: "17.01.2019 17.32",
+          endin: "17.01.2019 19.56",
           executor: "Васюков Евгений Петрович",
           formColor: "Background: #84D2DE",
           form: "Бланк для окон",
           task: "Замер оконных проёмов",
           crm: "",
           instructions: "",
+          price: "",
         },
         {
           id: "r10",
@@ -376,6 +418,7 @@ export default {
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
           date: "17.01.2019",
+          begin: "",
           endin: "",
           executor: "Попов Антон Андреевич",
           formColor: "Background: #84D2DE",
@@ -383,6 +426,7 @@ export default {
           task: "Замер оконных проёмов",
           crm: "",
           instructions: "",
+          price: "",
         },
       ],
 
@@ -391,14 +435,44 @@ export default {
     };
   },
 
+  created: function() {
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
+  },
+
+  destroyed: function() {
+        window.removeEventListener('resize', this.handleResize);
+  },
+
+  methods: {
+    handleResize: function() {
+            this.window.width = window.innerWidth;
+            this.window.height = window.innerHeight;
+        }
+  },
+
   computed: {
-    isOptionsLocked(){
+    isOptionsLocked: function(){
       if (this.tabPosition != 1){
         return true
       } else {
         return false
       }
-    }
+    },
+
+    paneHorizontalSize: function() {
+      var procent;
+      if (this.window.width > 1240){
+        procent = this.window.width / 100;
+        return (400 / procent);
+      }
+    },
+
+    paneVerticalSize: function() {
+      var procent;
+      procent = this.window.height / 100;
+      return (380 / procent);
+    },
   },
 
   components: {
@@ -408,11 +482,13 @@ export default {
     TopFilters,
     ExecutorFilter,
     FormsFilter,
-    Table,
-    TableExecutors,
-    addExecutor,
-    addRequest
-  }
+    RequestsTable,
+    ExecutorsTable,
+    ReportsTable,
+    AddExecutor,
+    AddRequest
+  },
+
 };
 </script>
 
@@ -425,11 +501,14 @@ button {
 html,
 body {
   height: 100%;
+  overflow: scroll;
+  min-width: 1240px;
 }
 
 content {
   background: #e5e5e5;
   height: inherit !important;
+  min-width: 1240px;
 }
 
 .default-theme {
@@ -491,7 +570,8 @@ content {
 
 h1,
 h2 {
-  font-weight: normal;
+  font-size: 50px;
+  padding-top: 300px;
 }
 
 ul {
@@ -511,6 +591,7 @@ a {
 /*Табы справа */
 .nav-tabs {
   border: none;
+  outline: none;
 }
 
 .nav-item a,
@@ -570,6 +651,15 @@ a {
   border: solid #000 0 0 2px 0;
   background: #fff;
 
+}
+
+span, a, h1, h2, label {       /*For text unselectable */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently not supported by any browser */
 }
 
 </style>

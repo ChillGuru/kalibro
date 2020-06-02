@@ -115,8 +115,11 @@ header {
     border-radius: 8px;
     background: #FFD79A;
     border-color: #FFD79A;
-    outline: none;
     white-space: nowrap;
+}
+
+.button:focus {
+    outline: none;
 }
 
 .call-back p {
