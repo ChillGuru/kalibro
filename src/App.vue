@@ -26,7 +26,7 @@
         @showReForm="isReForm = $event"
         @addNewRequest="requestList = $event"
       />
-      <splitpanes class="default-theme" style="height: calc(100% - 44px)">
+      <splitpanes class="default-theme" style="height: calc( 100% - 62px)">
         <!--Левая часть (фильтры)-->
         <pane :size='paneHorizontalSize' :max-size='paneHorizontalSize'>
           <splitpanes horizontal>
@@ -76,15 +76,13 @@
                 <h1>Данная функция в стадии разработки</h1>
                 <img src="./assets/works.png" alt="works" style="height: 100px; weight:100px;">
               </div>
+              <!--Карта-->
               <div class="justbox" v-if="selectedRadio == 'map'">
-                <h1>Данная функция в стадии разработки</h1>
-                <img src="./assets/works.png" alt="works" style="height: 100px; weight:100px;">
+                <GMap :size="rightContentHeight+'width:100%;'" :zoom="13"></GMap>
               </div>
               <div class="justbox" v-if="selectedRadio == 'table'">
                 <RequestsTable
-                  :requestList="requestList"
-                  :requestsFilter="checkedRequests"
-                  :executorsFilter="executors"
+                  :requestList="filteredRequests"
                   :formsFilter="checkedForms"
                 ></RequestsTable>
               </div>
@@ -94,7 +92,7 @@
                 <div class="justbox" v-if="selectedRadio == 'table'">
                   <ExecutorsTable
                     :requestList="requestList"
-                    :executorsFilter="executors"
+                    :executors="filteredExecutors"
                   ></ExecutorsTable>
                 </div>
             </b-tab>
@@ -142,8 +140,9 @@ import FormsFilter from "./FormsFilter.vue"; //Фильтр по бланкам.
 import RequestsTable from "./RequestsTable.vue"; //Таблица с заявками.
 import ExecutorsTable from "./ExecutorsTable.vue"; //Таблица с исполнителями.
 import ReportsTable from "./ReportsTable.vue"; //Таблица с отчетами.
+import GMap from "./GoogleMap.vue"; //Карта
 import AddExecutor from "./addExecutor.vue"; //Модальное окно по добавлению исполнителя
-import AddRequest from "./AddRequest.vue" //Модальное окно по добавлению заявки
+import AddRequest from "./addRequest.vue" //Модальное окно по добавлению заявки
 
 export default {
   name: "app",
@@ -273,7 +272,7 @@ export default {
           status: "Выполнена",
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
-          date: "17.01.2019",
+          date: "10.01.2019",
           begin: "17.01.2019 17.32",
           endin: "17.01.2019 19.56",
           executor: "Васнецов Николай Евгеньевич",
@@ -289,7 +288,7 @@ export default {
           status: "Открыта",
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
-          date: "17.01.2019",
+          date: "11.01.2019",
           begin: "",
           endin: "",
           executor: "Васнецов Николай Евгеньевич",
@@ -305,7 +304,7 @@ export default {
           status: "Выполнена",
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
-          date: "17.01.2019",
+          date: "12.01.2019",
           begin: "17.01.2019 17.32",
           endin: "17.01.2019 19.56",
           executor: "Васюков Евгений Петрович",
@@ -321,7 +320,7 @@ export default {
           status: "Открыта",
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
-          date: "17.01.2019",
+          date: "13.01.2019",
           begin: "",
           endin: "",
           executor: "Попов Антон Андреевич",
@@ -337,7 +336,7 @@ export default {
           status: "Открыта",
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
-          date: "17.01.2019",
+          date: "14.01.2019",
           begin: "",
           endin: "",
           executor: "Васнецов Николай Евгеньевич",
@@ -353,7 +352,7 @@ export default {
           status: "Выполнена",
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
-          date: "17.01.2019",
+          date: "15.01.2019",
           begin: "17.01.2019 17.32",
           endin: "17.01.2019 19.56",
           executor: "Васюков Евгений Петрович",
@@ -369,7 +368,7 @@ export default {
           status: "Открыта",
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
-          date: "17.01.2019",
+          date: "16.01.2019",
           begin: "",
           endin: "",
           executor: "Попов Антон Андреевич",
@@ -401,7 +400,7 @@ export default {
           status: "Выполнена",
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
-          date: "17.01.2019",
+          date: "18.01.2019",
           begin: "17.01.2019 17.32",
           endin: "17.01.2019 19.56",
           executor: "Васюков Евгений Петрович",
@@ -417,7 +416,7 @@ export default {
           status: "Открыта",
           city: "Екатеринбург",
           address: "ул. Союзная 27, кв.275",
-          date: "17.01.2019",
+          date: "19.01.2019",
           begin: "",
           endin: "",
           executor: "Попов Антон Андреевич",
@@ -473,6 +472,57 @@ export default {
       procent = this.window.height / 100;
       return (380 / procent);
     },
+
+    rightContentHeight: function() {
+      return "height:"+(this.window.height - 160)+"px; ";
+    },
+
+    filteredRequests: function() {
+                return this.requestList.filter(elem => {
+                    var res = true;
+
+                    this.checkedRequests.forEach((val) => {
+                        if (val.other === elem.status && val.status == false) {
+                          res = false;
+                        }
+                    });
+
+                    this.executors.forEach((val) => {
+                        if (val.name === elem.executor && val.status == false) {
+                          res = false;
+                        }
+                    });
+
+                    this.checkedForms.forEach((val) => {
+                        if (val.name === elem.form && val.status == false) {
+                          res = false;
+                        }
+                    });
+                    return res;
+                })
+            },
+
+    filteredExecutors: function() {
+                return this.executors.filter(elem => {
+                    var res = true;
+
+                    this.executors.forEach((val) => {
+                        if (val.name == elem.name && val.status == false) {
+                            res= false;
+                        }
+                    });
+
+                    return res;
+                })
+            },
+
+    markers: function() {
+      var marker = [];
+      if (requestList) {
+        
+      }
+
+    }
   },
 
   components: {
@@ -486,7 +536,8 @@ export default {
     ExecutorsTable,
     ReportsTable,
     AddExecutor,
-    AddRequest
+    AddRequest,
+    GMap
   },
 
 };

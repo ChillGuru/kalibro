@@ -3,16 +3,16 @@
                 <input
                     style="display: none"
                     type="checkbox"
-                    :id="executor.id + 'table'"
-                    :value="executor"
+                    :id="this.executorInfo.id + 'table'"
+                    :value="this.executorInfo"
                 />
-                <label class="req__content d-flex" :for="executor.id + 'table'">
+                <label class="req__content d-flex" :for="this.executorInfo.id + 'table'">
                 <ul class="item__values d-flex" style="width: 100%">
-                    <li style="width: 20%"><span>{{ executor.name }}</span></li>
-                    <li style="width: 20%"><span>{{executor.email}}</span></li>
-                    <li style="width: 20%"><span>{{executor.phone}}</span></li>
-                    <li style="width: 20%"><span>{{ inwork(executor.name) }}</span></li>
-                    <li style="width: 20%"><span>{{ complete(executor.name) }}</span></li>
+                    <li style="width: 20%"><span>{{this.executorInfo.name}}</span></li>
+                    <li style="width: 20%"><span>{{this.executorInfo.email}}</span></li>
+                    <li style="width: 20%"><span>{{this.executorInfo.phone}}</span></li>
+                    <li style="width: 20%"><span>{{ inwork(this.executorInfo.name) }}</span></li>
+                    <li style="width: 20%"><span>{{ complete(this.executorInfo.name) }}</span></li>
                 </ul>
                 </label>
                 <div class="panel2">
@@ -81,7 +81,6 @@ export default {
 
     data: function() {
         return {
-            executor: this.executorInfo,
             localID: this.id,
             count: 4,
             currentPage: 1,
@@ -113,7 +112,7 @@ export default {
             filteredRequests: function() {
                 return this.requestList.filter(elem => {
                     let res = false;
-                        if (elem.executor == this.executor.name) {
+                        if (elem.executor == this.executorInfo.name) {
                             res= true;
                         }
                     return res;

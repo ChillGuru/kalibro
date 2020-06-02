@@ -28,103 +28,32 @@
         </header>
 
         <div class="table__content">
-            <span v-if="filteredRequests == ''" class="lackof">Фильтры не включены или заявки отсутствуют</span> 
-            <div class="table__item" v-for="req in filteredRequests">
-                <input
-                    style="display: none"
-                    type="checkbox"
-                    :id="req.id"
-                    :value="req"
-                />
-                <label class="req__content d-flex" :for="req.id">
-                <ul class="item__values d-flex align-items-center" style="width: 100%">
-                    <li style="width: 3%"><div class="status__color" :style="reqColor(req.status)"></div></li>
-                    <li style="width: 8%">{{req.status}}</li>
-                    <li style="width: 20%"> {{req.address}}</li>
-                    <li style="width: 7%"> {{req.date}} </li>
-                    <li style="width: 20%">{{req.executor}}</li>
-                    <li style="width: 3%"><div class="status__color" :style="formColor(req.form)"></div></li>
-                    <li style="width: 12%">{{req.form}}</li>
-                    <li style="width: 17%">{{req.task}}</li>
-                </ul>
-                </label>
-                <div class="panel">
-                    <div class="d-flex">
-                        <div class="panel__map"></div>
-                        <div class="panel__btns">
-                            <button class="panel__btn">Удалить</button>
-                            <button class="panel__btn" style="margin-top: 30px">Изменить</button>
-                            <button class="panel__btn" style="margin-top: 30px">Подробнее</button>
-                            <button class="panel__btn" style="margin-top: 30px">Отчет</button>
-                        </div>
-                    </div>
-                </div>
+            <span v-if="this.requestList == ''" class="lackof">Фильтры не включены или заявки отсутствуют</span> 
+            <div v-for="req in this.requestList">
+                <requests-table-item
+                :requestInfo="req"
+                :formsFilter="formsFilter">
+                </requests-table-item>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import RequestsTableItem from "./RequestsTableItem.vue"
+
     export default {
         props:[
             'requestList',
-            'requestsFilter',
-            'executorsFilter',
             'formsFilter'
             ],
         data: function() {
             return{
             }
         },
-        computed:{
-            filteredRequests: function() {
-                return this.requestList.filter(elem => {
-                    var res = true;
-
-                    this.requestsFilter.forEach((val, i) => {
-                        if (val.other == elem.status && val.status == false) {
-                            res= false;
-                        }
-                    });
-
-                    this.executorsFilter.forEach((val, i) => {
-                        if (val.name == elem.executor && val.status == false) {
-                            res= false;
-                        }
-                    });
-
-                    this.formsFilter.forEach((val, i) => {
-                        if (val.name == elem.form && val.status == false) {
-                            res = false;
-                        }
-                    });
-                    return res;
-                })
-            }
+        components: {
+            RequestsTableItem
         },
-        methods: {
-            reqColor: function(name) {
-            switch (name) {
-                        case "Открыта":
-                            return "background: #FFD79A";
-                            
-                        case "Принята":
-                            return "background: #D993D0";
-                            
-                        case "Выполнена":
-                            return "background: #82DBB1";
-                        }
-            },
-            formColor: function(form) {
-                var color = '';
-                this.formsFilter.forEach((val, i) => {
-                        if (val.name == form) {
-                            color = val.color;
-                        }
-                    });
-                return color;
-            }
-        }
     }
 </script>
 

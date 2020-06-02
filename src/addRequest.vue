@@ -38,7 +38,7 @@
 
                 <h1 style="margin-top: 20px">ИСПОЛНИТЕЛЬ</h1>
                 <select class="max__text" v-model="newReq.executor" style="cursor: pointer">
-                    <option value="Любой">Выбрать всех (по умолчанию)</option>
+                    <option value="-">Выбрать всех (по умолчанию)</option>
                     <option v-for="executor in executors" :value="executor.name">{{ executor.name }}</option>
                 </select>
 
@@ -53,19 +53,21 @@
                     <button class="req__btn" @click="addNewReq">СОХРАНИТЬ</button>
                 </div>
         </div>
-        <div class="request__map"></div>
+        <GMap :size="'height: 100%; width:550px;'" :zoom="13"></GMap>
     </div>
 </div>
 </template>
 
 <script>
-import Inputmask from 'inputmask';
+import Inputmask from 'inputmask'; //Маски ввода
+import GMap from "./GoogleMap.vue"; //Карта
 
 export default {
     props: ["forms", "executors", "isForm", "requests"],
 
     data: function() {
         return {
+            all: 'Все',
             localIsForm: this.isForm,
             localReqs: this.requests,
             startdate: "",
@@ -107,7 +109,12 @@ export default {
         },
 
         addNewReq: function() {
-            if (this.newReq.city != ''){
+            if (this.newReq.city == ''){console.log('Данные не приняты');}
+            else if (this.newReq.address == ''){console.log('Данные не приняты');}
+            else if (this.newReq.task == ''){console.log('Данные не приняты');}
+            else if (this.newReq.form == ''){console.log('Данные не приняты');}
+            else if (this.newReq.executor == ''){console.log('Данные не приняты');}
+            else {
                 var bg = '';
                 this.newReq.id = Math.random() * (9999999 - 1) + 1;
                 bg = Math.floor(Math.random() * 899) + 100;
@@ -120,9 +127,13 @@ export default {
                 this.$emit('addNewRequest', this.localReqs)
                 this.localIsForm = false;
                 this.$emit('showReForm', this.localIsForm)
-            } else{console.log('Данные не приняты');}
+            }
         },
     },
+    
+    components: {
+        GMap
+    }
 
 }
 </script>
@@ -132,6 +143,7 @@ export default {
 .modal__req {
     position: absolute;
     width: 100%;
+    min-width: 1240px;
     height: calc(100% - 44px);
     z-index: 1050;
     background: rgba(0, 0, 0, 0.3);
@@ -173,6 +185,10 @@ export default {
     line-height: 15px;
     color: #9E9E9E;
     margin-left: 14px;
+}
+
+.reqForm h1 {
+    padding: 0;
 }
 
 .row1 {

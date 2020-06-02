@@ -5,27 +5,27 @@
                 <div class="col-12 col-md-1"></div>
                 <div class="col-8 col-md-6 col-lg-5 col-xl-4 nav">
                         <ul class="d-flex">
-                            <li style="margin-left: 0px"><label><img src="./assets/Logo.png" alt="logo" class="menu__logo"></label></li>
-                            <li><label class="nav__item">ГЛАВНАЯ</label></li>
-                            <li>
-                                <div class="dropdown show">
-                                    <label  class="nav__item" id="dropdownMenuLink" @click="MenuActive">
+                            <li style="margin-left: 0px"><label class="d-flex align-items-center" onClick='location.href="index.html"'><img src="./assets/Logo.png" alt="logo" class="menu__logo"></label></li>
+                            <li><label class="nav__item d-flex align-items-center" onClick='location.href="index.html"'>ГЛАВНАЯ</label></li>
+                            <li class="d-flex align-items-center">
+                                <div class="dropdown show d-flex align-items-center" style="">
+                                    <label  class="nav__item d-flex align-items-center" id="dropdownMenuLink" @click="MenuActive">
                                         ДОБАВИТЬ...</label>
-                                    <div class="dropdown-menu" :class="[isMenuActive == true ? 'show': '']">
-                                        <div class="dropdown-inner d-flex align-items-center"><label class="dropdown-item" @click="showReForm">Добавить заявку</label></div>
-                                        <div class="dropdown-inner d-flex align-items-center"><label class="dropdown-item">Добавить новый бланк</label></div>
-                                        <div class="dropdown-inner d-flex align-items-center" style="border-bottom: 0"><label class="dropdown-item" @click="showExForm">Добавить исполнителя</label></div>
+                                    <div class="dropdown-menu" >
+                                        <div class="dropdown-inner d-flex align-items-center"><label style="border-top: 1px solid white" class="dropdown-item d-flex align-items-center justify-content-center" @click="showReForm">ДОБАВИТЬ ЗАЯВКУ</label></div>
+                                        <div class="dropdown-inner d-flex align-items-center"><label class="dropdown-item d-flex align-items-center justify-content-center">ДОБАВИТЬ НОВЫЙ БЛАНК</label></div>
+                                        <div class="dropdown-inner d-flex align-items-center" style="border-bottom: 0"><label class="dropdown-item d-flex align-items-center justify-content-center" @click="showExForm">ДОБАВИТЬ ИСПОЛНИТЕЛЯ</label></div>
                                     </div>
                                 </div>
                             </li>
-                            <li style="margin-right: 0px"><label class="nav__item">НАСТРОЙКИ</label></li>
+                            <li style="margin-right: 0px"><label class="nav__item d-flex align-items-center">НАСТРОЙКИ</label></li>
                         </ul>
                 </div>
                 <div class="col-12 col-md-2 col-lg-4 col-xl-5"></div>
-                <div class="col-4 col-md-3 col-lg-2 d-flex align-items-center justify-content-end" style='height: 100%; padding-bottom: 8px;'>
+                <div class="col-4 col-md-3 col-lg-2 d-flex align-items-center justify-content-end" style='height: 100%;'>
                     <img class="client__logo" src="./assets/nav_user_logo.png" alt="client__logo">
-                    <label class="client__name">{{ localUsername }}</label>
-                    <label class="logout">Выйти</label>
+                    <label class="client__name" style="font-size: 16px;">{{ localUsername }}</label>
+                    <label class="logout" onClick='location.href="index.html"'>ВЫЙТИ</label>
                 </div>
             </div>
         </div>
@@ -80,17 +80,25 @@
 }
 
 .row {
-    height: 44px;
+    height: 62px;
     background: #6F6F6F;
+    padding: 0;
+}
+
+.nav {
+    height: 100%;
 }
 
 .nav ul {
     list-style: none;
+    height: 100%;
 }
 
 .nav ul li label {
     text-decoration: none;
     cursor: pointer;
+    height: 100%;
+    vertical-align: center;
 }
 
 .nav__item {
@@ -108,6 +116,10 @@
     transition: .4s;
 }
 
+.dropdown {
+    height: 62px;
+}
+
 .dropdown .show {
     margin-left: 25px;
 }
@@ -116,31 +128,34 @@
     background: #6F6F6F;
     padding: 0;
     margin: 0;
-    margin-top: 12px;
+
     border-radius: 0;
     border: 0;
 }
 
+ .dropdown:hover > .dropdown-menu {
+ display: block; 
+} 
+
 .dropdown-inner {
-    height: 45px;
+    height: 62px;
     width: 270px;
     border-bottom: 1px solid white;
 }
 
 .dropdown-item {
-    height: 44px;
+    height: 62px;
     align-items: center;
     font-weight: 500;
     font-size: 12px;
-    padding: 12px 0 0 0;
-    margin: 0 0 0 13px;
+    padding: 0;
+    margin: 0;
     color: #FFFFFF;
 }
 
 .dropdown-item:focus,
 .dropdown-item:hover {
     align-items: center;
-    height: 42px;
     color: #FFD79A;
     text-decoration: none;
     background-color: #6F6F6F;

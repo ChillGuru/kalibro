@@ -56,20 +56,32 @@ header {
 .navbar {
     min-height: 62px;
     background:rgba(48, 48, 48, 48);
+    padding: 0;
 }
 
 .nav ul {
     list-style: none;
 }
 
+.nav-item{
+    height: 100%;
+}
+
 .nav-item a,
 .login a {
+    display: inline-block;
+    text-align: center;     
+    position: relative;    
+    z-index: 1;        
     color: #FFFFFF;
     font-weight: 300;
     font-size: 14px;
-    line-height: 17px;
+    line-height: 61px;
+    height: 100%;
+    width: 100%;
     white-space: nowrap;
     text-decoration: none;
+    margin: 0 5px 0 5px;
 }
 
 .nav-item a:hover,
@@ -156,7 +168,6 @@ header {
     width: 463px;
     height: 54px;
     margin-top: 132px;
-    margin-bottom: 182px;
 }
 
 .btn-con p {
