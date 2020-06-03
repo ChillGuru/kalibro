@@ -27,14 +27,13 @@
         </header>
 
         <div class="table__content">
-            <span v-if="filteredExecutors == ''" class="lackof">Фильтры не включены или исполнители отсутствуют</span> 
-            <div v-for="executor in filteredExecutors">
+            <span v-if="executors == ''" class="lackof">Фильтры не включены или исполнители отсутствуют</span> 
+            <div v-for="executor in this.executors">
                 <table-item
                 :executorInfo="executor"
                 :id="uniID(executor.name)"
                 :requestList="requestList">
-
-                </table-item>
+             </table-item>
             </div>
         </div>
     </div>
@@ -46,7 +45,7 @@ import tableItem from "./ExecutorsTableItem.vue"
     export default {
         props:[
             'requestList',
-            'executorsFilter',
+            'executors',
             ],
         data: function() {
             return{
@@ -54,26 +53,10 @@ import tableItem from "./ExecutorsTableItem.vue"
             }
         },
 
-        computed:{
-            filteredExecutors: function() {
-                return this.executorsFilter.filter(elem => {
-                    var res = true;
-
-                    this.executorsFilter.forEach((val, i) => {
-                        if (val.name == elem.name && val.status == false) {
-                            res= false;
-                        }
-                    });
-
-                    return res;
-                })
-            },
-        },
-
         methods: {
             uniID: function(value) {
                 var id = 0;
-                this.filteredExecutors.forEach((val, i) => {
+                this.executors.forEach((val, i) => {
                     if (val.name == value) {
                         return id;
                     } else {id++}

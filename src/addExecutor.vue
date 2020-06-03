@@ -73,6 +73,7 @@ export default {
 .modal__ex {
     position: absolute;
     width: 100%;
+    min-width: 1240px;
     height: calc(100% - 44px);
     z-index: 1050;
     background: rgba(0, 0, 0, 0.3);
