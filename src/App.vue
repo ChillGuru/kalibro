@@ -78,7 +78,11 @@
               </div>
               <!--Карта-->
               <div class="justbox" v-if="selectedRadio == 'map'">
-                <GMap :size="rightContentHeight+'width:100%;'" :zoom="13"></GMap>
+                <GMap
+                :size="rightContentHeight+'width:100%;'"
+                :zoom="13"
+                :requests="filteredRequests">
+                </GMap>
               </div>
               <div class="justbox" v-if="selectedRadio == 'table'">
                 <RequestsTable
@@ -472,11 +476,11 @@ export default {
       procent = this.window.height / 100;
       return (380 / procent);
     },
-
+    //Вычисение высоты основной карты в пикселях (фактически костыль, т.к экземпляр карты не принимает проценты)
     rightContentHeight: function() {
       return "height:"+(this.window.height - 160)+"px; ";
     },
-
+    //Отфильтрованный список заявок
     filteredRequests: function() {
                 return this.requestList.filter(elem => {
                     var res = true;
@@ -501,7 +505,7 @@ export default {
                     return res;
                 })
             },
-
+    //Отфильтрованный список работников
     filteredExecutors: function() {
                 return this.executors.filter(elem => {
                     var res = true;
@@ -515,14 +519,6 @@ export default {
                     return res;
                 })
             },
-
-    markers: function() {
-      var marker = [];
-      if (requestList) {
-        
-      }
-
-    }
   },
 
   components: {

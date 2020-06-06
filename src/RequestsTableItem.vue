@@ -20,7 +20,10 @@
                 </label>
                 <div class="panel">
                     <div class="d-flex">
-                        <GMap style="width: 100%" :size="mapSize" :zoom="16"></GMap>
+                        <GMap style="width: 100%"
+                        :size="mapSize"
+                        :zoom="16"
+                        :requests="null"></GMap>
                         <div class="panel__btns">
                             <button class="panel__btn">Удалить</button>
                             <button class="panel__btn" style="margin-top: 30px">Изменить</button>

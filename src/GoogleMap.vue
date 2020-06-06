@@ -19,13 +19,12 @@
 <script>
 export default {
   name: "GoogleMap",
-  props: ['size', 'zoom'],
+  props: ['size', 'zoom', 'requests'],
   data() {
     return {
       // default to Yekateringurg to keep it simple
       // change this to whatever makes sense
       center: { lat: 56.8380, lng: 60.5974 },
-      markers: [],
       places: [],
       currentPlace: null
     };
@@ -33,6 +32,24 @@ export default {
 
   mounted() {
     this.geolocate();
+  },
+
+  computed: {
+    markers: function() {
+      var addresses = [];
+      var address = String;
+      if (this.requests){
+        this.requests.forEach((val) => {
+          address = val.city + ", " + val.address;
+          const marker = {
+            lat: address.geometry.location.lat(),
+            lng: address.geometry.location.lng()
+          };
+          addresses.push({position: marker});
+        s});
+      };
+      return addresses;
+    }
   },
 
   methods: {

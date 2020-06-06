@@ -53,7 +53,10 @@
                     <button class="req__btn" @click="addNewReq">СОХРАНИТЬ</button>
                 </div>
         </div>
-        <GMap :size="'height: 100%; width:550px;'" :zoom="13"></GMap>
+        <GMap
+        :size="'height: 100%; width:550px;'"
+        :zoom="13"
+        :requests="null"></GMap>
     </div>
 </div>
 </template>
