@@ -6,14 +6,14 @@
           style="display: none"
           type="checkbox"
           id="check_main"
-          checked="localAllRequestsChecked"
-          v-model="localAllRequestsChecked"
+          :checked="ALL_REQUESTS_CHECKED"
+          @change="check_all"
         />
         <label class="check__label" for="check_main" style="font-weight: 600;">Заявки</label>
       </div>
     </div>
     <div class="requests__content d-flex flex-column justify-content-between">
-      <div v-for="request in requests" class="check__content d-flex justify-content-between">
+      <div v-for="request in CHECKED_REQUESTS" class="check__content d-flex justify-content-between">
         <div>
           <input
             style="display: none"
@@ -22,7 +22,6 @@
             :checked="request.status"
             :value="request"
             @change="changeFilterStatus(request)"
-            :v-model="changes"
           />
           <label class="check__label unselectable" :for="request.id">{{ request.name }}</label>
         </div>
@@ -38,43 +37,58 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex';
+
 export default {
-  props: ["AllRequestsChecked", "checkedRequests"],
   data: function() {
     return {
-      localAllRequestsChecked: this.AllRequestsChecked,
-      changes: [],
-      forEmit: [],
-      requests: this.checkedRequests
     };
   },
 
   methods: {
+    ...mapActions([
+      'UPD_ALL_REQUESTS_CHECKED',
+      'UPD_CHECKED_REQUESTS'
+    ]),
+
+    check_all() {
+      let local = this.ALL_REQUESTS_CHECKED;
+      if (local == false) {local = true}
+      else {local = false;}
+      this.UPD_ALL_REQUESTS_CHECKED(local);
+    },
+
     changeFilterStatus: function(req) {
-      this.requests.forEach((val, i) => {
+      let local = this.CHECKED_REQUESTS;
+      local.forEach((val) => {
         if (val.name == req.name) {
           val.status = !val.status;
         }
       });
+      this.UPD_ALL_REQUESTS_CHECKED(local);
     }
   },
 
-  watch: {
-    requests: function() {
-      this.forEmit = this.requests;
-      this.$emit("requestFilterChanged", this.forEmit);
-    },
+  computed: {
+    ...mapGetters([
+      'ALL_REQUESTS_CHECKED',
+      'CHECKED_REQUESTS'
+    ]),
+  },
 
-    localAllRequestsChecked: function() {
-      if (this.localAllRequestsChecked) {
-        this.requests.forEach((val, i) => {
+  watch: {
+    ALL_REQUESTS_CHECKED: function() {
+    let local = this.CHECKED_REQUESTS;  
+      if (this.ALL_REQUESTS_CHECKED) {
+        local.forEach((val) => {
           val.status = true;
         });
       } else {
-        this.requests.forEach((val, i) => {
+        local.forEach((val) => {
           val.status = false;
         });
-      }
+      };
+      this.UPD_CHECKED_REQUESTS(local);
     }
   }
 };

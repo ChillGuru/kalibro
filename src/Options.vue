@@ -1,37 +1,38 @@
 <template>
   <div class="radio__group d-flex justify-content-around" :class="{locked: isLocked}">
     <label for="calendarOption" class="radio d-flex align-items-center justify-content-center" :class="{isLocked: isLocked}">
-      <input type="radio" value="calendar" name="mainradio" v-model="localSelected" id="calendarOption"/>
+      <input type="radio" value="calendar" :checked="SELECTED_RADIO == 'calendar'" name="mainradio"  id="calendarOption" @click="UPD_SELECTED_RADIO('calendar')"/>
       <span class="d-flex align-items-center justify-content-center"><img src="./assets/calendar_icon.png" alt="calendar_icon" class="option_icon"></span>
     </label>
     <label for="mapOption" class="radio d-flex align-items-center justify-content-center" :class="{isLocked: isLocked}">
-      <input type="radio" value="map" name="mainradio" v-model="localSelected" id="mapOption" />
+      <input type="radio" value="map" :checked="SELECTED_RADIO == 'map'" name="mainradio"  id="mapOption" @click="UPD_SELECTED_RADIO('map')"/>
       <span class="d-flex align-items-center justify-content-center"><img src="./assets/map_icon.svg" alt="map_icon" class="option_icon"></span>
     </label>
     <label for="tableOption" class="radio d-flex align-items-center justify-content-center">
-      <input type="radio" value="table" name="mainradio" v-model="localSelected" id="tableOption" />
+      <input type="radio" value="table" :checked="SELECTED_RADIO == 'table'" name="mainradio"  id="tableOption" @click="UPD_SELECTED_RADIO('table')"/>
       <span class="d-flex align-items-center justify-content-center"><img src="./assets/table_icon.png" alt="table_icon" class="option_icon"></span>
     </label>
   </div>
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex';
 export default {
-  props:['selected', 'isLocked'],
+  props:['isLocked'],
   data: function() {
-    return {
-      localSelected: this.selected
-    }
+    return {}
   },
-  watch: {
-    localSelected: function() {
-      this.$emit('radioChanged', this.localSelected)
-    },
+  methods: {
+    ...mapActions([
+      'UPD_SELECTED_RADIO'
+    ]),
+  },
 
-    selected: function() {
-      this.localSelected = this.selected
-    }    
-  }
+  computed: {
+    ...mapGetters([
+      'SELECTED_RADIO',
+    ]),
+  },
 };
 </script>
 

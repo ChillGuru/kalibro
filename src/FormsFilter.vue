@@ -3,14 +3,14 @@
   <div class="box ml-auto mr-auto" style="height: 100%;">
     <div class="box__header d-flex justify-content-between">
       <div class="check__main d-flex align-items-center">
-        <input style="display: none" type="checkbox" checked="localFormsChecked" v-model="localFormsChecked"  id="check_main3"/>
-        <label class="check__label" for="check_main3" style="font-weight: 600;">{{title}}</label>
+        <input style="display: none" type="checkbox" :checked="ALL_FORMS_CHECKED" @change="check_all" id="check_main3"/>
+        <label class="check__label" for="check_main3" style="font-weight: 600;">Бланки</label>
       </div>
       <button class="add__checkbox_item" @click="pushForm()">+</button>
     </div>
     <div class="forms__content d-flex flex-column">
-      <span v-if="localForms == ''" class="lackof">Бланки отсутсвуют</span> 
-      <div v-for="form in localForms" class="d-flex" style="margin: 8px 0; line-height: 17px; height: 17px;">
+      <span v-if="FORMS == ''" class="lackof">Бланки отсутсвуют</span> 
+      <div v-for="form in FORMS" class="d-flex" style="margin: 8px 0; line-height: 17px; height: 17px;">
         <div>
           <input
             style="display: none"
@@ -30,49 +30,71 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex';
+
 export default {
-  props: ["title", "forms", "allChecked"],
   data: function() {
     return {
-      localForms: this.forms,
-      localFormsChecked: this.allChecked,
       changes: []
     }
   },
   
   methods: {
+    ...mapActions([
+      'UPD_ALL_FORMS_CHECKED',
+      'UPD_FORMS_IN_LOCAL',
+      'ADD_FORM'
+    ]),
+
+    check_all() {
+      let local = this.ALL_FORMS_CHECKED;
+      if (local) {local = false}
+      else {local = true};
+      this.UPD_ALL_FORMS_CHECKED(local)
+    },
+
     changeFilterStatus: function(nm) {
-      this.localForms.forEach((val, i) => {
+      let local = this.FORMS
+      local.forEach((val) => {
         if (val.name == nm.name) {
           val.status = !val.status;
         }
       });
+      this.UPD_FORMS_IN_LOCAL(local)
     },
     
     pushForm: function() {
+      let local = this.FORMS; 
       var Form = {},
       color = Math.floor(Math.random() * 899) + 100;
-      Form.name = 'Some Form #' + (this.localForms.length + 1);
+      Form.name = 'Some Form #' + (local.length + 1);
       Form.color = 'background: #' + color.toString();
-      Form.id = 'Form' + (this.localForms.length + 1);
+      Form.id = 'Form' + (local.length + 1);
       Form.status = false;
-
-      this.localForms.push(Form);
-      return this.localForms;
+      this.ADD_FORM(Form);
     }
   },
 
+  computed: {
+    ...mapGetters([
+      'ALL_FORMS_CHECKED',
+      'FORMS'
+    ])
+  },
+
   watch: {
-    localFormsChecked: function() {
-      if (this.localFormsChecked) {
-        this.localForms.forEach((val, i) => {
+    ALL_FORMS_CHECKED: function() {
+      let local = this.FORMS;
+      if (this.ALL_FORMS_CHECKED) {
+        local.forEach((val) => {
           val.status = true;
         });
       } else {
-        this.localForms.forEach((val, i) => {
+        local.forEach((val) => {
           val.status = false;
         });
-      }
+      };
+      this.UPD_FORMS_IN_LOCAL(local)
     }
   },
 }

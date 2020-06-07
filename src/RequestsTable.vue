@@ -28,11 +28,10 @@
         </header>
 
         <div class="table__content">
-            <span v-if="this.requestList == ''" class="lackof">Фильтры не включены или заявки отсутствуют</span> 
-            <div v-for="req in this.requestList">
+            <span v-if="REQUESTLIST == ''" class="lackof">Фильтры не включены или заявки отсутствуют</span> 
+            <div v-for="req in REQUESTLIST">
                 <requests-table-item
-                :requestInfo="req"
-                :formsFilter="formsFilter">
+                :requestInfo="req">
                 </requests-table-item>
             </div>
         </div>
@@ -40,21 +39,23 @@
 </template>
 
 <script>
-    import RequestsTableItem from "./RequestsTableItem.vue"
+import {mapActions, mapGetters} from 'vuex';
+import RequestsTableItem from "./RequestsTableItem.vue"
 
-    export default {
-        props:[
-            'requestList',
-            'formsFilter'
-            ],
-        data: function() {
-            return{
-            }
-        },
-        components: {
-            RequestsTableItem
-        },
-    }
+export default {
+    data: function() {
+        return{
+        }
+    },
+    computed: {
+        ...mapGetters([
+            'REQUESTLIST'
+        ])
+    },
+    components: {
+        RequestsTableItem
+    },
+}
 </script>
 
 <style>

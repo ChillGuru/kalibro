@@ -14,7 +14,7 @@
             <input type="text" class="executorInput" v-model="newex.phone" id="ExNumber">
         </form>
         <div class="ex__modal__footer d-flex justify-content-center">
-                <button class="ex__btn" @click="showExForm">ОТМЕНИТЬ</button>
+                <button class="ex__btn" @click="UPD_EXECUTOR_FORM_VISIBLE(false)">ОТМЕНИТЬ</button>
                 <button class="ex__btn" @click="addNewEx">СОХРАНИТЬ</button>
         </div>
     </div>
@@ -22,9 +22,9 @@
 </template>
 
 <script>
-export default {
-    props: ["isForm", "executors"],
+import {mapActions, mapGetters} from 'vuex';
 
+export default {
     data: function() {
         return {
         localIsForm: this.isForm,
@@ -42,28 +42,28 @@ export default {
     },
 
     methods: {
-        showExForm: function() {
-            this.localIsForm = false
-        },
+        ...mapActions([
+            'UPD_EXECUTOR_FORM_VISIBLE',
+            'ADD_EXECUTOR'
+         ]),
 
         addNewEx: function() {
             if ((this.newex.name != '') && (this.newex.email != '') && (this.newex.password != '') && (this.passcheck != '') && (this.newex.phone != '')) {
                 if (this.newex.password === this.passcheck) {
                     this.newex.id = Math.random() * (9999999 - 1) + 1;
-                    this.localNames.push(this.newex);
-                    this.$emit('addNewExecutor', this.localNames)
-                    this.localIsForm  = false;
+                    this.ADD_EXECUTOR(this.newex);
+                    this.UPD_EXECUTOR_FORM_VISIBLE(false)
 
                 }
             }
         },
     },
-        
-    watch: {
-        localIsForm: function() {
-            this.$emit('showExForm', this.localIsForm)
-        }
-    }
+    
+    computed: {
+        ...mapGetters([
+            'EXECUTOR_FORM_VISIBLE'
+        ])
+    },
 
 }
 </script>

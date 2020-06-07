@@ -4,14 +4,11 @@
             <button class="filters__btn">Новая заявка</button>
             <Option 
             class="filters__radio" 
-            :selected="selectedRadio"
             :isLocked="isOptionsLocked"
-            @radioChanged="localSelectedRadio = $event"
             ></Option>
         </div>
         <RequestsFilter
             class="filters__box ml-auto mr-auto"
-            :checkedRequests="localCheckedRequests"
             @requestFilterChanged="RequestsForEmit = $event"
         ></RequestsFilter>
 
@@ -24,23 +21,15 @@
 
     export default {
         props:[
-            'selectedRadio',
-            'AllRequestsChecked',
-            'checkedRequests',
             'isOptionsLocked'
             ],
         data: function() {
             return{
                 date: '25/01/2019 - 29/01/2019',
                 RequestsForEmit: [],
-                localCheckedRequests: this.checkedRequests,
-                localSelectedRadio: ''
             }
         },
         watch: {
-            localSelectedRadio: function() {
-                this.$emit('radioChanged', this.localSelectedRadio)
-            },
             RequestsForEmit: function() {
                 this.$emit('requestFilterChanged', this.RequestsForEmit)
             }

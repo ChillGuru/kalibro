@@ -41,55 +41,49 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex';
 import ReportsTableItem from "./ReportsTableItem.vue"
 
-    export default {
-        props:[
-            'requestList',
-            'executorsFilter',
-            'checkedRequests',
-            'checkedForms'
-            ],
-        data: function() {
-            return{
-                
-            }
-        },
-
-        computed:{
-            filteredReports: function() {
-                return this.requestList.filter(elem => {
-                    var res = true;
-
-                    if (elem.status == 'Открыта') {res= false}
-
-                    this.executorsFilter.forEach((val, i) => {
-                        if (val.name == elem.executor && val.status == false) {
-                            res= false;
-                        }
-                    });
-
-                    this.checkedRequests.forEach((val, i) => {
-                        if (val.other == elem.status && val.status == false) {
-                            res= false;
-                        }
-                    });
-
-                    this.checkedForms.forEach((val, i) => {
-                        if (val.name == elem.form && val.status == false) {
-                            res= false;
-                        }
-                    });
-
-                    return res;
-                })
-            },
-        },
-
-        components: {
-            ReportsTableItem
+export default {
+    data: function() {
+        return{
         }
+    },
+
+    computed:{
+        ...mapGetters([
+            'EXECUTORS',
+            'FORMS',
+            'REQUESTLIST'
+        ]),
+
+        filteredReports: function() {
+            return this.REQUESTLIST.filter(elem => {
+                var res = true;
+
+                if (elem.status == 'Открыта') {res= false}
+
+                this.EXECUTORS.forEach((val, i) => {
+                    if (val.name == elem.executor && val.status == false) {
+                        res= false;
+                    }
+                });
+
+                this.FORMS.forEach((val, i) => {
+                    if (val.name == elem.form && val.status == false) {
+                        res= false;
+                    }
+                });
+
+                return res;
+            })
+        },
+    },
+
+    components: {
+        ReportsTableItem
     }
+}
 </script>
 
 <style>

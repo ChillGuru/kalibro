@@ -2,29 +2,15 @@
   <div id="app" class="main" style="height: 100%;">
     <Header
       style="min-width: 1240px;"
-      :isExForm="isExForm"
-      :isReForm="isReForm"
-      :username="login"
-      @showExForm="isExForm = $event"
-      @showReForm="isReForm = $event"
     ></Header>
       <!--Форма добавления нового исполнителя-->
       <add-executor
-        v-if="isExForm"
-        :isForm="isExForm"
-        :executors="executors"
-        @addNewExecutor="executors = $event"
-        @showExForm="isExForm = $event"
+        v-if="EXECUTOR_FORM_VISIBLE"
+        @addNewExecutor="EXECUTORS = $event"
       />
       <!--Форма добавления новой заявки-->
       <add-request
-        v-if="isReForm"
-        :isForm="isReForm"
-        :forms="checkedForms"
-        :executors="executors"
-        :requests="requestList"
-        @showReForm="isReForm = $event"
-        @addNewRequest="requestList = $event"
+        v-if="REQUEST_FORM_VISIBLE"
       />
       <splitpanes class="default-theme" style="height: calc( 100% - 62px)">
         <!--Левая часть (фильтры)-->
@@ -34,12 +20,7 @@
               <div class="left__pane">
                 <TopFilters
                   class="filters"
-                  :selectedRadio="selectedRadio"
-                  :AllRequestsChecked="AllRequestsChecked"
-                  :checkedRequests="checkedRequests"
                   :isOptionsLocked="isOptionsLocked"
-                  @radioChanged="selectedRadio = $event"
-                  @requestFilterChanged="checkedRequests = $event"
                 ></TopFilters>
               </div>
             </pane>
@@ -47,11 +28,6 @@
               <div class="left__pane">
                 <ExecutorFilter
                   class="filterbox"
-                  :title="'Исполнители'"
-                  :names="executors"
-                  :allChecked="allNamesChecked"
-                  :isForm="isExForm"
-                  @showExForm="isExForm = $event"
                 ></ExecutorFilter>
               </div>
             </pane>
@@ -59,9 +35,6 @@
               <div class="left__pane">
                 <FormsFilter
                   class="filterbox"
-                  :title="'Бланки'"
-                  :forms="checkedForms"
-                  :allChecked="allFormsChecked"
                 ></FormsFilter>
               </div>
             </pane>
@@ -71,43 +44,37 @@
         <pane :size='100-paneHorizontalSize' style="padding: 30px 23px 32px 10px">
           <b-tabs class="right__content">
             <!--Вкладка "Заявки"-->
-            <b-tab title="Заявки" @click="tabPosition = 1" active>
-              <div class="justbox" v-if="selectedRadio == 'calendar'">
+            <b-tab title="Заявки" @click="UPD_TAB_POSITION(1)" active>
+              <div class="justbox" v-if="SELECTED_RADIO == 'calendar'">
                 <h1>Данная функция в стадии разработки</h1>
                 <img src="./assets/works.png" alt="works" style="height: 100px; weight:100px;">
               </div>
               <!--Карта-->
-              <div class="justbox" v-if="selectedRadio == 'map'">
+              <div class="justbox" v-if="SELECTED_RADIO == 'map'">
                 <GMap
                 :size="rightContentHeight+'width:100%;'"
                 :zoom="13"
                 :requests="filteredRequests">
                 </GMap>
               </div>
-              <div class="justbox" v-if="selectedRadio == 'table'">
+              <div class="justbox" v-if="SELECTED_RADIO == 'table'">
                 <RequestsTable
-                  :requestList="filteredRequests"
-                  :formsFilter="checkedForms"
                 ></RequestsTable>
               </div>
             </b-tab>
             <!--Вкладка "Исполнители"-->
-            <b-tab title="Исполнители" @click="tabPosition = 2; selectedRadio = 'table';">
-                <div class="justbox" v-if="selectedRadio == 'table'">
+            <b-tab title="Исполнители" @click="UPD_TAB_POSITION(2); UPD_SELECTED_RADIO('table');">
+                <div class="justbox" v-if="SELECTED_RADIO == 'table'">
                   <ExecutorsTable
-                    :requestList="requestList"
                     :executors="filteredExecutors"
                   ></ExecutorsTable>
                 </div>
             </b-tab>
             <!--Вкладка "Отчеты"-->
-            <b-tab title="Отчеты" @click="tabPosition = 3; selectedRadio = 'table';">
-              <div class="justbox" v-if="selectedRadio == 'table'">
+            <b-tab title="Отчеты" @click="UPD_TAB_POSITION(3); UPD_SELECTED_RADIO('table');">
+              <div class="justbox" v-if="SELECTED_RADIO == 'table'">
                 <ReportsTable
                   :requestList="requestList"
-                  :executorsFilter="executors"
-                  :checkedRequests="checkedRequests"
-                  :checkedForms="checkedForms"
                 ></ReportsTable>
               </div>
             </b-tab>
@@ -116,15 +83,15 @@
                 <h1>Фильтр:</h1>
                 <br/>
                 <ul>
-                  <li v-for="r in checkedRequests">{{ r.name }}: {{ r.status }}</li>
+                  <li v-for="r in CHECKED_REQUESTS">{{ r.name }}: {{ r.status }}</li>
                 </ul>
                 <br />
                 <ul>
-                  <li v-for="n in executors">{{ n.name }}: {{ n.status }}</li>
+                  <li v-for="n in EXECUTORS">{{ n.name }}: {{ n.status }}</li>
                 </ul>
                 <br />
                 <ul>
-                  <li v-for="f in checkedForms">{{ f.name }}: {{ f.status }}</li>
+                  <li v-for="f in FORMS">{{ f.name }}: {{ f.status }}</li>
                 </ul>
               </div>
             </b-tab>
@@ -135,6 +102,7 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex';
 import { Splitpanes, Pane } from "splitpanes"; //Сплитеры.
 import "splitpanes/dist/splitpanes.css"; //Стили сплитеров.
 import Header from "./header.vue"; //Хедер (ваш Кэп).
@@ -153,123 +121,10 @@ export default {
   data: function() {
     //Все значения приведенные здесь - считаются дефолтными.
     return {
-      login: "admin",
-      window: { //размер окна
+      window: { //размер окна (не трогай)
         height: window.innerHeight,
         width: window.innerWidth,
-    },
-      selectedRadio: "table", //Значения: calendar, map или table. Это радиокнопки  в фильтрах.
-
-      tabPosition: 1,
-
-      AllRequestsChecked: true,
-      checkedRequests: [
-        //Фильтр по типу заявок.
-        {
-          name: "Открыты",
-          other: "Открыта",
-          fullname: "Открытая заявка",
-          id: "open",
-          color: "background: #FFD79A",
-          status: true
-        },
-
-        {
-          name: "Приняты",
-          other: "Принята",
-          fullname: "Принятая заявка",
-          id: "adopted",
-          color: "background: #D993D0",
-          status: true
-        },
-
-        {
-          name: "Выполнены",
-          other: "Выполнена",
-          fullname: "Выполненная заявка",
-          id: "complete",
-          color: "background: #82DBB1",
-          status: true
-        }
-      ],
-
-      allNamesChecked: false,
-      executors: [
-        {
-          name: "Васнецов Николай Евгеньевич",
-          email: "example@gmail.com",
-          password: "qwerty",
-          phone: "88005553535",
-          status: true,
-          id: "name1"
-        },
-        {
-          name: "Романов Александр Николаевич",
-          email: "example@gmail.com",
-          password: "qwerty",
-          phone: "88005553535",
-          status: false,
-          id: "name2"
-        },
-        {
-          name: "Прокопьев Владимир Дмитриевич",
-          email: "example@gmail.com",
-          password: "qwerty",
-          phone: "88005553535",
-          status: false,
-          id: "name3"
-        },
-        {
-          name: "Попов Антон Андреевич",
-          email: "example@gmail.com",
-          password: "qwerty",
-          phone: "88005553535",
-          status: false,
-          id: "name4"
-        },
-        {
-          name: "Васюков Евгений Петрович",
-          email: "example@gmail.com",
-          password: "qwerty",
-          phone: "88005553535",
-          status: false,
-          id: "name5"
-        }
-      ],
-
-      allFormsChecked: false,
-      checkedForms: [
-        {
-          name: "Бланк для окон",
-          color: "background: #84D2DE;",
-          status: true,
-          id: "form1"
-        },
-        {
-          name: "Бланк для дверей",
-          color: "background: #BFF3A7;",
-          status: false,
-          id: "form2"
-        },
-        {
-          name: "Монтаж 15к1е6",
-          color: "background: #84D2DE;",
-          status: false,
-          id: "form3"
-        },
-        {
-          name: "Бланк стандарт 15",
-          color: "background: #85B8F1;",
-          status: false,
-          id: "form4"
-        },
-        {
-          name: "ГОСТ-12512-У-1",
-          color: "background: #D4D4D4;",
-          status: false,
-          id: "form5"
-        }
-      ],
+      },
       requestList: [
         {
           id: "r1",
@@ -431,32 +286,55 @@ export default {
           instructions: "",
           price: "",
         },
-      ],
-
-      isExForm: false,
-      isReForm: false
+      ]
     };
   },
 
+  mounted: function() {
+    this.GET_EXECUTORS();
+    this.GET_FORMS();
+    this.GET_REQUESTLIST();
+  },
+
   created: function() {
-        window.addEventListener('resize', this.handleResize);
-        this.handleResize();
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
   },
 
   destroyed: function() {
-        window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('resize', this.handleResize);
   },
 
   methods: {
+    ...mapActions([
+      'UPD_SELECTED_RADIO',
+      'UPD_TAB_POSITION',
+      'GET_EXECUTORS',
+      'GET_FORMS',
+      'GET_REQUESTLIST'
+    ]),
+    
     handleResize: function() {
-            this.window.width = window.innerWidth;
-            this.window.height = window.innerHeight;
-        }
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+    },
   },
 
   computed: {
+    ...mapGetters([
+      'EXECUTORS',
+      'FORMS',
+      'REQUESTLIST',
+      'LOGIN',
+      'SELECTED_RADIO',
+      'TAB_POSITION',
+      'EXECUTOR_FORM_VISIBLE',
+      'REQUEST_FORM_VISIBLE',
+      'CHECKED_REQUESTS'
+    ]),
+
     isOptionsLocked: function(){
-      if (this.tabPosition != 1){
+      if (this.TAB_POSITION != 1){
         return true
       } else {
         return false
@@ -482,22 +360,22 @@ export default {
     },
     //Отфильтрованный список заявок
     filteredRequests: function() {
-                return this.requestList.filter(elem => {
+                return this.REQUESTLIST.filter(elem => {
                     var res = true;
 
-                    this.checkedRequests.forEach((val) => {
+                    this.CHECKED_REQUESTS.forEach((val) => {
                         if (val.other === elem.status && val.status == false) {
                           res = false;
                         }
                     });
 
-                    this.executors.forEach((val) => {
+                    this.EXECUTORS.forEach((val) => {
                         if (val.name === elem.executor && val.status == false) {
                           res = false;
                         }
                     });
 
-                    this.checkedForms.forEach((val) => {
+                    this.FORMS.forEach((val) => {
                         if (val.name === elem.form && val.status == false) {
                           res = false;
                         }
@@ -507,10 +385,10 @@ export default {
             },
     //Отфильтрованный список работников
     filteredExecutors: function() {
-                return this.executors.filter(elem => {
+                return this.EXECUTORS.filter(elem => {
                     var res = true;
 
-                    this.executors.forEach((val) => {
+                    this.EXECUTORS.forEach((val) => {
                         if (val.name == elem.name && val.status == false) {
                             res= false;
                         }
