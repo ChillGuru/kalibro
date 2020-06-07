@@ -3,7 +3,9 @@ import BootstrapVue from "bootstrap-vue"
 import App from './App.vue'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-vue/dist/bootstrap-vue.css"
-import * as VueGoogleMaps from "vue2-google-maps";
+import * as VueGoogleMaps from "vue2-google-maps"
+import store from './vuex/Store'
+
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -18,5 +20,6 @@ Vue.use(BootstrapVue)
 
 new Vue({
   el: '#app',
-  render: h => h(App)
+  store,
+  render: h => h(App),
 })

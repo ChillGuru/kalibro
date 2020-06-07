@@ -31,8 +31,7 @@
             <div v-for="executor in this.executors">
                 <table-item
                 :executorInfo="executor"
-                :id="uniID(executor.name)"
-                :requestList="requestList">
+                :id="uniID(executor.name)">
              </table-item>
             </div>
         </div>
@@ -43,10 +42,7 @@
 import tableItem from "./ExecutorsTableItem.vue"
 
     export default {
-        props:[
-            'requestList',
-            'executors',
-            ],
+        props:['executors'],
         data: function() {
             return{
 

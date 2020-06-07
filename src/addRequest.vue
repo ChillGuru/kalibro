@@ -32,14 +32,14 @@
 
                 <h1 style="margin-top: 20px">БЛАНК</h1>
                 <select class="max__text" v-model="newReq.form" style="cursor: pointer">
-                    <option :value="forms[0].name">{{ forms[0].name }} (по умолчанию)</option>
-                    <option v-for="form in forms" :value="form.name" v-if="form.name != forms[0].name">{{ form.name }}</option>
+                    <option :value="FORMS[0].name">{{ FORMS[0].name }} (по умолчанию)</option>
+                    <option v-for="form in FORMS" :value="form.name" v-if="form.name != FORMS[0].name">{{ form.name }}</option>
                 </select>
 
                 <h1 style="margin-top: 20px">ИСПОЛНИТЕЛЬ</h1>
                 <select class="max__text" v-model="newReq.executor" style="cursor: pointer">
                     <option value="-">Выбрать всех (по умолчанию)</option>
-                    <option v-for="executor in executors" :value="executor.name">{{ executor.name }}</option>
+                    <option v-for="executor in EXECUTORS" :value="executor.name">{{ executor.name }}</option>
                 </select>
 
                 <h1 style="margin-top: 20px">CRM-ССЫЛКА</h1>
@@ -49,7 +49,7 @@
                 <textarea class="max__text" v-model="newReq.instructions" style="height: 67px" wrap="soft"></textarea>
             </form>
             <div class="req__modal__footer d-flex justify-content-center">
-                    <button class="req__btn" @click="showReForm">ОТМЕНИТЬ</button>
+                    <button class="req__btn" @click="UPD_REQUEST_FORM_VISIBLE(false)">ОТМЕНИТЬ</button>
                     <button class="req__btn" @click="addNewReq">СОХРАНИТЬ</button>
                 </div>
         </div>
@@ -62,17 +62,14 @@
 </template>
 
 <script>
+import {mapActions, mapGetters, mapState} from 'vuex';
 import Inputmask from 'inputmask'; //Маски ввода
 import GMap from "./GoogleMap.vue"; //Карта
 
 export default {
-    props: ["forms", "executors", "isForm", "requests"],
-
     data: function() {
         return {
             all: 'Все',
-            localIsForm: this.isForm,
-            localReqs: this.requests,
             startdate: "",
             starttime: "",
             enddate: "",
@@ -86,7 +83,7 @@ export default {
                 endin: this.endtdate,
                 executor: "",
                 formColor: "",
-                form: this.forms[0].name,
+                form: "",
                 task: "",
                 crm: "",
                 instructions: "",
@@ -103,15 +100,23 @@ export default {
         im.mask(document.getElementById('date__mask2'));
         var im = new Inputmask("99:99");
         im.mask(document.getElementById('time__mask2'));
+        this.GET_EXECUTORS();
+        this.GET_REQUESTLIST();
+        this.GET_FORMS();
     },
 
     methods: {
-        showReForm: function() {
-            this.localIsForm = false;
-            this.$emit('showReForm', this.localIsForm)
-        },
+        ...mapActions([
+            'UPD_REQUEST_FORM_VISIBLE',
+            'UPD_REQUESTLIST_IN_LOCAL',
+            'GET_EXECUTORS',
+            'GET_FORMS',
+            'GET_REQUESTLIST',
+            'ADD_REQUEST'
+        ]),
 
         addNewReq: function() {
+            let local = this.REQUESTLIST;
             if (this.newReq.city == ''){console.log('Данные не приняты');}
             else if (this.newReq.address == ''){console.log('Данные не приняты');}
             else if (this.newReq.task == ''){console.log('Данные не приняты');}
@@ -121,19 +126,25 @@ export default {
                 var bg = '';
                 this.newReq.id = Math.random() * (9999999 - 1) + 1;
                 bg = Math.floor(Math.random() * 899) + 100;
-                this.forms.forEach((val, i) => {
+                this.FORMS.forEach((val) => {
                     if (val.name == this.newReq.form) {
                     this.newReq.color = val.color;
                     }
                 });
-                this.localReqs.push(this.newReq);
-                this.$emit('addNewRequest', this.localReqs)
-                this.localIsForm = false;
-                this.$emit('showReForm', this.localIsForm)
+                this.ADD_REQUEST(this.newReq);
+                this.UPD_REQUEST_FORM_VISIBLE(false);
             }
         },
     },
     
+    computed: {
+        ...mapGetters([
+            'FORMS',
+            'EXECUTORS',
+            'REQUESTLIST'
+        ])
+    },
+
     components: {
         GMap
     }

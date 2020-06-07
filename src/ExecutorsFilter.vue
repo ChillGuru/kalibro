@@ -3,14 +3,14 @@
   <div class="box ml-auto mr-auto" style="height: 100%;">
     <div class="box__header d-flex justify-content-between">
       <div class="check__main d-flex align-items-center">
-        <input style="display: none" type="checkbox" checked="localNamesChecked" v-model="localNamesChecked"  id="check_main2"/>
-        <label class="check__label" for="check_main2" style="font-weight: 600;">{{title}}</label>
+        <input style="display: none" type="checkbox" :checked="ALL_NAMES_CHECKED" @change="all_check"  id="check_main2"/>
+        <label class="check__label" for="check_main2" style="font-weight: 600;">Исполнители</label>
       </div>
-      <button class="add__checkbox_item" @click="showExForm">+</button>
+      <button class="add__checkbox_item" @click="UPD_EXECUTOR_FORM_VISIBLE(true)">+</button>
     </div>
     <div class="executors__content d-flex flex-column">
-      <span v-if="localNames == ''" class="lackof">Исполнители отсутствуют</span>  
-      <div v-for="executor in localNames" class="d-flex justify-content-between" style="margin: 8px 0; line-height: 17px;">
+      <span v-if="EXECUTORS == ''" class="lackof">Исполнители отсутствуют</span>  
+      <div v-for="executor in EXECUTORS" class="d-flex justify-content-between" style="margin: 8px 0; line-height: 17px;">
         <div>
           <input
             style="display: none"
@@ -31,58 +31,66 @@
 
 <script>
 import addExecutor from "./addExecutor.vue" //Модальное окно по добавлению исполнителя
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
-  props: ["title", "names", "allChecked", "isForm"],
   data: function() {
     return {
-      localNames: this.names,
-      localNamesChecked: this.allChecked,
       changes: [],
-      localIsForm: this.isForm
     }
   },
 
   mounted: function() {
-    this.id = this._uid
+    this.id = this._uid;
+    this.GET_EXECUTORS();
   },
   
+  computed: {
+    ...mapGetters([
+      'EXECUTORS',
+      'ALL_NAMES_CHECKED'
+    ])
+  },
+
   methods: {
+    ...mapActions([
+          'GET_EXECUTORS',
+          'UPD_EXECUTORS_IN_LOCAL',
+          'UPD_ALL_NAMES_CHECKED',
+          'UPD_EXECUTOR_FORM_VISIBLE'
+        ]),
+
+    all_check() {
+      let local = this.ALL_NAMES_CHECKED;
+      if (local == true) {local = false}
+      else {local = true};
+      this.UPD_ALL_NAMES_CHECKED(local);
+    },
+
     changeFilterStatus: function(nm) {
-      this.localNames.forEach((val, i) => {
+      let localNames = this.EXECUTORS;
+      localNames.forEach((val) => {
         if (val.name == nm.name) {
           val.status = !val.status;
         }
       });
-    },
-
-    pushName: function() {
-      var Executor = {};
-      Executor.name = 'Some name #' + (this.localNames.length + 1);
-      Executor.id = 'name' + (this.localNames.length + 1);
-      Executor.status = false;
-
-      this.localNames.push(Executor);
-      return this.localNames;
-    },
-
-    showExForm: function() {
-      this.localIsForm = true;
-      this.$emit('showExForm', this.localIsForm)
-  }
+      this.UPD_EXECUTORS_IN_LOCAL(localNames);
+    }
   },
 
   watch: {
-    localNamesChecked: function() {
-      if (this.localNamesChecked) {
-        this.localNames.forEach((val, i) => {
+    ALL_NAMES_CHECKED: function() {
+      let local = this.EXECUTORS;
+      if (this.ALL_NAMES_CHECKED) {
+        local.forEach((val) => {
           val.status = true;
         });
       } else {
-        this.localNames.forEach((val, i) => {
+        local.forEach((val) => {
           val.status = false;
         });
-      }
+      };
+      this.UPD_EXECUTORS_IN_LOCAL(local);
     }
   },
 

@@ -36,10 +36,11 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex';
 import GMap from "./GoogleMap.vue"; //Карта
 
 export default {
-    props: ['requestInfo', 'formsFilter'],
+    props: ['requestInfo'],
 
     data: function() {
         return {
@@ -60,7 +61,7 @@ export default {
         },
         formColor: function(form) {
                 var color = '';
-                this.formsFilter.forEach((val, i) => {
+                this.FORMS.forEach((val, i) => {
                         if (val.name == form) {
                             color = val.color;
                         }
@@ -82,6 +83,9 @@ export default {
     },
 
     computed: {
+        ...mapGetters([
+            'FORMS'
+        ]),
         mapSize: function() {
             var size = String;
             size = "width: inherit; "+"height: 271px;";

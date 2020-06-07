@@ -75,9 +75,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
-    props: ['executorInfo', 'id', 'requestList'],
+    props: ['executorInfo', 'id'],
 
     data: function() {
         return {
@@ -94,6 +95,9 @@ export default {
         },
 
     computed:{
+        ...mapGetters([
+            'REQUESTLIST'
+        ]),
             isCurrent: function() {
                 if ((this.countPage > 5)&&(this.currentPage < this.countPage - 3)) {
                     return true
@@ -110,7 +114,7 @@ export default {
             },
             // фильтр заявок
             filteredRequests: function() {
-                return this.requestList.filter(elem => {
+                return this.REQUESTLIST.filter(elem => {
                     let res = false;
                         if (elem.executor == this.executorInfo.name) {
                             res= true;
