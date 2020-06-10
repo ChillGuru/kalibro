@@ -28,8 +28,8 @@
         </header>
 
         <div class="table__content">
-            <span v-if="REQUESTLIST == ''" class="lackof">Фильтры не включены или заявки отсутствуют</span> 
-            <div v-for="req in REQUESTLIST">
+            <span v-if="this.requests == ''" class="lackof">Фильтры не включены или заявки отсутствуют</span> 
+            <div v-for="req in this.requests">
                 <requests-table-item
                 :requestInfo="req">
                 </requests-table-item>
@@ -43,6 +43,7 @@ import {mapActions, mapGetters} from 'vuex';
 import RequestsTableItem from "./RequestsTableItem.vue"
 
 export default {
+    props: ['requests'],
     data: function() {
         return{
         }
