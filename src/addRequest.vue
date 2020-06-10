@@ -100,18 +100,12 @@ export default {
         im.mask(document.getElementById('date__mask2'));
         var im = new Inputmask("99:99");
         im.mask(document.getElementById('time__mask2'));
-        this.GET_EXECUTORS();
-        this.GET_REQUESTLIST();
-        this.GET_FORMS();
     },
 
     methods: {
         ...mapActions([
             'UPD_REQUEST_FORM_VISIBLE',
             'UPD_REQUESTLIST_IN_LOCAL',
-            'GET_EXECUTORS',
-            'GET_FORMS',
-            'GET_REQUESTLIST',
             'ADD_REQUEST'
         ]),
 

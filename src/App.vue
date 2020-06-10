@@ -59,6 +59,7 @@
               </div>
               <div class="justbox" v-if="SELECTED_RADIO == 'table'">
                 <RequestsTable
+                :requests="filteredRequests"
                 ></RequestsTable>
               </div>
             </b-tab>
