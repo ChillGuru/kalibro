@@ -51,11 +51,8 @@
               </div>
               <!--Карта-->
               <div class="justbox" v-if="SELECTED_RADIO == 'map'">
-                <GMap
-                :size="rightContentHeight+'width:100%;'"
-                :zoom="13"
-                :requests="filteredRequests">
-                </GMap>
+                <Map>
+                </Map>
               </div>
               <div class="justbox" v-if="SELECTED_RADIO == 'table'">
                 <RequestsTable
@@ -75,7 +72,6 @@
             <b-tab title="Отчеты" @click="UPD_TAB_POSITION(3); UPD_SELECTED_RADIO('table');">
               <div class="justbox" v-if="SELECTED_RADIO == 'table'">
                 <ReportsTable
-                  :requestList="requestList"
                 ></ReportsTable>
               </div>
             </b-tab>
@@ -113,6 +109,7 @@ import FormsFilter from "./FormsFilter.vue"; //Фильтр по бланкам.
 import RequestsTable from "./RequestsTable.vue"; //Таблица с заявками.
 import ExecutorsTable from "./ExecutorsTable.vue"; //Таблица с исполнителями.
 import ReportsTable from "./ReportsTable.vue"; //Таблица с отчетами.
+import Map from "./SimpleMap.vue";
 import GMap from "./GoogleMap.vue"; //Карта
 import AddExecutor from "./addExecutor.vue"; //Модальное окно по добавлению исполнителя
 import AddRequest from "./addRequest.vue" //Модальное окно по добавлению заявки
@@ -120,174 +117,11 @@ import AddRequest from "./addRequest.vue" //Модальное окно по д�
 export default {
   name: "app",
   data: function() {
-    //Все значения приведенные здесь - считаются дефолтными.
     return {
-      window: { //размер окна (не трогай)
+      window: {
         height: window.innerHeight,
         width: window.innerWidth,
-      },
-      requestList: [
-        {
-          id: "r1",
-          status: "Выполнена",
-          city: "Екатеринбург",
-          address: "ул. Союзная 27, кв.275",
-          date: "10.01.2019",
-          begin: "17.01.2019 17.32",
-          endin: "17.01.2019 19.56",
-          executor: "Васнецов Николай Евгеньевич",
-          formColor: "Background: #84D2DE",
-          form: "Бланк для окон",
-          task: "Замер оконных проёмов",
-          crm: "",
-          instructions: "",
-          price: "",
-        },
-        {
-          id: "r2",
-          status: "Открыта",
-          city: "Екатеринбург",
-          address: "ул. Союзная 27, кв.275",
-          date: "11.01.2019",
-          begin: "",
-          endin: "",
-          executor: "Васнецов Николай Евгеньевич",
-          formColor: "Background: #84D2DE",
-          form: "Бланк для окон",
-          task: "Замер оконных проёмов",
-          crm: "",
-          instructions: "",
-          price: "",
-        },
-        {
-          id: "r3",
-          status: "Выполнена",
-          city: "Екатеринбург",
-          address: "ул. Союзная 27, кв.275",
-          date: "12.01.2019",
-          begin: "17.01.2019 17.32",
-          endin: "17.01.2019 19.56",
-          executor: "Васюков Евгений Петрович",
-          formColor: "Background: #84D2DE",
-          form: "Бланк для окон",
-          task: "Замер оконных проёмов",
-          crm: "",
-          instructions: "",
-          price: "",
-        },
-        {
-          id: "r4",
-          status: "Открыта",
-          city: "Екатеринбург",
-          address: "ул. Союзная 27, кв.275",
-          date: "13.01.2019",
-          begin: "",
-          endin: "",
-          executor: "Попов Антон Андреевич",
-          formColor: "Background: #84D2DE",
-          form: "Бланк для окон",
-          task: "Замер оконных проёмов",
-          crm: "",
-          instructions: "",
-          price: "",
-        },
-        {
-          id: "r5",
-          status: "Открыта",
-          city: "Екатеринбург",
-          address: "ул. Союзная 27, кв.275",
-          date: "14.01.2019",
-          begin: "",
-          endin: "",
-          executor: "Васнецов Николай Евгеньевич",
-          formColor: "Background: #84D2DE",
-          form: "Бланк для окон",
-          task: "Замер оконных проёмов",
-          crm: "",
-          instructions: "",
-          price: "",
-        },
-        {
-          id: "r6",
-          status: "Выполнена",
-          city: "Екатеринбург",
-          address: "ул. Союзная 27, кв.275",
-          date: "15.01.2019",
-          begin: "17.01.2019 17.32",
-          endin: "17.01.2019 19.56",
-          executor: "Васюков Евгений Петрович",
-          formColor: "Background: #84D2DE",
-          form: "Бланк для окон",
-          task: "Замер оконных проёмов",
-          crm: "",
-          instructions: "",
-          price: "",
-        },
-        {
-          id: "r7",
-          status: "Открыта",
-          city: "Екатеринбург",
-          address: "ул. Союзная 27, кв.275",
-          date: "16.01.2019",
-          begin: "",
-          endin: "",
-          executor: "Попов Антон Андреевич",
-          formColor: "Background: #84D2DE",
-          form: "Бланк для окон",
-          task: "Замер оконных проёмов",
-          crm: "",
-          instructions: "",
-          price: "",
-        },
-        {
-          id: "r8",
-          status: "Открыта",
-          city: "Екатеринбург",
-          address: "ул. Союзная 27, кв.275",
-          date: "17.01.2019",
-          begin: "",
-          endin: "",
-          executor: "Васнецов Николай Евгеньевич",
-          formColor: "Background: #84D2DE",
-          form: "Бланк для окон",
-          task: "Замер оконных проёмов",
-          crm: "",
-          instructions: "",
-          price: "",
-        },
-        {
-          id: "r9",
-          status: "Выполнена",
-          city: "Екатеринбург",
-          address: "ул. Союзная 27, кв.275",
-          date: "18.01.2019",
-          begin: "17.01.2019 17.32",
-          endin: "17.01.2019 19.56",
-          executor: "Васюков Евгений Петрович",
-          formColor: "Background: #84D2DE",
-          form: "Бланк для окон",
-          task: "Замер оконных проёмов",
-          crm: "",
-          instructions: "",
-          price: "",
-        },
-        {
-          id: "r10",
-          status: "Открыта",
-          city: "Екатеринбург",
-          address: "ул. Союзная 27, кв.275",
-          date: "19.01.2019",
-          begin: "",
-          endin: "",
-          executor: "Попов Антон Андреевич",
-          formColor: "Background: #84D2DE",
-          form: "Бланк для окон",
-          task: "Замер оконных проёмов",
-          crm: "",
-          instructions: "",
-          price: "",
-        },
-      ]
+      }
     };
   },
 
@@ -295,6 +129,7 @@ export default {
     this.GET_EXECUTORS();
     this.GET_FORMS();
     this.GET_REQUESTLIST();
+
   },
 
   created: function() {
@@ -343,17 +178,13 @@ export default {
     },
 
     paneHorizontalSize: function() {
-      var procent;
-      if (this.window.width > 1240){
-        procent = this.window.width / 100;
-        return (400 / procent);
-      }
+      if (this.window.width > 1239){
+        return (400 / (this.window.width / 100));
+      } else {return 32}
     },
 
     paneVerticalSize: function() {
-      var procent;
-      procent = this.window.height / 100;
-      return (380 / procent);
+      return (380 / (this.window.height / 100));
     },
     //Вычисение высоты основной карты в пикселях (фактически костыль, т.к экземпляр карты не принимает проценты)
     rightContentHeight: function() {
@@ -412,7 +243,8 @@ export default {
     ReportsTable,
     AddExecutor,
     AddRequest,
-    GMap
+    GMap,
+    Map
   },
 
 };
