@@ -2,27 +2,27 @@
     <header>
         <div class="container-fluid">
             <div class="row navbar">
-                <div class="col-12 col-md-1"></div>
-                <div class="col-8 col-md-6 col-lg-5 col-xl-4 nav">
-                        <ul class="d-flex">
-                            <li style="margin-left: 0px"><label class="d-flex align-items-center" onClick='location.href="index.html"'><img src="./assets/Logo.png" alt="logo" class="menu__logo"></label></li>
-                            <li><label class="nav__item d-flex align-items-center" onClick='location.href="index.html"'>ГЛАВНАЯ</label></li>
-                            <li class="d-flex align-items-center">
-                                <div class="dropdown show d-flex align-items-center" style="">
-                                    <label  class="nav__item d-flex align-items-center" id="dropdownMenuLink" @click="MenuActive">
-                                        ДОБАВИТЬ...</label>
-                                    <div class="dropdown-menu" >
-                                        <div class="dropdown-inner d-flex align-items-center"><label style="border-top: 1px solid white" class="dropdown-item d-flex align-items-center justify-content-center" @click="UPD_REQUEST_FORM_VISIBLE(true)">ДОБАВИТЬ ЗАЯВКУ</label></div>
-                                        <div class="dropdown-inner d-flex align-items-center"><label class="dropdown-item d-flex align-items-center justify-content-center">ДОБАВИТЬ НОВЫЙ БЛАНК</label></div>
-                                        <div class="dropdown-inner d-flex align-items-center" style="border-bottom: 0"><label class="dropdown-item d-flex align-items-center justify-content-center" @click="UPD_EXECUTOR_FORM_VISIBLE(true)">ДОБАВИТЬ ИСПОЛНИТЕЛЯ</label></div>
-                                    </div>
+                <div class="col-1 col-md-1"></div>
+                <div class="col-7 col-lg-5 col-xl-4 nav">
+                    <ul class="d-flex">
+                        <li style="margin-left: 0px"><label class="d-flex align-items-center" onClick='location.href="index.html"'><img src="./assets/Logo.png" alt="logo" class="menu__logo"></label></li>
+                        <li><label class="nav__item d-flex align-items-center" onClick='location.href="index.html"'>ГЛАВНАЯ</label></li>
+                        <li class="d-flex align-items-center">
+                            <div class="dropdown show d-flex align-items-center" style="">
+                                <label  class="nav__item d-flex align-items-center" id="dropdownMenuLink" @click="MenuActive">
+                                    ДОБАВИТЬ...</label>
+                                <div class="dropdown-menu" >
+                                    <div class="dropdown-inner d-flex align-items-center"><label style="border-top: 1px solid white" class="dropdown-item d-flex align-items-center justify-content-center" @click="UPD_REQUEST_FORM_VISIBLE(true)">ДОБАВИТЬ ЗАЯВКУ</label></div>
+                                    <div class="dropdown-inner d-flex align-items-center"><label class="dropdown-item d-flex align-items-center justify-content-center">ДОБАВИТЬ НОВЫЙ БЛАНК</label></div>
+                                    <div class="dropdown-inner d-flex align-items-center" style="border-bottom: 0"><label class="dropdown-item d-flex align-items-center justify-content-center" @click="UPD_EXECUTOR_FORM_VISIBLE(true)">ДОБАВИТЬ ИСПОЛНИТЕЛЯ</label></div>
                                 </div>
-                            </li>
-                            <li style="margin-right: 0px"><label class="nav__item d-flex align-items-center">НАСТРОЙКИ</label></li>
-                        </ul>
+                            </div>
+                        </li>
+                        <li style="margin-right: 0px"><label class="nav__item d-flex align-items-center">НАСТРОЙКИ</label></li>
+                    </ul>
                 </div>
-                <div class="col-12 col-md-2 col-lg-4 col-xl-5"></div>
-                <div class="col-4 col-md-3 col-lg-2 d-flex align-items-center justify-content-end" style='height: 100%;'>
+                <div class="col-1 col-lg-4 col-xl-5"></div>
+                <div class="col-3 col-lg-2 d-flex align-items-center justify-content-end" style='height: 100%;'>
                     <img class="client__logo" src="./assets/nav_user_logo.png" alt="client__logo">
                     <label class="client__name" style="font-size: 16px;">{{ LOGIN }}</label>
                     <label class="logout" onClick='location.href="index.html"'>ВЫЙТИ</label>
