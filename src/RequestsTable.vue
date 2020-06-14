@@ -31,7 +31,8 @@
             <span v-if="this.requests == ''" class="lackof">Фильтры не включены или заявки отсутствуют</span> 
             <div v-for="req in this.requests">
                 <requests-table-item
-                :requestInfo="req">
+                :requestInfo="req"
+                :marker="findMarker(req.id, Markers)">
                 </requests-table-item>
             </div>
         </div>
@@ -39,7 +40,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import {mapActions, mapGetters, mapState} from 'vuex';
 import RequestsTableItem from "./RequestsTableItem.vue"
 
 export default {
@@ -48,10 +49,23 @@ export default {
         return{
         }
     },
+    methods: {
+        findMarker(id, marks) {
+            let marker = {};
+            marks.forEach((val) => {
+                if (val.id == id) {
+                    marker = val;
+                };
+            });
+            return marker;
+        } 
+    },
     computed: {
         ...mapGetters([
             'REQUESTLIST'
-        ])
+        ]),
+
+        ...mapState(['Markers'])
     },
     components: {
         RequestsTableItem

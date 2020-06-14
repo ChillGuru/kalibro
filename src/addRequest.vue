@@ -53,10 +53,14 @@
                     <button class="req__btn" @click="addNewReq">СОХРАНИТЬ</button>
                 </div>
         </div>
-        <GMap
-        :size="'height: 100%; width:550px;'"
-        :zoom="13"
-        :requests="null"></GMap>
+        <div style="width: 550px; height: 642px;">
+            <Map
+            :center="[56.8380, 60.5974]"
+            :crop="15"
+            :kind="''"
+            :markers="''"
+            ></Map>
+        </div>
     </div>
 </div>
 </template>
@@ -64,7 +68,7 @@
 <script>
 import {mapActions, mapGetters, mapState} from 'vuex';
 import Inputmask from 'inputmask'; //Маски ввода
-import GMap from "./GoogleMap.vue"; //Карта
+import Map from "./SimpleMap.vue"; //Карта
 
 export default {
     data: function() {
@@ -140,7 +144,7 @@ export default {
     },
 
     components: {
-        GMap
+        Map
     }
 
 }
