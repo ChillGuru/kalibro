@@ -51,7 +51,12 @@
               </div>
               <!--Карта-->
               <div class="justbox" v-if="SELECTED_RADIO == 'map'">
-                <Map>
+                <Map
+                :center="[56.8380, 60.5974]"
+                :crop="14"
+                :kind="'circle'"
+                :markers="filteredMarkers"
+                :key="counter">
                 </Map>
               </div>
               <div class="justbox" v-if="SELECTED_RADIO == 'table'">
@@ -99,7 +104,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import {mapActions, mapGetters, mapState} from 'vuex';
 import { Splitpanes, Pane } from "splitpanes"; //Сплитеры.
 import "splitpanes/dist/splitpanes.css"; //Стили сплитеров.
 import Header from "./header.vue"; //Хедер (ваш Кэп).
@@ -109,8 +114,7 @@ import FormsFilter from "./FormsFilter.vue"; //Фильтр по бланкам.
 import RequestsTable from "./RequestsTable.vue"; //Таблица с заявками.
 import ExecutorsTable from "./ExecutorsTable.vue"; //Таблица с исполнителями.
 import ReportsTable from "./ReportsTable.vue"; //Таблица с отчетами.
-import Map from "./SimpleMap.vue";
-import GMap from "./GoogleMap.vue"; //Карта
+import Map from "./SimpleMap.vue"; //Карта
 import AddExecutor from "./addExecutor.vue"; //Модальное окно по добавлению исполнителя
 import AddRequest from "./addRequest.vue" //Модальное окно по добавлению заявки
 
@@ -121,7 +125,8 @@ export default {
       window: {
         height: window.innerHeight,
         width: window.innerWidth,
-      }
+      },
+      counter: 0,
     };
   },
 
@@ -129,7 +134,6 @@ export default {
     this.GET_EXECUTORS();
     this.GET_FORMS();
     this.GET_REQUESTLIST();
-
   },
 
   created: function() {
@@ -153,7 +157,7 @@ export default {
     handleResize: function() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-    },
+    }
   },
 
   computed: {
@@ -168,6 +172,32 @@ export default {
       'REQUEST_FORM_VISIBLE',
       'CHECKED_REQUESTS'
     ]),
+
+    ...mapState(['Markers']),
+
+    upgradeMarkers: function() {
+      let Marks = [];
+      this.Markers.forEach((val) => {
+        this.REQUESTLIST.forEach((val2) => {
+            if (val.id == val2.id) {
+              Marks.push(Object.assign(val2, val))
+            }
+        });
+      })
+      return Marks;
+    },
+
+    filteredMarkers() {
+      return this.upgradeMarkers.filter(elem => {
+        var res = true;
+        this.CHECKED_REQUESTS.forEach((val) =>{
+          if (elem.status == val.other && val.status == false) {
+            res = false
+          };
+        });
+        return res;
+      });
+    },
 
     isOptionsLocked: function(){
       if (this.TAB_POSITION != 1){
@@ -231,6 +261,12 @@ export default {
             },
   },
 
+  watch: {
+    filteredMarkers() {
+      this.counter = this.counter + 1
+    }
+  },
+
   components: {
     Splitpanes,
     Pane,
@@ -243,7 +279,6 @@ export default {
     ReportsTable,
     AddExecutor,
     AddRequest,
-    GMap,
     Map
   },
 

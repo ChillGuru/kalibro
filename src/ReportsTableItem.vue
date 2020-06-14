@@ -5,6 +5,7 @@
                     type="checkbox"
                     :id="report.id + 'table'"
                     :value="report"
+                    v-model="view"
                 />
                 <label class="req__content d-flex" :for="report.id + 'table'">
                 <ul class="item__values d-flex" style="width: 100%">
@@ -18,7 +19,7 @@
                     <li style="width: 12.5%"><span>{{report.price}}</span></li>
                 </ul>
                 </label>
-                <div class="panel2">
+                <div class="panel2" v-if="view">
                     
                 </div>
     </div>
@@ -32,6 +33,7 @@ export default {
     data: function() {
         return {
             report: this.reportInfo,
+            view: false
         }
     }
 }

@@ -14,10 +14,19 @@ export default new Vuex.Store({
         AllRequestsChecked: true, //флажок "Выбрать все заявки" в фильтре заявок
         allNamesChecked: false, //флажок "Выбрать всех исполнителей" в фильтре исполнителей
         allFormsChecked: false, //флажок "Выбрать все формы" в фильтре форм
-        TestMarker: [
-            {lat: 56.8380, lng: 60.5974},
-            {lat: 56.8350, lng: 60.5974},
+        Markers: [
+            {id: 'r1', lat: 56.8380, lng: 60.5974},
+            {id: 'r2', lat: 56.8350, lng: 60.5974},
+            {id: 'r3', lat: 56.8320, lng: 60.5974},
+            {id: 'r4', lat: 56.8290, lng: 60.5974},
+            {id: 'r5', lat: 56.8410, lng: 60.5974},
+            {id: 'r6', lat: 56.8440, lng: 60.5974},
+            {id: 'r7', lat: 56.8470, lng: 60.5974},
+            {id: 'r8', lat: 56.8260, lng: 60.5974},
+            {id: 'r9', lat: 56.8230, lng: 60.5974},
+            {id: 'r10', lat: 56.8350, lng: 60.5954},
         ],
+
         checkedRequests: [ //Фильтр по типу заявок.
           {
             name: "Открыты",

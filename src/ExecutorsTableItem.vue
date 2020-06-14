@@ -5,6 +5,7 @@
                     type="checkbox"
                     :id="this.executorInfo.id + 'table'"
                     :value="this.executorInfo"
+                    v-model="view"
                 />
                 <label class="req__content d-flex" :for="this.executorInfo.id + 'table'">
                 <ul class="item__values d-flex" style="width: 100%">
@@ -15,7 +16,7 @@
                     <li style="width: 20%"><span>{{ complete(this.executorInfo.name) }}</span></li>
                 </ul>
                 </label>
-                <div class="panel2">
+                <div class="panel2" v-if="view">
                     <!--Верхняя часть, с кнопками-->
                     <div class="panel__filter d-flex align-items-center justify-content-between">
                         <div class="p__filter d-flex">
@@ -85,6 +86,7 @@ export default {
             localID: this.id,
             count: 4,
             currentPage: 1,
+            view: false
         }
     },
 
