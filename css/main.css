@@ -62,7 +62,9 @@ header {
 .nav ul {
     list-style: none;
 }
-
+.navbar-toggler {
+    margin: 0 !important;
+}
 .nav-item{
     height: 100%;
 }
@@ -91,7 +93,14 @@ header {
 }
 
 .login {
-    width: 189px;
+    width: 176px;
+    margin: 0 !important;
+}
+
+@media (max-width: 769px) {
+    .logot{
+        margin-left: -90px;
+    }
 }
 
 .user-logo {
@@ -120,6 +129,11 @@ header {
     font-weight: 300;
     font-size: 18px;
     white-space: nowrap;
+}
+
+button,
+button:focus {
+    outline: none;
 }
 
 .button {
@@ -269,7 +283,7 @@ header {
     padding-bottom: 50px;
 }
 
-..carousel-indicators {
+.carousel-indicators {
     margin-top: 50px;
 }
 
@@ -449,11 +463,10 @@ footer {
 
 .footer-info-1 {
     width: 240px;
-    margin-right: 31px;
 }
 
 .footer-info-2{
-    width: 240px;
+    width: 300px;
 }
 
 .probel2 {

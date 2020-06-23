@@ -46,7 +46,7 @@
             <!--Вкладка "Заявки"-->
             <b-tab title="Заявки" @click="UPD_TAB_POSITION(1)" active>
               <div class="justbox" v-if="SELECTED_RADIO == 'calendar'">
-                <h1>Данная функция в стадии разработки</h1>
+                <h1>Данная опция на стадии разработки</h1>
                 <img src="./assets/works.png" alt="works" style="height: 100px; weight:100px;">
               </div>
               <!--Карта-->
@@ -78,23 +78,6 @@
               <div class="justbox" v-if="SELECTED_RADIO == 'table'">
                 <ReportsTable
                 ></ReportsTable>
-              </div>
-            </b-tab>
-            <b-tab title="Отладка">
-              <div class="justbox">
-                <h1>Фильтр:</h1>
-                <br/>
-                <ul>
-                  <li v-for="r in CHECKED_REQUESTS">{{ r.name }}: {{ r.status }}</li>
-                </ul>
-                <br />
-                <ul>
-                  <li v-for="n in EXECUTORS">{{ n.name }}: {{ n.status }}</li>
-                </ul>
-                <br />
-                <ul>
-                  <li v-for="f in FORMS">{{ f.name }}: {{ f.status }}</li>
-                </ul>
               </div>
             </b-tab>
           </b-tabs>
@@ -192,6 +175,16 @@ export default {
         var res = true;
         this.CHECKED_REQUESTS.forEach((val) =>{
           if (elem.status == val.other && val.status == false) {
+            res = false
+          };
+        });
+        this.EXECUTORS.forEach((val) =>{
+          if (elem.executor == val.name && val.status == false) {
+            res = false
+          };
+        });
+        this.FORMS.forEach((val) =>{
+          if (elem.form == val.name && val.status == false) {
             res = false
           };
         });

@@ -110,7 +110,8 @@ export default {
         ...mapActions([
             'UPD_REQUEST_FORM_VISIBLE',
             'UPD_REQUESTLIST_IN_LOCAL',
-            'ADD_REQUEST'
+            'ADD_REQUEST',
+            'UPD_MARKERS'
         ]),
 
         addNewReq: function() {
@@ -129,6 +130,12 @@ export default {
                     this.newReq.color = val.color;
                     }
                 });
+                let marker = {
+                    id: this.newReq.id,
+                    lat: 56.880703,
+                    lng: 60.510625
+                }
+                this.UPD_MARKERS(marker);
                 this.ADD_REQUEST(this.newReq);
                 this.UPD_REQUEST_FORM_VISIBLE(false);
             }

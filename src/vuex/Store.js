@@ -15,16 +15,51 @@ export default new Vuex.Store({
         allNamesChecked: false, //флажок "Выбрать всех исполнителей" в фильтре исполнителей
         allFormsChecked: false, //флажок "Выбрать все формы" в фильтре форм
         Markers: [
-            {id: 'r1', lat: 56.8380, lng: 60.5974},
-            {id: 'r2', lat: 56.8350, lng: 60.5974},
-            {id: 'r3', lat: 56.8320, lng: 60.5974},
-            {id: 'r4', lat: 56.8290, lng: 60.5974},
-            {id: 'r5', lat: 56.8410, lng: 60.5974},
-            {id: 'r6', lat: 56.8440, lng: 60.5974},
-            {id: 'r7', lat: 56.8470, lng: 60.5974},
-            {id: 'r8', lat: 56.8260, lng: 60.5974},
-            {id: 'r9', lat: 56.8230, lng: 60.5974},
-            {id: 'r10', lat: 56.8350, lng: 60.5954},
+            {id: 'r1', lat: 56.831114, lng: 60.613925},
+            {id: 'r2', lat: 56.830609, lng: 60.608978},
+            {id: 'r3', lat: 56.831661, lng: 60.624353},
+            {id: 'r4', lat: 56.827651, lng: 60.588715},
+            {id: 'r5', lat: 56.822433, lng: 60.624797},
+            {id: 'r6', lat: 56.831026, lng: 60.631943},
+            {id: 'r7', lat: 56.826048, lng: 60.616877},
+            {id: 'r8', lat: 56.824416, lng: 60.603717},
+            {id: 'r9', lat: 56.843715, lng: 60.615981},
+            {id: 'r10', lat: 56.819045, lng: 60.613604},
+        ],
+
+        fullForm: [
+            {
+                articul: '-',
+                parameter: 'Длина',
+                name: '-',
+                ed: 'м',
+                value: 10,
+                price: null
+            },
+            {
+                articul: '-',
+                parameter: 'Ширина',
+                name: '-',
+                ed: 'м',
+                value: 6,
+                price: null
+            },
+            {
+                articul: '15389',
+                parameter: 'Светильник',
+                name: 'Астра',
+                ed: 'шт',
+                value: 2,
+                price: 500
+            },
+            {
+                articul: '14028',
+                parameter: 'Светильник',
+                name: 'Бра',
+                ed: 'шт',
+                value: 2,
+                price: 560
+            }
         ],
 
         checkedRequests: [ //Фильтр по типу заявок.
@@ -103,6 +138,9 @@ export default new Vuex.Store({
         SET_FORM: (state, form) => {
             state.Forms.push(form)
         },
+        SET_MARKER: (state, marker) => {
+            state.Markers.push(marker)
+        }
     },
 
     actions: {
@@ -182,7 +220,9 @@ export default new Vuex.Store({
         ADD_FORM({commit}, form) {
             this.commit('SET_FORM', form)
         },
-
+        UPD_MARKERS({commit}, marker) {
+            this.commit('SET_MARKER', marker)
+        },
     },
 
     getters: {

@@ -20,38 +20,43 @@
              background-blend-mode: overlay;
              color: #FFFFFF;">
 
-    <header id="header" class="header">
-        <div class="container-fluid" style="min-height: 62px;">
-            <div class="row navbar-expand-md navbar-dark" style="min-height: 62px; background: rgba(0, 0, 0, 0.8);">
-                <!--Кнопка/Отступ-->
-                <div class="col col-xl-4  order-md-1">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" style="margin-top: 5px;">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
+<header id="header" class="header">
+    <div class="container-fluid" style="min-height: 62px;">
+        <div class="row navbar navbar-expand-md navbar-dark" style="min-height: 62px; background:rgba(0, 0, 0, 0.8); z-index: 999;">
+            <!--Кнопка/Отступ-->
+            <div class="col-xs-1 d-md-none d-xl-block col-xl-1 d-flex align-items-center" style="height: 62px; z-index: 999; max-width: 90px;">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" style="margin-top: 5px;">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <!--Логотип-->
+            <div class="col-12 col-md-2 d-flex justify-content-center align-items-center logot">
+                <a href="index.html"><img src="img/Logo.png" alt="navlogo" class="nav-logo"></a>
+            </div>
+            <!--Отступ-->
+            <div class="col-xs-0 col-xl-1"></div>
+            <!--Навигация-->
+            <div class="nav collapse navbar-collapse col col-md-6 col-xl-4" id="collapsibleNavbar">
+                <ul class="navbar-nav d-flex justify-content-between" style="width: 100%;">
+                    <li class="nav-item"><a href="AboutService.html">О сервисе</a></li>
+                    <li class="nav-item"><a href="#">Новости</a></li>
+                    <li class="nav-item"><a href="#">API для разработчиков</a></li>
+                    <li class="nav-item"><a href="prices.html">Стоимость</a></li>
+                </ul>
+            </div>
 
-                <!--Навигация-->
-                <div class="nav collapse navbar-collapse col col-md-6 col-xl-4 order-last order-md-4" id="collapsibleNavbar">
-                    <ul class="navbar-nav d-flex justify-content-between" style="width: 100%;">
-                        <li class="nav-item"><a href="AboutService.html">О сервисе</a></li>
-                        <li class="nav-item"><a href="#">Новости</a></li>
-                        <li class="nav-item"><a href="#">API для разработчиков</a></li>
-                        <li class="nav-item"><a href="prices.html">Стоимость</a></li>
-                    </ul>
-                </div>
-
-                <!--Отступ-->
-                <div class="col col-xl-1  order-md-5"></div>
-                <!--Личный кабинет-->
-                <div class="col-12 col-sm-5 col-lg-3 d-flex align-items-center order-first  order-sm-6">
-                    <div class="login d-flex justify-content-between align-items-center">
-                        <img class="user-logo" src="img/nav_user_logo.png" alt="user-logo">
-                        <a href="app.html">Личный кабинет</a>
-                    </div>
+            <!--Отступ-->
+            <div class="col-xs-0 col-xl-2"></div>
+            <!--Личный кабинет-->
+            <div class="d-none d-sm-block col-md-3 col-xl-2 d-flex align-items-center order-first order-sm-6">
+                <div class="login d-flex justify-content-between align-items-center" style="margin: 0">
+                    <img class="user-logo d-none d-md-block" src="img/nav_user_logo.png" alt="user-logo">
+                    <a class="d-none d-md-block" style="height: 62px; margin: 0; padding: 0 5px;" href="app.html">Личный кабинет</a>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
     <content>
         <div class="container-fluid">
@@ -59,7 +64,7 @@
                 <!--Отступ-->
                 <div class="col col-xl-1" style="height: 50px;"></div>
                 <!--Главное лого-->
-                <div class="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
+                <div class="col-4 col-md-4 col-xl-2 d-flex justify-content-center">
                     <img src="img/Logo.png" alt="main-logo" class="main-logo">
                 </div>
                 <!--Отступ-->
@@ -68,8 +73,8 @@
                 <div class="col-12 col-md-7 col-xl-4 d-flex justify-content-center">
                     <div class="contacts  d-flex justify-content-between align-items-center flex-wrap">
                         <div class="numbers" style="margin-right: 20px">
-                            <p>+7 (495) 369 18 76</p>
-                            <p>+7 (343) 382 44 36</p>
+                            <p>+7 (932) 111 12 66</p>
+                            <p>+7 (952) 735 75 62</p>
                         </div>
                         <button class="button call-back">
                             <p>ОБРАТНЫЙ ЗВОНОК</p>
