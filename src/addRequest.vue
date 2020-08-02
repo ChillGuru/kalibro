@@ -68,10 +68,10 @@
 <script>
 import {mapActions, mapGetters, mapState} from 'vuex';
 import Inputmask from 'inputmask'; //Маски ввода
-import Map from "./SimpleMap.vue"; //Карта
+import Map from "./SimpleMap.vue" //Карта
 
 export default {
-    data: function() {
+    data() {
         return {
             all: 'Все',
             startdate: "",
@@ -95,15 +95,15 @@ export default {
         }
     },
 
-    mounted: function() {
-        var im = new Inputmask("99/99/9999");
-        im.mask(document.getElementById('date__mask'));
-        var im = new Inputmask("99:99");
-        im.mask(document.getElementById('time__mask'));
-        var im = new Inputmask("99/99/9999");
-        im.mask(document.getElementById('date__mask2'));
-        var im = new Inputmask("99:99");
-        im.mask(document.getElementById('time__mask2'));
+    mounted() {
+        let im = new Inputmask("99/99/9999")
+        im.mask(document.getElementById('date__mask'))
+        let im2 = new Inputmask("99:99")
+        im2.mask(document.getElementById('time__mask'))
+        let im3 = new Inputmask("99/99/9999")
+        im3.mask(document.getElementById('date__mask2'))
+        let im4 = new Inputmask("99:99")
+        im4.mask(document.getElementById('time__mask2'))
     },
 
     methods: {
@@ -114,30 +114,30 @@ export default {
             'UPD_MARKERS'
         ]),
 
-        addNewReq: function() {
-            let local = this.REQUESTLIST;
-            if (this.newReq.city == ''){console.log('Данные не приняты');}
-            else if (this.newReq.address == ''){console.log('Данные не приняты');}
-            else if (this.newReq.task == ''){console.log('Данные не приняты');}
-            else if (this.newReq.form == ''){console.log('Данные не приняты');}
-            else if (this.newReq.executor == ''){console.log('Данные не приняты');}
+        addNewReq() {
+            let local = this.REQUESTLIST
+            if (this.newReq.city == ''){console.log('Данные не приняты')}
+            else if (this.newReq.address == ''){console.log('Данные не приняты')}
+            else if (this.newReq.task == ''){console.log('Данные не приняты')}
+            else if (this.newReq.form == ''){console.log('Данные не приняты')}
+            else if (this.newReq.executor == ''){console.log('Данные не приняты')}
             else {
-                var bg = '';
-                this.newReq.id = Math.random() * (9999999 - 1) + 1;
-                bg = Math.floor(Math.random() * 899) + 100;
+                let bg = ''
+                this.newReq.id = Math.random() * (9999999 - 1) + 1
+                bg = Math.floor(Math.random() * 899) + 100
                 this.FORMS.forEach((val) => {
                     if (val.name == this.newReq.form) {
-                    this.newReq.color = val.color;
+                    this.newReq.color = val.color
                     }
-                });
+                })
                 let marker = {
                     id: this.newReq.id,
                     lat: 56.880703,
                     lng: 60.510625
                 }
-                this.UPD_MARKERS(marker);
-                this.ADD_REQUEST(this.newReq);
-                this.UPD_REQUEST_FORM_VISIBLE(false);
+                this.UPD_MARKERS(marker)
+                this.ADD_REQUEST(this.newReq)
+                this.UPD_REQUEST_FORM_VISIBLE(false)
             }
         },
     },
@@ -153,7 +153,6 @@ export default {
     components: {
         Map
     }
-
 }
 </script>
 

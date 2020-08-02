@@ -42,36 +42,36 @@
 
 <script>
 import {mapActions, mapGetters, mapState} from 'vuex';
-import Map from "./SimpleMap.vue"; //Карта
+import Map from "./SimpleMap.vue" //Карта
 
 export default {
     props: ['requestInfo', 'marker'],
 
-    data: function() {
+    data() {
         return {
             view: false
         }
     },
 
     methods: {
-        reqColor: function(name) {
+        reqColor(name) {
             switch (name) {
                 case "Открыта":
-                    return "background: #FFD79A";                        
+                    return "background: #FFD79A"                        
                 case "Принята":
-                    return "background: #D993D0";
+                    return "background: #D993D0"
                 case "Выполнена":
-                    return "background: #82DBB1";
+                    return "background: #82DBB1"
             }
         },
-        formColor: function(form) {
-                var color = '';
+        formColor(form) {
+                let color = ''
                 this.FORMS.forEach((val, i) => {
                         if (val.name == form) {
-                            color = val.color;
+                            color = val.color
                         }
-                    });
-                return color;
+                    })
+                return color
         }
     },
 

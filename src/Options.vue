@@ -19,7 +19,7 @@
 import {mapActions, mapGetters} from 'vuex';
 export default {
   props:['isLocked'],
-  data: function() {
+  data() {
     return {}
   },
   methods: {
@@ -33,7 +33,7 @@ export default {
       'SELECTED_RADIO',
     ]),
   },
-};
+}
 </script>
 
 <style>

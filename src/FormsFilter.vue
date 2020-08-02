@@ -33,7 +33,7 @@
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
-  data: function() {
+  data() {
     return {
       changes: []
     }
@@ -47,31 +47,31 @@ export default {
     ]),
 
     check_all() {
-      let local = this.ALL_FORMS_CHECKED;
+      let local = this.ALL_FORMS_CHECKED
       if (local) {local = false}
-      else {local = true};
+      else {local = true}
       this.UPD_ALL_FORMS_CHECKED(local)
     },
 
-    changeFilterStatus: function(nm) {
+    changeFilterStatus(nm) {
       let local = this.FORMS
       local.forEach((val) => {
         if (val.name == nm.name) {
-          val.status = !val.status;
+          val.status = !val.status
         }
-      });
+      })
       this.UPD_FORMS_IN_LOCAL(local)
     },
     
-    pushForm: function() {
-      let local = this.FORMS; 
-      var Form = {},
-      color = Math.floor(Math.random() * 899) + 100;
-      Form.name = 'Some Form #' + (local.length + 1);
-      Form.color = 'background: #' + color.toString();
-      Form.id = 'Form' + (local.length + 1);
-      Form.status = false;
-      this.ADD_FORM(Form);
+    pushForm() {
+      let local = this.FORMS
+      let Form = {},
+      color = Math.floor(Math.random() * 899) + 100
+      Form.name = 'Some Form #' + (local.length + 1)
+      Form.color = 'background: #' + color.toString()
+      Form.id = 'Form' + (local.length + 1)
+      Form.status = false
+      this.ADD_FORM(Form)
     }
   },
 
@@ -83,17 +83,17 @@ export default {
   },
 
   watch: {
-    ALL_FORMS_CHECKED: function() {
-      let local = this.FORMS;
+    ALL_FORMS_CHECKED() {
+      let local = this.FORMS
       if (this.ALL_FORMS_CHECKED) {
         local.forEach((val) => {
-          val.status = true;
-        });
+          val.status = true
+        })
       } else {
         local.forEach((val) => {
-          val.status = false;
-        });
-      };
+          val.status = false
+        })
+      }
       this.UPD_FORMS_IN_LOCAL(local)
     }
   },

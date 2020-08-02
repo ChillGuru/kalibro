@@ -25,7 +25,7 @@
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
-    data: function() {
+    data() {
         return {
         localIsForm: this.isForm,
         localNames: this.executors,
@@ -47,13 +47,12 @@ export default {
             'ADD_EXECUTOR'
          ]),
 
-        addNewEx: function() {
+        addNewEx() {
             if ((this.newex.name != '') && (this.newex.email != '') && (this.newex.password != '') && (this.passcheck != '') && (this.newex.phone != '')) {
                 if (this.newex.password === this.passcheck) {
-                    this.newex.id = Math.random() * (9999999 - 1) + 1;
-                    this.ADD_EXECUTOR(this.newex);
+                    this.newex.id = Math.random() * (9999999 - 1) + 1
+                    this.ADD_EXECUTOR(this.newex)
                     this.UPD_EXECUTOR_FORM_VISIBLE(false)
-
                 }
             }
         },
@@ -69,7 +68,6 @@ export default {
 </script>
 
 <style>
-
 .modal__ex {
     position: absolute;
     width: 100%;

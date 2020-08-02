@@ -43,20 +43,20 @@ import tableItem from "./ExecutorsTableItem.vue"
 
     export default {
         props:['executors'],
-        data: function() {
+        data() {
             return{
 
             }
         },
 
         methods: {
-            uniID: function(value) {
-                var id = 0;
+            uniID(value) {
+                let id = 0
                 this.executors.forEach((val, i) => {
                     if (val.name == value) {
-                        return id;
+                        return id
                     } else {id++}
-                });
+                })
             }
         },
 

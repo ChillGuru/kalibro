@@ -30,19 +30,19 @@
 </template>
 
 <script>
-import addExecutor from "./addExecutor.vue" //Модальное окно по добавлению исполнителя
-import {mapActions, mapGetters} from 'vuex';
+import addExecutor from "./addExecutor.vue"; //Модальное окно по добавлению исполнителя
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
-  data: function() {
+  data() {
     return {
       changes: [],
     }
   },
 
-  mounted: function() {
-    this.id = this._uid;
-    this.GET_EXECUTORS();
+  mounted() {
+    this.id = this._uid
+    this.GET_EXECUTORS()
   },
   
   computed: {
@@ -61,36 +61,36 @@ export default {
         ]),
 
     all_check() {
-      let local = this.ALL_NAMES_CHECKED;
+      let local = this.ALL_NAMES_CHECKED
       if (local == true) {local = false}
-      else {local = true};
-      this.UPD_ALL_NAMES_CHECKED(local);
+      else {local = true}
+      this.UPD_ALL_NAMES_CHECKED(local)
     },
 
-    changeFilterStatus: function(nm) {
-      let localNames = this.EXECUTORS;
+    changeFilterStatus(nm) {
+      let localNames = this.EXECUTORS
       localNames.forEach((val) => {
         if (val.name == nm.name) {
-          val.status = !val.status;
+          val.status = !val.status
         }
-      });
-      this.UPD_EXECUTORS_IN_LOCAL(localNames);
+      })
+      this.UPD_EXECUTORS_IN_LOCAL(localNames)
     }
   },
 
   watch: {
-    ALL_NAMES_CHECKED: function() {
-      let local = this.EXECUTORS;
+    ALL_NAMES_CHECKED() {
+      let local = this.EXECUTORS
       if (this.ALL_NAMES_CHECKED) {
         local.forEach((val) => {
-          val.status = true;
-        });
+          val.status = true
+        })
       } else {
         local.forEach((val) => {
-          val.status = false;
-        });
-      };
-      this.UPD_EXECUTORS_IN_LOCAL(local);
+          val.status = false
+        })
+      }
+      this.UPD_EXECUTORS_IN_LOCAL(local)
     }
   },
 

@@ -45,7 +45,7 @@ import {mapActions, mapGetters} from 'vuex';
 import ReportsTableItem from "./ReportsTableItem.vue"
 
 export default {
-    data: function() {
+    data() {
         return{
         }
     },
@@ -57,9 +57,9 @@ export default {
             'REQUESTLIST'
         ]),
 
-        filteredReports: function() {
+        filteredReports() {
             return this.REQUESTLIST.filter(elem => {
-                var res = true;
+                let res = true;
 
                 if (elem.status == 'Открыта') {res= false}
 

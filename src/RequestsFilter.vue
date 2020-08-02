@@ -40,9 +40,9 @@
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
-  data: function() {
+  data() {
     return {
-    };
+    }
   },
 
   methods: {
@@ -52,20 +52,20 @@ export default {
     ]),
 
     check_all() {
-      let local = this.ALL_REQUESTS_CHECKED;
+      let local = this.ALL_REQUESTS_CHECKED
       if (local == false) {local = true}
-      else {local = false;}
-      this.UPD_ALL_REQUESTS_CHECKED(local);
+      else {local = false}
+      this.UPD_ALL_REQUESTS_CHECKED(local)
     },
 
-    changeFilterStatus: function(req) {
-      let local = this.CHECKED_REQUESTS;
+    changeFilterStatus(req) {
+      let local = this.CHECKED_REQUESTS
       local.forEach((val) => {
         if (val.name == req.name) {
-          val.status = !val.status;
+          val.status = !val.status
         }
-      });
-      this.UPD_ALL_REQUESTS_CHECKED(local);
+      })
+      this.UPD_ALL_REQUESTS_CHECKED(local)
     }
   },
 
@@ -77,21 +77,21 @@ export default {
   },
 
   watch: {
-    ALL_REQUESTS_CHECKED: function() {
-    let local = this.CHECKED_REQUESTS;  
+    ALL_REQUESTS_CHECKED() {
+    let local = this.CHECKED_REQUESTS
       if (this.ALL_REQUESTS_CHECKED) {
         local.forEach((val) => {
-          val.status = true;
-        });
+          val.status = true
+        })
       } else {
         local.forEach((val) => {
-          val.status = false;
-        });
-      };
-      this.UPD_CHECKED_REQUESTS(local);
+          val.status = false
+        })
+      }
+      this.UPD_CHECKED_REQUESTS(local)
     }
   }
-};
+}
 </script>
 
 <style>

@@ -103,7 +103,7 @@ import AddRequest from "./addRequest.vue" //Модальное окно по д�
 
 export default {
   name: "app",
-  data: function() {
+  data() {
     return {
       window: {
         height: window.innerHeight,
@@ -113,18 +113,18 @@ export default {
     };
   },
 
-  mounted: function() {
+  mounted() {
     this.GET_EXECUTORS();
     this.GET_FORMS();
     this.GET_REQUESTLIST();
   },
 
-  created: function() {
+  created() {
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
   },
 
-  destroyed: function() {
+  destroyed() {
     window.removeEventListener('resize', this.handleResize);
   },
 
@@ -137,9 +137,9 @@ export default {
       'GET_REQUESTLIST'
     ]),
     
-    handleResize: function() {
-      this.window.width = window.innerWidth;
-      this.window.height = window.innerHeight;
+    handleResize() {
+      this.window.width = window.innerWidth
+      this.window.height = window.innerHeight
     }
   },
 
@@ -158,41 +158,41 @@ export default {
 
     ...mapState(['Markers']),
 
-    upgradeMarkers: function() {
-      let Marks = [];
+    upgradeMarkers() {
+      let Marks = []
       this.Markers.forEach((val) => {
         this.REQUESTLIST.forEach((val2) => {
             if (val.id == val2.id) {
               Marks.push(Object.assign(val2, val))
             }
-        });
+        })
       })
-      return Marks;
+      return Marks
     },
 
     filteredMarkers() {
       return this.upgradeMarkers.filter(elem => {
-        var res = true;
+        let res = true
         this.CHECKED_REQUESTS.forEach((val) =>{
           if (elem.status == val.other && val.status == false) {
             res = false
-          };
-        });
+          }
+        })
         this.EXECUTORS.forEach((val) =>{
           if (elem.executor == val.name && val.status == false) {
             res = false
-          };
-        });
+          }
+        })
         this.FORMS.forEach((val) =>{
           if (elem.form == val.name && val.status == false) {
             res = false
-          };
-        });
-        return res;
-      });
+          }
+        })
+        return res
+      })
     },
 
-    isOptionsLocked: function(){
+    isOptionsLocked(){
       if (this.TAB_POSITION != 1){
         return true
       } else {
@@ -200,56 +200,55 @@ export default {
       }
     },
 
-    paneHorizontalSize: function() {
+    paneHorizontalSize() {
       if (this.window.width > 1239){
-        return (400 / (this.window.width / 100));
+        return (400 / (this.window.width / 100))
       } else {return 32}
     },
 
-    paneVerticalSize: function() {
-      return (380 / (this.window.height / 100));
+    paneVerticalSize() {
+      return (380 / (this.window.height / 100))
     },
     //Вычисение высоты основной карты в пикселях (фактически костыль, т.к экземпляр карты не принимает проценты)
-    rightContentHeight: function() {
-      return "height:"+(this.window.height - 160)+"px; ";
+    rightContentHeight() {
+      return "height:"+(this.window.height - 160)+"px; "
     },
     //Отфильтрованный список заявок
-    filteredRequests: function() {
-                return this.REQUESTLIST.filter(elem => {
-                    var res = true;
+    filteredRequests() {
+      return this.REQUESTLIST.filter(elem => {
+        let res = true
 
-                    this.CHECKED_REQUESTS.forEach((val) => {
-                        if (val.other === elem.status && val.status == false) {
-                          res = false;
-                        }
-                    });
+        this.CHECKED_REQUESTS.forEach((val) => {
+          if (val.other === elem.status && val.status == false) {
+            res = false
+          }
+        })
 
-                    this.EXECUTORS.forEach((val) => {
-                        if (val.name === elem.executor && val.status == false) {
-                          res = false;
-                        }
-                    });
+        this.EXECUTORS.forEach((val) => {
+          if (val.name === elem.executor && val.status == false) {
+            res = false
+          }
+        })
 
-                    this.FORMS.forEach((val) => {
-                        if (val.name === elem.form && val.status == false) {
-                          res = false;
-                        }
-                    });
-                    return res;
-                })
-            },
+        this.FORMS.forEach((val) => {
+          if (val.name === elem.form && val.status == false) {
+            res = false
+          }
+        })
+        return res
+      })
+    },
     //Отфильтрованный список работников
-    filteredExecutors: function() {
+    filteredExecutors() {
                 return this.EXECUTORS.filter(elem => {
-                    var res = true;
+                    let res = true
 
                     this.EXECUTORS.forEach((val) => {
                         if (val.name == elem.name && val.status == false) {
-                            res= false;
+                            res= false
                         }
-                    });
-
-                    return res;
+                    })
+                    return res
                 })
             },
   },
@@ -274,7 +273,6 @@ export default {
     AddRequest,
     Map
   },
-
 };
 </script>
 

@@ -36,7 +36,7 @@
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
-    data: function() {
+    data() {
         return {
             isMenuActive: false,
         }
@@ -47,7 +47,7 @@ export default {
             'UPD_REQUEST_FORM_VISIBLE'
         ]),
 
-        MenuActive: function() {
+        MenuActive() {
             if (this.isMenuActive == false) {this.isMenuActive = true}
             else {this.isMenuActive = false}
         },

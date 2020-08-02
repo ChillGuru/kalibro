@@ -97,37 +97,37 @@ export default new Vuex.Store({
 
     mutations: {
         SET_SELECTED_RADIO: (state, selectedRadio) => {
-            state.selectedRadio = selectedRadio;
+            state.selectedRadio = selectedRadio
         },
         SET_TAB_POSITION: (state, tabPosition) => {
-            state.tabPosition = tabPosition;
+            state.tabPosition = tabPosition
         },
         SET_CHECKED_REQUESTS: (state, checkedRequests) => {
-            state.checkedRequests = checkedRequests;
+            state.checkedRequests = checkedRequests
         },
         SET_EXECUTOR_FORM_VISIBLE: (state, isExForm) => {
-            state.isExForm = isExForm;
+            state.isExForm = isExForm
         },
         SET_REQUEST_FORM_VISIBLE: (state, isReForm) => {
-            state.isReForm = isReForm;
+            state.isReForm = isReForm
         },
         SET_ALL_REQUESTS_CHECKED: (state, AllRequestsChecked) => {
-            state.AllRequestsChecked = AllRequestsChecked;
+            state.AllRequestsChecked = AllRequestsChecked
         },
         SET_ALL_NAMES_CHECKED: (state, allNamesChecked) => {
-            state.allNamesChecked = allNamesChecked;
+            state.allNamesChecked = allNamesChecked
         },
         SET_ALL_FORMS_CHECKED: (state, allFormsChecked) => {
-            state.allFormsChecked = allFormsChecked;
+            state.allFormsChecked = allFormsChecked
         },
         SET_EXECUTORS_TO_STATE: (state, Executors) => {
-            state.Executors = Executors;
+            state.Executors = Executors
         },
         SET_FORMS_TO_STATE: (state, Forms) => {
-            state.Forms = Forms;
+            state.Forms = Forms
         },
         SET_REQUESTLIST_TO_STATE: (state, requestList) => {
-            state.requestList = requestList;
+            state.requestList = requestList
         },
         SET_REQUEST: (state, request) => {
             state.requestList.push(request)

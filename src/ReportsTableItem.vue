@@ -51,7 +51,7 @@ import {mapState} from 'vuex';
 export default {
     props: ['reportInfo'],
 
-    data: function() {
+    data() {
         return {
             report: this.reportInfo,
             view: false

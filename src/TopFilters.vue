@@ -1,7 +1,7 @@
 <template>
     <div class="filters-body d-flex flex-column">
         <div class="d-flex justify-content-between ml-auto mr-auto" style="width: 350px">
-            <button class="filters__btn">Новая заявка</button>
+            <button class="filters__btn" @click="UPD_REQUEST_FORM_VISIBLE(true)">Новая заявка</button>
             <Option 
             class="filters__radio" 
             :isLocked="isOptionsLocked"
@@ -16,24 +16,32 @@
 </template>
 
 <script>
-    import Option from './Options.vue' //Переключатели Календарь/Карта/Таблица
-    import RequestsFilter from './RequestsFilter.vue' //Блок с заявками
+    import Option from './Options.vue'; //Переключатели Календарь/Карта/Таблица
+    import RequestsFilter from './RequestsFilter.vue'; //Блок с заявками
+    import {mapActions} from 'vuex'
 
     export default {
         props:[
             'isOptionsLocked'
             ],
-        data: function() {
+        data() {
             return{
                 date: '25/01/2019 - 29/01/2019',
                 RequestsForEmit: [],
             }
         },
         watch: {
-            RequestsForEmit: function() {
+            RequestsForEmit() {
                 this.$emit('requestFilterChanged', this.RequestsForEmit)
             }
         },
+
+        methods: {
+            ...mapActions([
+                'UPD_REQUEST_FORM_VISIBLE'
+            ])
+        },
+
         components: {
             Option,
             RequestsFilter

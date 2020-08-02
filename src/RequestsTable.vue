@@ -45,19 +45,19 @@ import RequestsTableItem from "./RequestsTableItem.vue"
 
 export default {
     props: ['requests'],
-    data: function() {
+    data() {
         return{
         }
     },
     methods: {
         findMarker(id, marks) {
-            let marker = {};
+            let marker = {}
             marks.forEach((val) => {
                 if (val.id == id) {
-                    marker = val;
-                };
-            });
-            return marker;
+                    marker = val
+                }
+            })
+            return marker
         } 
     },
     computed: {

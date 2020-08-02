@@ -81,7 +81,7 @@ import { mapGetters } from 'vuex';
 export default {
     props: ['executorInfo', 'id'],
 
-    data: function() {
+    data() {
         return {
             localID: this.id,
             count: 4,
@@ -91,8 +91,8 @@ export default {
     },
 
     watch: {
-             count: function() {
-                 this.currentPage = 1;
+             count() {
+                 this.currentPage = 1
              }
         },
 
@@ -100,149 +100,149 @@ export default {
         ...mapGetters([
             'REQUESTLIST'
         ]),
-            isCurrent: function() {
+            isCurrent() {
                 if ((this.countPage > 5)&&(this.currentPage < this.countPage - 3)) {
                     return true
                 } else {return false}
             },
-            paginationData: function(){
-                let start = (this.currentPage - 1) * this.count;
-                let end = start*1 + this.count*1;
-                return this.filteredRequests.slice(start, end);
+            paginationData(){
+                let start = (this.currentPage - 1) * this.count
+                let end = start*1 + this.count*1
+                return this.filteredRequests.slice(start, end)
             },
             // количество страниц ( после изменения ОТОБРАЖАТЬ ПО, произойдет пересчет данной величины)
-            countPage: function(){
-                return Math.ceil(this.filteredRequests.length / this.count);
+            countPage(){
+                return Math.ceil(this.filteredRequests.length / this.count)
             },
             // фильтр заявок
-            filteredRequests: function() {
+            filteredRequests() {
                 return this.REQUESTLIST.filter(elem => {
-                    let res = false;
+                    let res = false
                         if (elem.executor == this.executorInfo.name) {
-                            res= true;
+                            res= true
                         }
-                    return res;
+                    return res
                 })
             },
             // Список с кнопочками
-            paginationList: function(){
-                var list = [];
+            paginationList(){
+                let list = []
                 if ((this.filteredRequests == '') || (this.conut < 1)) {list.push("-"); return list; currentPage = 1;}
                 if (this.countPage < 6) {
                     switch(this.currentPage) {
                         case 1: 
-                            list.push(this.currentPage);
-                            list.push(this.currentPage + 1);
-                            list.push(this.currentPage + 2);
-                            list.push(this.currentPage + 3);
-                            list.push(this.currentPage + 4);
+                            list.push(this.currentPage)
+                            list.push(this.currentPage + 1)
+                            list.push(this.currentPage + 2)
+                            list.push(this.currentPage + 3)
+                            list.push(this.currentPage + 4)
                             list = list
-                                .filter( num => num <= this.countPage); 
-                            break;
+                                .filter( num => num <= this.countPage)
+                            break
                         
                         case 2:
-                            list.push(this.currentPage - 1);
-                            list.push(this.currentPage);
-                            list.push(this.currentPage + 1);
-                            list.push(this.currentPage + 2);
-                            list.push(this.currentPage + 3);
+                            list.push(this.currentPage - 1)
+                            list.push(this.currentPage)
+                            list.push(this.currentPage + 1)
+                            list.push(this.currentPage + 2)
+                            list.push(this.currentPage + 3)
                             list = list
-                                .filter( num => num <= this.countPage); 
-                            break;
+                                .filter( num => num <= this.countPage)
+                            break
 
                         case 3:
-                            list.push(this.currentPage - 2);
-                            list.push(this.currentPage - 1);
-                            list.push(this.currentPage);
-                            list.push(this.currentPage + 1);
-                            list.push(this.currentPage + 2);
+                            list.push(this.currentPage - 2)
+                            list.push(this.currentPage - 1)
+                            list.push(this.currentPage)
+                            list.push(this.currentPage + 1)
+                            list.push(this.currentPage + 2)
                             list = list
-                                .filter( num => num <= this.countPage); 
-                            break;
+                                .filter( num => num <= this.countPage) 
+                            break
 
                         case 4:
-                            list.push(this.currentPage - 3);
-                            list.push(this.currentPage - 2);
-                            list.push(this.currentPage - 1);
-                            list.push(this.currentPage);
-                            list.push(this.currentPage + 1);
+                            list.push(this.currentPage - 3)
+                            list.push(this.currentPage - 2)
+                            list.push(this.currentPage - 1)
+                            list.push(this.currentPage)
+                            list.push(this.currentPage + 1)
                             list = list
-                                .filter( num => num <= this.countPage); 
-                            break;
+                                .filter( num => num <= this.countPage) 
+                            break
 
                         case 5:
-                            list.push(this.currentPage - 4);
-                            list.push(this.currentPage - 3);
-                            list.push(this.currentPage - 2);
-                            list.push(this.currentPage - 1);
-                            list.push(this.currentPage);
+                            list.push(this.currentPage - 4)
+                            list.push(this.currentPage - 3)
+                            list.push(this.currentPage - 2)
+                            list.push(this.currentPage - 1)
+                            list.push(this.currentPage)
                             list = list
-                                .filter( num => num <= this.countPage); 
-                            break;
-                    };
+                                .filter( num => num <= this.countPage) 
+                            break
+                    }
                 } else {
                 if (this.currentPage == 1){
-                    list.push(this.currentPage);
-                    list.push(this.currentPage + 1);
-                    list.push(this.currentPage + 2); 
+                    list.push(this.currentPage)
+                    list.push(this.currentPage + 1)
+                    list.push(this.currentPage + 2)
                     list = list
-                        .filter( num => num <= this.countPage); 
+                        .filter( num => num <= this.countPage) 
 
                 } else if (this.currentPage == this.countPage){
-                    list.push(this.currentPage - 4);
-                    list.push(this.currentPage - 3);
-                    list.push(this.currentPage - 2);
-                    list.push(this.currentPage - 1);
+                    list.push(this.currentPage - 4)
+                    list.push(this.currentPage - 3)
+                    list.push(this.currentPage - 2)
+                    list.push(this.currentPage - 1)
                     
                 } else if (this.currentPage == this.countPage - 1) {
-                    list.push(this.currentPage - 3);
-                    list.push(this.currentPage - 2);
-                    list.push(this.currentPage - 1);
-                    list.push(this.currentPage);
+                    list.push(this.currentPage - 3)
+                    list.push(this.currentPage - 2)
+                    list.push(this.currentPage - 1)
+                    list.push(this.currentPage)
                 } else if (this.currentPage == this.countPage - 2){
-                    list.push(this.currentPage - 2);
-                    list.push(this.currentPage - 1);
-                    list.push(this.currentPage);
-                    list.push(this.currentPage + 1);
+                    list.push(this.currentPage - 2)
+                    list.push(this.currentPage - 1)
+                    list.push(this.currentPage)
+                    list.push(this.currentPage + 1)
                 }else if (this.currentPage == this.countPage - 3){
-                    list.push(this.currentPage - 1);
-                    list.push(this.currentPage);
-                    list.push(this.currentPage + 1);
-                    list.push(this.currentPage + 2);
-                }else{
-                    list.push(this.currentPage - 1);    // предыдущая
-                    list.push(this.currentPage);        // текущая страница
-                    list.push(this.currentPage + 1);    // следующая
+                    list.push(this.currentPage - 1)
+                    list.push(this.currentPage)
+                    list.push(this.currentPage + 1)
+                    list.push(this.currentPage + 2)
+                } else {
+                    list.push(this.currentPage - 1)    // предыдущая
+                    list.push(this.currentPage)        // текущая страница
+                    list.push(this.currentPage + 1)    // следующая
                     list = list
                         .filter(num => num > 0) // оставляем страницы только больше 0
-                        .filter( num => num <= this.countPage); // отсекаем страницы больше самой последней
-                    };
+                        .filter( num => num <= this.countPage) // отсекаем страницы больше самой последней
+                    }
                 }
-                return list;
+                return list
             },
     },
     methods: {
-        inwork: function(name) {
-            var num = 0;
+        inwork(name) {
+            let num = 0
             this.filteredRequests.forEach((val, i) => {
                 if ((val.executor == name) && (val.status ==  "Принята")) {
-                    num++;
+                    num++
                 }   
-            });
-            return num;
+            })
+            return num
         },
 
-        complete: function(name) {
-            var num = 0;
+        complete(name) {
+            let num = 0
             this.filteredRequests.forEach((val, i) => {
                 if ((val.executor == name) && (val.status ==  "Выполнена")) {
-                    num++;
+                    num++
                 }   
-            });
-            return num;
+            })
+            return num
         },
 
-        isactive: function(asd){
+        isactive(asd){
                 if (asd == this.currentPage) {
                 return "act"
             } else {return ".listToBtn"}
